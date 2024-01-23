@@ -1,0 +1,28 @@
+body{
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+app-head{
+    height: 7.5vh;
+    background-color: transparent;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    position: sticky;
+    background-color: rgba(255, 255, 255, .15);  
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+}
+.pages{
+    height: 92.5vh;
+    /* width: 100vw; */
+    background-color: white;
+}
+app-foot{
+    height: 75vh;
+    background-color: white;
+    justify-self: end;
+
+}

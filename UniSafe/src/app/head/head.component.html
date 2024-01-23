@@ -1,0 +1,23 @@
+<body>
+    
+    <div class="left"></div>
+    
+    <div class="mid">
+        <button class="links">Home</button>
+        <button class="links" routerLink="/about">About</button>
+        <button class="links" style="color: red; font-weight: bold;"
+        routerLink="/aboutme">Report a GBV</button>
+        <button class="links" routerLink="/genderdesk">GenderDesk</button>
+        <button class="links" routerLink="/genderclub">GenderClub</button>
+        <button class="links" (click)="scrollToFooter()">Contact us</button>
+    </div>
+    
+    <div class="right">
+        <button class="login" style="margin-right: 0.2vw;"
+        routerLink="/login">Login</button>
+        <button class="signup"
+        style="background-color: #362555; color: white; margin-left: 0.2vw;"
+        routerLink="/signup">Sign up</button>
+    </div>
+
+</body>

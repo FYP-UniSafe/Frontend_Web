@@ -1,0 +1,108 @@
+body{
+    height: 100%;
+    width: 100%;
+    background-color: #362555;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.top{
+    flex: 1;
+    width: 85vw;
+    display: flex;
+    background-color: #362555;
+}
+.left{
+    height: 100%;
+    width: 20%;
+    background-color: #362555;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.left img{
+    height: 35%;
+    width: 80%;
+    margin-top: 10vh;
+}
+
+.mid{
+    height: 100%;
+    width: 40%;
+    background-color: #362555;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    line-height: 2.2vh;
+}
+.tophead{
+    font-size: 1.8vw;
+    margin-top: 10vh;
+    margin-left: 3vw;
+    font-weight: 500;
+}
+.mid span{
+    width: 75%;
+    border-top: 1px solid #ffffff;
+    align-self: flex-start;
+    margin-left: 3vw;
+    margin-top: 1vh;
+}
+.mid p{
+    margin-bottom: 1vh;
+    margin-left: 3vw;
+}
+.mid .heads{
+    margin-bottom: 0.05vh;
+}
+.getmock{
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+.mockup{
+    height: 40vh;
+    width: 10vw;
+    align-self: center;
+}
+@keyframes blink {
+    0%, 100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
+.getit{
+    height: 6vh;
+    width: 9vw;
+    animation: blink 3s infinite;
+}
+
+
+
+.bottom{
+    height: 7.5vh;
+    width: 100%;
+    background-color: #362555;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.bottom hr{
+    margin-top: 0;
+    width: 80vw;
+}
+.bottom p{
+    color: #757575;
+    font-size: 0.9vw;
+    
+}
