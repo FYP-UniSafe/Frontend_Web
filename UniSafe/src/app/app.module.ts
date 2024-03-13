@@ -8,6 +8,9 @@ import { FootComponent } from './foot/foot.component';
 import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
+import { SharedModule } from './shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { VerifyOtpComponent } from './verify-otp/verify-otp.component'
 
 @NgModule({
   declarations: [
@@ -16,11 +19,14 @@ import { LoginComponent } from './login/login.component';
     FootComponent,
     HomeComponent,
     SignupComponent,
-    LoginComponent
+    LoginComponent,
+    VerifyOtpComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule ,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
