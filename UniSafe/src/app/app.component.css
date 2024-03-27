@@ -2,6 +2,8 @@ body{
     display: flex;
     flex-direction: column;
     background-color: white;
+    margin: 0;
+    padding: 0;
 }
 app-head{
     height: 7.5vh;
@@ -16,13 +18,26 @@ app-head{
 
 }
 .pages{
-    height: 92.5vh;
+    /* height: 92.5vh; */
+    height: auto;
     /* width: 100vw; */
     background-color: white;
 }
 app-foot{
-    height: 75vh;
+    height: auto;
     background-color: white;
     justify-self: end;
+}
 
+
+
+@media (max-width: 1349px){
+    app-head{
+        height: 5vh;
+    }
+}
+
+
+@media (max-width: 451px){
+    
 }

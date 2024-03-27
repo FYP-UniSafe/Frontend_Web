@@ -20,14 +20,16 @@ body{
 .card h2{
     margin-top: 10vh;
 }
+.card .p1{
+    margin-top: -0.7vw;
+}
 .card p{
     font-size: 1vw;
 }
-
 .card img{
     height: 7vw;
     width: 7vw;
-    margin-bottom: 2vw;
+    margin-bottom: 3vw;
 }
 .card input{
     height: 2vw;
@@ -49,8 +51,8 @@ body{
     border: 1px solid black;
 }
 .card button{
-    margin-top: 2vw;
-    margin-bottom: 3vh;
+    margin-top: 1.5vw;
+    margin-bottom: 7vh;
     height: 2.3vw;
     width: 7.5vw;
     font-size: 1vw;
@@ -66,39 +68,13 @@ body{
     transform: scale(1.05);
 }
 .card .p2{
-    margin-top: -0.5vw;
-    margin-bottom: 5vw;
+    margin-top: 1vw;
+    margin-bottom: 2.5vw;
 }
 .card .p2 a{
     text-decoration: none;
     color: #0277BD;
 }
-.a{
-    text-decoration: none;
-    color: #0277BD;
-    font-size: 0.8vw;
-    /* right: 15px; */
-    align-self: flex-end;
-    padding-right: 6vw;
-}
-.password-container {
-    position: relative;
-    }
-    .eye-show,
-    .eye-hide {
-    position: absolute;
-    color: #757575;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 0.8vw;
-
-    }
-
-    .hide {
-    display: none;
-    }
 
 ::placeholder {
     color: #888;
@@ -142,13 +118,6 @@ body{
     color: #888;
     font-size: 1.5vw;
     }
-    .a{
-        text-decoration: none;
-        color: #0277BD;
-        font-size: 2vw;
-        align-self: flex-end;
-        padding-right: 25vw;
-    }
     .card input::placeholder{
     padding-left: 0.3vw;
     font-size: 1.5vw;
@@ -171,14 +140,6 @@ body{
     width: 15vw;
     font-size: 2vw;
     margin-bottom: 0;
-    }
-    .eye-show,
-    .eye-hide {
-    right: 25px;
-    font-size: 2vw;
-    }
-    .card .p2{
-        margin-top: 3vw;
     }
 }
 
@@ -207,13 +168,6 @@ body{
     border: 1px solid black;
     font-size: 3vw;
     }
-    .a{
-        text-decoration: none;
-        color: #0277BD;
-        font-size: 3vw;
-        align-self: flex-end;
-        padding-right: 15vw;
-    }
     .card p{
         font-size: 3.5vw;
     }
@@ -225,13 +179,5 @@ body{
     height: 4.5vh;
     width: 25vw;
     font-size: 3.5vw;
-    }
-    .eye-show,
-    .eye-hide {
-    right: 25px;
-    font-size: 3vw;
-    }
-    .card .p2{
-        margin-top: 5vw;
     }
 }

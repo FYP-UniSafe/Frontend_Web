@@ -1,1 +1,117 @@
-<p>signup works!</p>
+<body>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-3qmMVcNkx5Hezuk4YecfKrPm6dA+zArWhZMunGmG6jQgxYDLz7alccxcHS1nK1n+X9D21WL30VgYGewW9bPI9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit">
+        <div class="card">
+            <h2>Sign up</h2>
+            <p class="p1">Join a Supportive Community</p>
+
+            <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
+
+            <input type="text" required id="Fullname" placeholder="Fullname" formControlName="fullname">
+
+            <div class="Gender">
+              <select id="gender" formControlName="gender" >
+                <option value="0">Gender</option>
+                <option value="1">Female</option>
+                <option value="2">Male</option>
+              </select>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            
+            <input type="text" required placeholder="Email" id="email" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+
+            <input type="text" required placeholder="Phone" id="phoneMumber" formControlName="phoneNumber" pattern="^\+255\d{9}$">
+
+            <div class="Profile">
+              <select id="userProfile" formControlName="userProfile" (change)="onProfileChange()">
+                <option value="0">Profile Type</option>
+                <option value="Student">Student</option>
+                <option value="GenderDesk">GenderDesk</option>
+                <option value="Consultant">Consultant</option>
+                <option value="Police">Police</option>
+              </select>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            
+            <div formGroupName="specificFields">
+              <!-- Student specific fields -->
+              <div *ngIf="signupForm.get('userProfile')?.value === 'Student'">
+                <div>
+                  <input type="text" placeholder="Registration Number" id="registrationNumber" formControlName="registrationNumber" />
+                </div>
+                <div class="colleges">
+                  <select  id="college" formControlName="college">
+                    <option [value]="0" [selected]="signupForm.get('specificFields.collegeOrSchool')?.value === '0'">College or School</option>
+                    <option value="1">CoICT</option>
+                    <option value="2">CoET</option>
+                    <option value="3">UDBS</option>
+                    <option value="4">CoNAS</option>
+                    <option value="5">CoSS</option>
+                    <option value="6">CoHU</option>
+                    <option value="7">CoAF</option>
+                    <option value="8">MUCE</option>
+                    <option value="9">DUCE</option>
+                    <option value="10">SoED</option>
+                    <option value="11">SoAF</option>
+                    <option value="12">UDSE</option>
+                    <option value="13">MCHAS</option>
+                    <option value="14">UDSoL</option>
+                    <option value="15">SJMC</option>
+                    <option value="16">SoMG</option>
+                    <option value="17">Other</option>
+                  </select>
+                  <i class="fas fa-chevron-down"></i>
+                </div>
+              </div>
+              <!-- GenderDesk and Consultant specific fields -->
+              <div *ngIf="signupForm.get('userProfile')?.value === 'GenderDesk' || signupForm.get('userProfile')?.value === 'Consultant'">
+                <div>
+                  <input type="text" id="staffNumber" placeholder="Staff Number" formControlName="staffNumber" />
+                </div>
+                <div>
+                  <input type="text" id="office" placeholder="Office" formControlName="office" />
+                </div>
+              </div>
+              <!-- Police specific fields -->
+              <div *ngIf="signupForm.get('userProfile')?.value === 'Police'">
+                <div>
+                  <input type="text" id="policeNumber" placeholder="Police number" formControlName="policeNumber" />
+                </div>
+                <div>
+                  <input type="text" id="station" placeholder="Station" formControlName="station" />
+                </div>
+              </div>
+            </div>
+
+            <div class="password-container">
+              <input 
+                name="password"
+                [type]="showPassword ? 'text' : 'password'"
+                class="form-control pwd-control"
+                id="password-field"
+                placeholder="Password"
+              />
+              
+              <i
+                class="far fa-eye eye-show"
+                (click)="togglePasswordVisibility()"
+                [class.hide]="!showPassword"
+              ></i>
+
+              <i
+                class="far fa-eye-slash eye-hide"
+                (click)="togglePasswordVisibility()"
+                [class.hide]="showPassword"
+              ></i>
+          </div> 
+
+              <button type="submit" routerLink="/verify-otp">Sign up</button>
+
+              <p class="p2">Already have an account?<a href="/login">Login</a></p>
+
+        </div>
+    </form>
+</body>
