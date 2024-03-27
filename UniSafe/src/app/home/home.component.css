@@ -1,10 +1,12 @@
 body{
-    height: 100%;
-    width: 1005;
+    height: 200vh;
+    width: 100%;
     display: flex;
+    margin: 0;
+    padding: 0;
 }
 .words{
-    height: 100%;
+    height: 92.5vh;
     width: 60%;
     display: flex;
     flex-direction: column;
@@ -26,14 +28,20 @@ body{
     color: #362555;
     line-height: 2.3vw;
 }
+.br{
+    display: none;
+}
+.br1{
+    display: none;
+}
 @keyframes blink {
     0%, 100% {
-      opacity: 0;
+        opacity: 0;
     }
     50% {
-      opacity: 1;
+        opacity: 1;
     }
-  }
+}
 .words .p2 a{
     text-decoration: none;
     font-weight: bold;
@@ -41,11 +49,8 @@ body{
     text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
     animation: blink 3s infinite;
 }
-
-
-
 .picture{
-    height: 100%;
+    height: 92.5vh;
     width: 30%;
     display: flex;
     justify-content: center;
@@ -53,5 +58,71 @@ body{
 }
 .picture img{
     height: 80%;
-    width: fit-content;
+    width: 80%;
+}
+
+
+@media (max-width: 1349px){
+body{
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+.words{
+    height: auto;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    line-height: 1vh;
+    margin-top: 2.5vh;
+}
+.words h1{
+    font-size: 5vw;
+    margin-left: 0;
+}
+.words p{
+    font-size: 2.5vw;
+    line-height: 3vw;
+    text-align: center;
+    margin-left: 0;
+}
+.br{
+    display: initial;
+}
+.picture{
+    background-color: #362555;
+    height: 60vh;
+    width: 80vw;
+    order: -1;
+}
+.picture img{
+    height: 100%;
+    width: 100%;
+}
+
+}
+
+
+@media (max-width: 451px){
+    .words{
+        line-height: 1vh;
+    }
+    .words h1{
+        font-size: 7.5vw;
+        margin-left: 0;
+    }
+    .words p{
+        font-size: 3.7vw;
+        line-height: 4.5vw;
+        text-align: center;
+        margin-left: 0;
+    }
+    .br1{
+        display: inline;
+    }
+    .picture{
+        height: 60vh;
+        width: 100vw;
+        order: -1;
+    }
 }

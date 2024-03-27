@@ -10,7 +10,9 @@ import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { VerifyOtpComponent } from './verify-otp/verify-otp.component'
+import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
+import { ReportComponent } from './report/report.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { VerifyOtpComponent } from './verify-otp/verify-otp.component'
     HomeComponent,
     SignupComponent,
     LoginComponent,
-    VerifyOtpComponent
+    VerifyOtpComponent,
+    ReportComponent,
   ],
   imports: [
     BrowserModule,

@@ -10,10 +10,11 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
   title = 'UniSafe';
 
-  constructor(private router: Router){}
+  constructor(private router: Router) {}
 
   isHomeRoute(): boolean{
-    return this.router.url === '/home';
+    // return this.router.url === '/home';
+    return this.router.url === '/home' || this.router.url === '/report';
   }
 
 }
