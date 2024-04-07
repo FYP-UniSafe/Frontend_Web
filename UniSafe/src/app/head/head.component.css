@@ -1,192 +1,176 @@
-body{
-    height: 100%;
-    width: 100%;
-    display: flex;
+body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  background-color: transparent;
 }
 
-
-.left{
-    height: auto;
-    width: 25%;
-    /* justify-self: flex-start; */
-    display: flex;
-    /* flex-direction: column; */
-    /* background-color: #362555; */
+.left {
+  height: auto;
+  width: 25%;
+  /* justify-self: flex-start; */
+  display: flex;
+  /* flex-direction: column; */
+  /* background-color: #362555; */
 }
-.menu-icon{
-    display: none;
+.menu-icon {
+  display: none;
 }
-.mobile-menu{
-    display: none;
-    
-
+.mobile-menu {
+  display: none;
 }
 
-.mid{
-    height: 100%;
-    width: 50%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+.mid {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
-.links{
-    height: 2.5vh;
-    width: 10vw;
-    position: sticky;
-    background-color: transparent;
-    color: black;
-    text-decoration: none;
-    font-size: 0.9vw;
-    cursor: pointer;
-    border: none;
-    transition: transform 0.5s;
-    
+.links {
+  height: 2.5vh;
+  width: 10vw;
+  position: sticky;
+  background-color: transparent;
+  color: black;
+  text-decoration: none;
+  font-size: 0.9vw;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.5s;
 }
-.links:hover{
-    font-weight: bold;
-    color: #362555;
-    transform: scale(1.5);
+.links:hover {
+  font-weight: bold;
+  color: #0f6cbf;
+  transform: scale(1.5);
 }
 
+.right {
+  height: 100%;
+  width: 25%;
+  justify-self: flex-end;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+.right button {
+  height: 3.25vh;
+  width: 4vw;
+  position: sticky;
+  background-color: transparent;
+  color: black;
+  text-decoration: none;
+  font-size: 0.6vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  border-radius: 50vw;
+  transition: transform 0.5s;
+}
+.right button:hover {
+  font-weight: bold;
+  color: #0f6cbf;
+  transform: scale(1.05);
+}
 
-.right{
-    height: 100%;
-    width: 25%;
-    justify-self: flex-end;
-    display: flex;
+/* @media (max-width: 1349px){ */
+@media (max-width: 1023px) {
+  .left {
+    display: block;
+
     justify-content: center;
-    align-items: center;
-    background-color: transparent;
-}
-.right button{
-    height: 3.25vh;
-    width: 4vw;
-    position: sticky;
-    background-color: transparent;
-    color: black;
-    text-decoration: none;
-    font-size: 0.6vw;
+
+    width: 80vw;
+  }
+  .menu-icon {
+    display: block;
+    height: 5vh;
+    font-size: 3vh;
+    padding-left: 5vw;
+    color: #0f6cbf;
+  }
+  .mobile-menu {
+    display: flex;
+    transition: 0.4s ease-in-out;
+    justify-content: flex-start;
+    position: fixed;
+    height: 95vh;
+    width: 80vw;
+    left: -80vw;
+    background: rgba(15, 108, 191, 0.9);
+  }
+  .mobile-menu-active {
+    left: 0;
+    transition: 0.4s ease-in-out;
+  }
+  .mobile-menu ul {
+    padding: 0;
+    margin: 0;
+  }
+  .mobile-menu ul li {
+    display: block;
+    text-align: left;
+    opacity: 1;
+    color: white;
+    list-style-type: none;
+    padding-left: 10vw;
+    padding-top: 2.5vh;
+    padding-bottom: 2.5vh;
     cursor: pointer;
-    border: 0.5px solid black; 
-    border-radius: 50vw;
     transition: transform 0.5s;
-}
-.right button:hover{
-    font-weight: bold;
-    color: #362555;
-    transform: scale(1.05);
-}
+  }
+  .mobile-menu ul li:hover {
+    transform: scale(1.5);
+  }
+  .line {
+    display: block;
+    width: 45%;
+    height: 5%;
+    background-color: #0f6cbf;
+    position: absolute;
+    left: 11.83%;
+    transition: transform 0.3s ease-in-out;
+    border-radius: 5px;
+  }
+  /* P0sitioning of lines in the div (container) */
+  .line:nth-child(1) {
+    top: 30%;
+  }
+  .line:nth-child(2) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .line:nth-child(3) {
+    bottom: 30%;
+  }
+  /* Make the middle line disappear when cliecked */
+  .divhamb.active .line:nth-child(2) {
+    opacity: 0;
+  }
+  /* Top and bottom line cross size and positioning */
+  .divhamb.active .line:nth-child(1) {
+    transform: translateY(1.1vh) rotate(45deg);
+    background-color: #0f6cbf;
+    opacity: 0;
+  }
+  .divhamb.active .line:nth-child(3) {
+    transform: translateY(-1.015vh) rotate(-45deg);
+    background-color: #0f6cbf;
+    opacity: 0;
+  }
 
-
-
-@media (max-width: 1349px){
-    .left{
-        display: block;
-        /* flex-direction: column; */
-        justify-content: center;
-        /* background-color: #362555; */
-        width: 80vw;
-        
-    }
-    .menu-icon{
-        display: block;
-        height: 5vh;
-        font-size: 3vh;
-        padding-left: 5vw;
-        color: #362555;
-        /* height: 100%;
-        width: 50%;
-        position: relative;
-        cursor: pointer; */
-    }
-    .mobile-menu{
-        display: flex;
-        transition: 0.4s ease-in-out;
-        justify-content: flex-start;
-        position: fixed;
-        height: 95vh;
-        width: 80vw;
-        left: -80vw;
-        background: rgba(54, 37, 85, .9);  ;
-    }
-    .mobile-menu-active{
-        left: 0;
-        transition: 0.4s ease-in-out;
-    }
-    .mobile-menu ul{
-        padding: 0;
-        margin: 0;
-    }
-    .mobile-menu ul li{
-        display: block;
-        text-align: left;
-        opacity: 1;
-        color: white;
-        list-style-type: none;
-        padding-left: 10vw;
-        padding-top: 2.5vh;
-        padding-bottom: 2.5vh;
-        cursor: pointer;
-        transition: transform 0.5s;
-    }
-    .mobile-menu ul li:hover{
-        transform: scale(1.5);
-        }
-    .line{
-        display: block;
-        width: 45%;
-        height: 5%;
-        background-color: #362555;
-        position: absolute;
-        left: 11.83%;
-        transition: transform 0.3s ease-in-out;
-        border-radius: 5px;
-        }
-        /* P0sitioning of lines in the div (container) */
-        .line:nth-child(1){
-        top: 30%;
-        }
-        .line:nth-child(2){
-        top: 50%;
-        transform: translateY(-50%);
-        }
-        .line:nth-child(3){
-        bottom: 30%;
-        }
-        /* Make the middle line disappear when cliecked */
-        .divhamb.active .line:nth-child(2) {
-        opacity: 0;
-    }
-    /* Top and bottom line cross size and positioning */
-    .divhamb.active .line:nth-child(1) {
-        transform: translateY(1.1vh) rotate(45deg);
-        background-color: #362555;
-        opacity: 0;
-    }
-    .divhamb.active .line:nth-child(3) {
-        transform: translateY(-1.015vh) rotate(-45deg);
-        background-color: #362555;
-        opacity: 0;
-    }
-
-
-    .mid{
-        display: none;
-    }
-    .right{
-        flex: 1;
-        height: 100%;
-        width: 25%;
-        /* background-color: red; */
-    }
-    .login{
-        display: none;
-    }
-    .signup{
-        display: none;
-    }
-}
-
-@media (max-width: 451px){
-    
+  .mid {
+    display: none;
+  }
+  .right {
+    flex: 1;
+    height: 100%;
+    width: 25%;
+  }
+  .login {
+    display: none;
+  }
+  .signup {
+    display: none;
+  }
 }

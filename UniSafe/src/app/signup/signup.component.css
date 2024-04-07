@@ -1,185 +1,165 @@
-body{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin: 0;
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
 }
-.card{
-    height: auto;
-    width: 45vw;
-    align-self: center;
-    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 2vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+.card {
+  height: auto;
+  width: 45vw;
+  align-self: center;
+  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
-.card h2{
-    margin-top: 2.5vw;
+.card h2 {
+  margin-top: 2.5vw;
 }
-.card .p1{
-    margin-top: -0.7vw;
+.card .p1 {
+  margin-top: -0.7vw;
 }
-.card p{
+.card p {
   font-size: 1vw;
 }
-.card img{
-    height: 7vw;
-    width: 7vw;
-    margin-bottom: 0.5vw;
+.card img {
+  height: 7vw;
+  width: 7vw;
+  margin-bottom: 0.5vw;
 }
-.card input{
-    height: 2vw;
-    width: 17.5vw;
-    margin-top: 0.5vw;
-    margin-bottom: 0.5vw;
-    border-radius: 0.7vw;
-    border: 0.5px solid black;
-    text-indent: 1vw;
-    color: #888;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: lighter;
-    font-size: 0.7vw;
+.card input {
+  height: 2vw;
+  width: 17.5vw;
+  margin-top: 0.5vw;
+  margin-bottom: 0.5vw;
+  border-radius: 0.7vw;
+  border: 0.5px solid black;
+  text-indent: 1vw;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
 }
-.card input::placeholder{
-    padding-left: 0.3vw;
+.card input::placeholder {
+  padding-left: 0.3vw;
 }
-.card input:focus{
-    border: 1px solid black;
+.card input:focus {
+  border: 1px solid black;
 }
-.card select{
-    appearance: none;
-    -webkit-appearance: none;
-    margin: 0;      
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    position: relative;
-    height: 2.2vw;
-    width: 17.78vw;
-    margin-top: 0.5vw;
-    margin-bottom: 0.5vw;
-    border-radius: 0.7vw;
-    border: 0.5px solid black;
-    color: #888;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: lighter;
-    font-size: 0.7vw;
-    padding-left: 1vw;
-    cursor: pointer;
+.card select {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  height: 2.2vw;
+  width: 17.78vw;
+  margin-top: 0.5vw;
+  margin-bottom: 0.5vw;
+  border-radius: 0.7vw;
+  border: 0.5px solid black;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
+  padding-left: 1vw;
+  cursor: pointer;
 }
 
-.card select:focus{
-    border: 1px solid black;
+.card button {
+  margin-top: 1.5vw;
+  height: 2.3vw;
+  width: 7.5vw;
+  font-size: 1vw;
+  color: white;
+  background-color: #0F6CBF;
+  font-weight: bold;
+  border-radius: 5vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  transition: transform 0.5s;
 }
-.card select option:checked {
-    background-color:  #362555;
-    color: white;
-  }
-.card select::-ms-expand {
-    display: none;
-  }
-.card select::-webkit-scrollbar-track {
-    background-color: black;
-  }
-.card select option {
-    background-color: #f1e9ff;
-  }
-
-.card button{
-    margin-top: 1.5vw;
-    height: 2.3vw;
-    width: 7.5vw;
-    font-size: 1vw;
-    color: #757575;
-    background-color: #362555;
-    font-weight: bold;
-    border-radius: 5vw;
-    cursor: pointer;
-    border: 0.5px solid black;
-    transition: transform 0.5s;
+.card button:hover {
+  transform: scale(1.05);
 }
-.card button:hover{
-    transform: scale(1.05);
+.card .p2 {
+  margin-top: 1vw;
+  margin-bottom: 2.5vw;
 }
-.card .p2{
-    margin-top: 1vw;
-    margin-bottom: 2.5vw;
-}
-.card .p2 a{
-    text-decoration: none;
-    color: #0277BD;
+.card .p2 a {
+  text-decoration: none;
+  color: #0277bd;
 }
 
 ::placeholder {
-    color: #888;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: lighter;
-    font-size: 0.7vw;
-    width: 15vw;
-  }
-  .password-container {
-    position: relative;
-  }
-  .eye-show,
-  .eye-hide {
-    position: absolute;
-    color: #757575;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 0.8vw;
-    
-  }
-  
-  .hide {
-    display: none;
-  }
-  .Profile{
-    position: relative;
-  }
-  .Gender{
-    position: relative;
-  }
-  .colleges{
-    position: relative;
-  }
-  .fas{
-    position: absolute;
-    color: #757575;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 0.8vw;
-  }
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
+  width: 15vw;
+}
+.password-container {
+  position: relative;
+}
+.eye-show,
+.eye-hide {
+  position: absolute;
+  color: #757575;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 0.8vw;
+}
 
+.hide {
+  display: none;
+}
+.Profile {
+  position: relative;
+}
+.Gender {
+  position: relative;
+}
+.colleges {
+  position: relative;
+}
+.fas {
+  position: absolute;
+  color: #757575;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 0.8vw;
+}
 
-
-  @media (max-width: 819px){
-    .card{
-      height: auto;
-      width: 100vw;
-      box-shadow: 0 0 0 transparent;
-      box-shadow: none inset;
-      border-radius: 0;
-      border: none;
-    }
-    .card h2{
-      font-size: 30px;
-    }
-    .card img{
-      height: 20vw;
-      width: 20vw;
+@media (max-width: 819px) {
+  .card {
+    height: auto;
+    width: 100vw;
+    box-shadow: 0 0 0 transparent;
+    box-shadow: none inset;
+    border-radius: 0;
+    border: none;
   }
-  .card p{
+  .card h2 {
+    font-size: 30px;
+  }
+  .card img {
+    height: 20vw;
+    width: 20vw;
+  }
+  .card p {
     font-size: 15px;
   }
-  .card input{
+  .card input {
     height: 4vh;
     width: 50vw;
     margin-top: 1vw;
@@ -190,11 +170,11 @@ body{
     color: #888;
     font-size: 1.5vw;
   }
-  .card input::placeholder{
+  .card input::placeholder {
     padding-left: 0.3vw;
     font-size: 1.5vw;
   }
-  .card select{
+  .card select {
     height: 4.5vh;
     width: 51vw;
     margin-top: 0.5vw;
@@ -206,38 +186,37 @@ body{
     padding-left: 3.3vw;
     cursor: pointer;
   }
-.card button{
-  margin-top: 2vh;
-  height: 3.5vh;
-  width: 11vw;
-  font-size: 1.5vw;
+  .card button {
+    margin-top: 2vh;
+    height: 3.5vh;
+    width: 11vw;
+    font-size: 1.5vw;
   }
   .eye-show,
   .eye-hide {
     right: 25px;
     font-size: 2vw;
   }
-  .fas{
+  .fas {
     right: 28px;
     font-size: 2vw;
   }
-  }
+}
 
-  
-  @media (max-width: 451px){
-    .card{
-      height: auto;
-      width: 100vw;
-      box-shadow: none;
-      border-radius: 0;
-      justify-content: center;
-      align-items: center;
-    }
-    .card img{
-      height: 30vw;
-      width: 30vw;
+@media (max-width: 451px) {
+  .card {
+    height: auto;
+    width: 100vw;
+    box-shadow: none;
+    border-radius: 0;
+    justify-content: center;
+    align-items: center;
   }
-  .card input{
+  .card img {
+    height: 30vw;
+    width: 30vw;
+  }
+  .card input {
     height: 5vh;
     width: 70vw;
     margin-top: 2vw;
@@ -246,10 +225,10 @@ body{
     border: 1px solid black;
     font-size: 2.5vw;
   }
-  .card input::placeholder{
+  .card input::placeholder {
     font-size: 2.5vw;
   }
-  .card select{
+  .card select {
     height: 5.5vh;
     width: 71vw;
     margin-top: 0.5vw;
@@ -261,19 +240,19 @@ body{
     padding-left: 3.3vw;
     cursor: pointer;
   }
-.card button{
-  margin-top: 2vh;
-  height: 4vh;
-  width: 21vw;
-  font-size: 3vw;
+  .card button {
+    margin-top: 2vh;
+    height: 4vh;
+    width: 21vw;
+    font-size: 3vw;
   }
   .eye-show,
   .eye-hide {
     right: 25px;
     font-size: 3vw;
   }
-  .fas{
+  .fas {
     right: 28px;
     font-size: 3vw;
   }
-  }
+}

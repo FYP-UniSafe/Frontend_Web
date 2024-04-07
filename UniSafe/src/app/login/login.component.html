@@ -1,43 +1,45 @@
 <body>
-    <head>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    </head>
-    <form>
-        <div class="card">
-            <h2>Login to UniSafe</h2>
-            
-            <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
-            
-            
-            <input type="text" required id="Email" placeholder="Email">
+  <head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+  </head>
+  <form>
+    <div class="card">
+      <h2>Login to UniSafe</h2>
 
-            <div class="password-container">
-                <input 
-                    name="password"
-                    [type]="showPassword ? 'text' : 'password'"
-                    class="form-control pwd-control"
-                    id="password-field"
-                    placeholder="Password"
-                />
-                
-                <i
-                    class="far fa-eye eye-show"
-                    (click)="togglePasswordVisibility()"
-                    [class.hide]="!showPassword"
-                ></i>
+      <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
 
-                <i
-                    class="far fa-eye-slash eye-hide"
-                    (click)="togglePasswordVisibility()"
-                    [class.hide]="showPassword"
-                ></i>
-            </div> 
+      <input type="text" required id="Email" placeholder="Email" />
 
-            <a class="a" href="/.....">Forgot password?</a>
+      <div class="password-container">
+        <input
+          name="password"
+          [type]="showPassword ? 'text' : 'password'"
+          class="form-control pwd-control"
+          id="password-field"
+          placeholder="Password"
+        />
 
-            <button type="submit" routerLink="/home">Login</button>
+        <i
+          class="far fa-eye eye-show"
+          (click)="togglePasswordVisibility()"
+          [class.hide]="!showPassword"
+        ></i>
 
-            <p class="p2">Don't have an account?<a href="/signup">Signup</a></p>
-        </div>
-    </form>
+        <i
+          class="far fa-eye-slash eye-hide"
+          (click)="togglePasswordVisibility()"
+          [class.hide]="showPassword"
+        ></i>
+      </div>
+
+      <a class="a" href="/.....">Forgot password?</a>
+
+      <button type="submit" routerLink="/home">Login</button>
+
+      <p class="p2">Don't have an account?<a href="/signup">Signup</a></p>
+    </div>
+  </form>
 </body>

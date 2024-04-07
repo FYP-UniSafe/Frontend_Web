@@ -1,0 +1,112 @@
+<head>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-3qmMVcNkx5Hezuk4YecfKrPm6dA+zArWhZMunGmG6jQgxYDLz7alccxcHS1nK1n+X9D21WL30VgYGewW9bPI9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    
+    <form [formGroup]="reportForm">
+        <div class="head">
+            <h2>Report a GBV</h2>
+        </div>
+        <div class="main">
+            <h3>1. Victim's details</h3>
+            <div class="who">
+                <p>Who are you reporting for:*</p>
+                <div class="labels">
+                    <input type="radio" name="reportfor" required id="option1" value="option1" />
+                    <label for="option1">Self</label>
+                    <br>
+                    <input type="radio" name="reportfor" required id="option2" value="option2" />
+                    <label for="option2">Else</label>
+                </div>
+            </div>
+            <div class="fill">
+                <input  type="text" required id="" placeholder="Full name*" formControlName="fullname"/>
+                <div class="div">
+                    <select id="gender" formControlName="gender" >
+                      <option value="0">Gender*</option>
+                      <option value="1">Female</option>
+                      <option value="2">Male</option>
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="div">
+                    <select  id="college" formControlName="college">
+                      <option value="0">College / School*</option>
+                      <option value="1">CoICT</option>
+                      <option value="2">CoET</option>
+                      <option value="3">UDBS</option>
+                      <option value="4">CoNAS</option>
+                      <option value="5">CoSS</option>
+                      <option value="6">CoHU</option>
+                      <option value="7">CoAF</option>
+                      <option value="8">MUCE</option>
+                      <option value="9">DUCE</option>
+                      <option value="10">SoED</option>
+                      <option value="11">SoAF</option>
+                      <option value="12">UDSE</option>
+                      <option value="13">MCHAS</option>
+                      <option value="14">UDSoL</option>
+                      <option value="15">SJMC</option>
+                      <option value="16">SoMG</option>
+                      <option value="17">Other</option>
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <input  type="text" required id="" placeholder="Registration Number*" formControlName="registrationNumber"/>
+                <input  type="text" required id="" placeholder="Email*" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
+                <input  type="text" required id="" placeholder="Phone number*" formControlName="phoneNumber" pattern="^\+255\d{9}$"/>
+            </div>
+
+
+            <h3>2. Description of the Abuse</h3>
+            <div class="fill">
+                <div class="div">
+                    <select id="abusetype" formControlName="abusetype" >
+                      <option value="0">Abuse Type*</option>
+                      <option value="1">Physical Violence</option>
+                      <option value="2">Sexual Violence</option>
+                      <option value="3">Psychological Violence</option>
+                      <option value="4">Cyber Violence</option>
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="div">
+                    <p class="datetimep">Date and Time*:</p>
+                    <input class="date" type="datetime-local" required id=""  formControlName="datetime"/>
+
+                <div class="div">
+                    <select id="location" formControlName="loa" >
+                      <option value="0">Location of the Abuse*</option>
+                      <option value="1">Hall I</option>
+                      <option value="2">Hall II</option>
+                      <option value="3">Hall III</option>
+                      <option value="4">Hall IV</option>
+                      <option value="5">Hall V</option>
+                      <option value="6">Hall VI</option>
+                      <option value="7">Hall VII</option>
+                      <option value="8">Magufuli Hostels</option>
+                      <option value="9">Mabibo Hostels</option>
+                      <option value="10">Kunduchi Hostels</option>
+                      <option value="11">CoICT Hostels</option>
+                      <option value="12">Ubungo Hostels</option>
+                      <option value="13">Other</option>
+                    </select>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+
+                <div class="other">
+                   <p>If the location is Other, please type the location below:</p>
+                   <input type="text" id="" placeholder="" formControlName="other"/>
+                </div>
+
+                <div class="descr">
+                    <textarea  placeholder="Breifly describe what happened *"></textarea>
+                </div>
+            </div>
+
+
+    
+        </div>
+    <!-- </form> -->
+<!-- </body> -->
