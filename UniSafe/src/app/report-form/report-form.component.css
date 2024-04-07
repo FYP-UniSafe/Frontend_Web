@@ -1,0 +1,160 @@
+Body {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body form {
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  color: #362555;
+  align-items: center;
+}
+.head {
+  height: auto;
+  width: 80%;
+  margin-top: 10vh;
+  display: flex;
+  justify-content: center;
+}
+.main {
+  height: 250vh;
+  width: 60%;
+  color: black;
+  display: flex;
+  flex-direction: column;
+}
+.who {
+  display: flex;
+  font-size: 1.1vw;
+  width: 50%;
+  margin-left: 10%;
+  margin-top: 5vh;
+  justify-content: space-between;
+}
+.who input {
+  cursor: pointer;
+}
+.main h3 {
+  font-size: 1.3vw;
+  margin-top: 5vh;
+}
+.fill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2vh;
+  width: 80%;
+  align-self: center;
+}
+.fill input {
+  height: 5.5vh;
+  width: 100%;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  border-radius: 0.7vw;
+  border: 1.5px solid black;
+  text-indent: 1vw;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
+}
+.fill .div {
+  width: 100%;
+  position: relative;
+}
+.fas {
+  position: absolute;
+  color: #757575;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 0.8vw;
+}
+.fill select {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  height: 5.5vh;
+  width: 100%;
+  margin-top: 1vw;
+  margin-bottom: 1vw;
+  border-radius: 0.7vw;
+  border: 1.5px solid black;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
+  padding-left: 1vw;
+  cursor: pointer;
+}
+.datetimep {
+  align-self: flex-start;
+  margin-bottom: -0.3vh;
+}
+input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+  padding-left: -20px;
+}
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  position: relative;
+  /* left: -2.5%; */
+  left: -18px;
+}
+.other {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+.descr {
+  width: 100%;
+  height: auto;
+}
+.descr textarea {
+  height: 10vh;
+  width: 100%;
+  padding: 10px;
+  resize: vertical;
+  border: 1.5px solid black;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+/* @media (max-width: 1349px) { */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  .main {
+    width: 80%;
+  }
+  .who {
+    display: flex;
+    font-size: 1.5vw;
+    width: 50%;
+    margin-left: 10%;
+  }
+  .head {
+    margin-top: 5vh;
+  }
+  .main h3 {
+    font-size: 2.5vw;
+  }
+}
+
+/* @media (max-width: 451px) { */
+@media only screen and (max-width: 767px) {
+  .main {
+    width: 90%;
+  }
+  .main h3 {
+    font-size: 3vw;
+  }
+}

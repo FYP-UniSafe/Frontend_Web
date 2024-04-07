@@ -23,10 +23,10 @@ export class SignupComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       gender: ['0', Validators.required],
       phoneNumber: ['', Validators.required],
-      userProfile: ['0', Validators.required], // Default value for profile type
+      userProfile: ['0', Validators.required],
       specificFields: this.formBuilder.group({
         registrationNumber: [''],
-        collegeOrSchool: ['0'],
+        collegeOrSchool: ['0', Validators.required], // Ensure default value is '0'
         staffNumber: [''],
         office: [''],
         policeNumber: [''],

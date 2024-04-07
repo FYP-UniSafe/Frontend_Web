@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { ReportComponent } from './report/report.component';
+import { ReportFormComponent } from './report-form/report-form.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ReportComponent } from './report/report.component';
     LoginComponent,
     VerifyOtpComponent,
     ReportComponent,
+    ReportFormComponent,
   ],
   imports: [
     BrowserModule,

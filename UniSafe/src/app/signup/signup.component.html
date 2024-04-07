@@ -40,11 +40,11 @@
               <!-- Student specific fields -->
               <div *ngIf="signupForm.get('userProfile')?.value === 'Student'">
                 <div>
-                  <input type="text" placeholder="Registration Number" id="registrationNumber" formControlName="registrationNumber" />
+                  <input type="text" placeholder="Registration Number" id="" formControlName="registrationNumber" />
                 </div>
                 <div class="colleges">
-                  <select  id="college" formControlName="college">
-                    <option [value]="0" [selected]="signupForm.get('specificFields.collegeOrSchool')?.value === '0'">College or School</option>
+                  <select  id="college" formControlName="collegeOrSchool">
+                    <option value="0">College / School</option>
                     <option value="1">CoICT</option>
                     <option value="2">CoET</option>
                     <option value="3">UDBS</option>

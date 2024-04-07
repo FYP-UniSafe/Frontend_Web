@@ -7,10 +7,10 @@
         <div class="mobile-menu" [class.mobile-menu-active]="menuValue">
             <ul>
                 <li (click)="closeMenu()" routerLink="/home">Home</li>
-                <li (click)="closeMenu()" routerLink="/about">About</li>
-                <li (click)="closeMenu()" routerLink="/report">Report a GBV</li>
+                <!-- <li (click)="closeMenu()" routerLink="/about">About</li> -->
+                <li (click)="closeMenu()" style="color: red; font-weight: bold; "routerLink="/report">Report a GBV</li>
                 <li (click)="closeMenu()" routerLink="/genderdesk">GenderDesk</li>
-                <li (click)="closeMenu()" routerLink="/genderclub">GenderClub</li>
+                <li (click)="closeMenu()" routerLink="/genderclub">Appointments</li>
                 <li (click)="closeMenu(); scrollToFooter()">Contact us</li>
                 <li (click)="closeMenu()" routerLink="/login">Login</li>
                 <li (click)="closeMenu()" routerLink="/signup">Signup</li>
@@ -19,11 +19,11 @@
     </div>
     
     <div class="mid">
-        <button class="links">Home</button>
-        <button class="links" routerLink="/about">About</button>
+        <button class="links" routerLink="/home">Home</button>
+        <!-- <button class="links" routerLink="/about">About</button> -->
         <button class="links" style="color: red; font-weight: bold;"routerLink="/report">Report a GBV</button>
         <button class="links" routerLink="/genderdesk">GenderDesk</button>
-        <button class="links" routerLink="/genderclub">GenderClub</button>
+        <button class="links" routerLink="/genderclub">Appointments</button>
         <button class="links" (click)="scrollToFooter()">Contact us</button>
     </div>
     
@@ -31,7 +31,7 @@
         <button class="login" style="margin-right: 0.2vw;"
         routerLink="/login">Login</button>
         <button class="signup"
-        style="background-color: #362555; color: white; margin-left: 0.2vw;"
+        style="background-color: #0F6CBF; color: white; margin-left: 0.2vw;"
         routerLink="/signup">Sign up</button>
     </div>
 

@@ -1,7 +1,103 @@
-body{
-    height: 200vh;
-    width: 100%;
-    display: flex;
-    margin: 0;
-    padding: 0;
+body {
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.div1 {
+  height: auto;
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+}
+.div1 h1 {
+  color: #362555;
+  margin-top: 10vh;
+  font-size: 30px;
+}
+.div1 h3 {
+  color: red;
+  margin-top: 3vh;
+  font-size: 20px;
+}
+.spb {
+  color: red;
+}
+.div1 button {
+  height: 5vh;
+  width: 10vw;
+  margin-top: 3vh;
+  margin-bottom: 5vh;
+  border-radius: 50vw;
+  position: sticky;
+  background-color: red;
+  color: white;
+  border: 0.5px solid black;
+  cursor: pointer;
+  align-self: center;
+  transition: transform 0.7s;
+}
+.div1 button:hover {
+  font-weight: bold;
+  transform: scale(1.07);
+}
+.div2 {
+  height: 100vh;
+  width: 100%;
+}
+.head {
+  height: 7.5vh;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.head span {
+  border-top: 5px solid #362555;
+  width: 15vw;
+  margin-bottom: 1vh;
+  margin-left: 10vw;
+}
+.head h2 {
+  color: #362555;
+  margin-left: 10vw;
+  font-size: 1.2vw;
+}
+
+/* @media (max-width: 1349px) { */
+@media (max-width: 1023px) {
+  .div1 h1 {
+    margin-top: 6.5vh;
+    font-size: 25px;
+  }
+  .div1 h3 {
+    margin-top: 2vh;
+  }
+  .div1 button {
+    height: 4vh;
+    width: 20vw;
+  }
+  .head {
+    height: 5vh;
+  }
+  .head h2{
+    font-size: 3vw;
+  }
+  .head span {
+    /* border-top: 5px solid #362555; */
+    width: 30vw;
+    /* margin-bottom: 1vh;
+    margin-left: 10vw; */
+  }
+}
+
+/* @media (max-width: 451px) { */
+@media (max-width: 767px) {
+  .div1 button {
+    height: 6vh;
+    width: 40vw;
+  }
 }

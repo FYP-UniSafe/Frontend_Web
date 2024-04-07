@@ -19,16 +19,16 @@ button {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #d3bcff; /* Color of the track */
+    background: #c8e5ff; /* Color of the track */
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #635283; /* Color of the handle */
+    background: #4b85b8; /* Color of the handle */
     border-radius: 6px; /* Rounded corners of the handle */
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #362555; /* Color of the handle on hover */
+    background: #0F6CBF; /* Color of the handle on hover */
 }
