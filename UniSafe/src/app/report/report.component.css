@@ -14,7 +14,7 @@ body {
   flex-direction: column;
 }
 .div1 h1 {
-  color: #362555;
+  color: #0F6CBF;
   margin-top: 10vh;
   font-size: 30px;
 }
@@ -45,7 +45,7 @@ body {
   transform: scale(1.07);
 }
 .div2 {
-  height: 100vh;
+  height: auto;
   width: 100%;
 }
 .head {
@@ -56,13 +56,13 @@ body {
   justify-content: center;
 }
 .head span {
-  border-top: 5px solid #362555;
+  border-top: 5px solid #0F6CBF;
   width: 15vw;
   margin-bottom: 1vh;
   margin-left: 10vw;
 }
 .head h2 {
-  color: #362555;
+  color: #0F6CBF;
   margin-left: 10vw;
   font-size: 1.2vw;
 }
@@ -83,21 +83,18 @@ body {
   .head {
     height: 5vh;
   }
-  .head h2{
+  .head h2 {
     font-size: 3vw;
   }
   .head span {
-    /* border-top: 5px solid #362555; */
     width: 30vw;
-    /* margin-bottom: 1vh;
-    margin-left: 10vw; */
   }
 }
 
 /* @media (max-width: 451px) { */
 @media (max-width: 767px) {
   .div1 button {
-    height: 6vh;
-    width: 40vw;
+    height: 5vh;
+    width: 30vw;
   }
 }

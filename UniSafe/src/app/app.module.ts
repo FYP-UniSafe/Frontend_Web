@@ -9,10 +9,12 @@ import { HomeComponent } from './home/home.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from './shared/shared.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { ReportComponent } from './report/report.component';
 import { ReportFormComponent } from './report-form/report-form.component';
+import { CounsellingComponent } from './counselling/counselling.component';
+// import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
 
 
 @NgModule({
@@ -26,12 +28,14 @@ import { ReportFormComponent } from './report-form/report-form.component';
     VerifyOtpComponent,
     ReportComponent,
     ReportFormComponent,
+    CounsellingComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule ,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { ReportComponent } from './report/report.component';
 import { ReportFormComponent } from './report-form/report-form.component';
+import { CounsellingComponent } from './counselling/counselling.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'signup', component: SignupComponent},
   {path: 'verify-otp', component: VerifyOtpComponent},
   {path: 'report', component: ReportComponent},
+  {path: 'counselling', component: CounsellingComponent},
   {path: '**', redirectTo: 'home'}
 ];
 

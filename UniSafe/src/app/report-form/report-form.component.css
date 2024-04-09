@@ -9,7 +9,7 @@ body form {
   width: 100%;
   display: flex;
   flex-direction: column;
-  color: #362555;
+  /* color: #362555; */
   align-items: center;
 }
 .head {
@@ -19,8 +19,11 @@ body form {
   display: flex;
   justify-content: center;
 }
+.head h2 {
+  color: #0f6cbf;
+}
 .main {
-  height: 250vh;
+  height: auto;
   width: 60%;
   color: black;
   display: flex;
@@ -28,10 +31,11 @@ body form {
 }
 .who {
   display: flex;
+  flex-direction: column;
   font-size: 1.1vw;
   width: 50%;
   margin-left: 10%;
-  margin-top: 5vh;
+  margin-top: 1vh;
   justify-content: space-between;
 }
 .who input {
@@ -106,55 +110,272 @@ input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
 input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   position: relative;
   /* left: -2.5%; */
-  left: -18px;
+  left: -15px;
+  font-size: 1vw;
 }
 .other {
+  height: auto;
   width: 80%;
   display: flex;
   flex-direction: column;
 }
+.other p {
+  font-size: 12.5px;
+  /* margin-top: 2vh; */
+}
+.other input {
+  border: 0.5px solid black;
+  height: 5.5vh;
+}
 .descr {
   width: 100%;
   height: auto;
+  margin-top: 4vh;
 }
 .descr textarea {
-  height: 10vh;
+  height: 15vh;
   width: 100%;
-  padding: 10px;
+  padding: 15px;
   resize: vertical;
   border: 1.5px solid black;
+  border-radius: 0.7vw;
   font-family: "Montserrat", sans-serif;
   font-weight: lighter;
   font-size: 0.7vw;
   margin-top: 1vh;
   margin-bottom: 1vh;
 }
+.eviden {
+  width: 100%;
+  /* background-color: #0f6cbf; */
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.eviden div {
+  display: flex;
+}
+.eviden input {
+  border: none;
+}
+.descrel {
+  width: 100%;
+  height: auto;
+}
+.descrel textarea {
+  height: 10vh;
+  width: 100%;
+  padding: 15px;
+  resize: vertical;
+  border: 1.5px solid black;
+  border-radius: 0.7vw;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+.couns {
+  display: flex;
+  margin-top: 1vw;
+  flex-direction: column;
+  font-size: 1.1vw;
+  width: 80%;
+  margin-left: 10%;
+  justify-content: space-between;
+}
+button {
+  margin-top: 7.5vh;
+  height: 6vh;
+  width: 8vw;
+  justify-self: center;
+  align-self: center;
+  font-size: 1vw;
+  color: white;
+  background-color: #0f6cbf;
+  margin-bottom: 7.5vh;
+  border-radius: 5vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  transition: transform 0.5s;
+}
+button:hover {
+  transform: scale(1.05);
+  font-weight: bold;
+}
 
 /* @media (max-width: 1349px) { */
-@media only screen and (min-width: 768px) and (max-width: 1023px) {
+@media (max-width: 1023px) {
   .main {
     width: 80%;
+    height: auto;
   }
   .who {
     display: flex;
-    font-size: 1.5vw;
+    font-size: 2vw;
     width: 50%;
     margin-left: 10%;
   }
   .head {
-    margin-top: 5vh;
+    margin-top: 7.5vh;
+  }
+  .head h2 {
+    color: #0f6cbf;
   }
   .main h3 {
     font-size: 2.5vw;
   }
+  .fill input {
+    height: 4.5vh;
+    border-radius: 1.5vw;
+    text-indent: 1.75vw;
+    font-size: 1.25vw;
+  }
+  .fill p{
+    margin-top: 1vh;
+  }
+  .fas {
+    right: 30px;
+    font-size: 1.5vw;
+  }
+  .fill select {
+    height: 4.5vh;
+    border-radius: 1.5vw;
+    font-size: 1.25vw;
+    padding-left: 1.75vw;
+  }
+
+  input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+    padding-left: -10px;
+  }
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    /* left: -2.5%; */
+    left: -20px;
+    font-size: 3vw;
+  }
+  .other {
+    margin-top: 1vh;
+  }
+  .other p {
+    font-size: 10px;
+  }
+  .other input {
+    height: 4.5vh;
+  }
+  .descr {
+    margin-top: 2vh;
+  }
+  .descr textarea {
+    height: 9vh;
+    padding: 15px;
+    border-radius: 1.5vw;
+    font-size: 1.25vw;
+  }
+  .descrel textarea {
+    height: 7vh;
+    padding: 15px;
+    border-radius: 1.5vw;
+    font-size: 1.25vw;
+  }
+  .couns{
+    font-size: 2vw;
+  }
+  button {
+    height: 4vh;
+    width: 13vw;
+    font-size: 2vw;
+  }
+  button:hover {
+    transform: scale(1.05);
+    font-weight: bold;
+  }
 }
 
 /* @media (max-width: 451px) { */
-@media only screen and (max-width: 767px) {
+@media (max-width: 600px) {
   .main {
-    width: 90%;
+    width: 100%;
+    /* background-color: red; */
   }
   .main h3 {
+    font-size: 5vw;
+    margin-left: 10%;
+  }
+  .who {
+    font-size: 3.2vw;
+    width: 70%;
+    height: auto;
+    margin-left: 10%;
+  }
+  .fill input {
+    height: 5vh;
+    border-radius: 3.5vw;
+    text-indent: 5vw;
     font-size: 3vw;
+  }
+  .fill p{
+    font-size: 3.2vw;
+    margin-top: 1vh;
+  }
+  .fas {
+    /* right: 30px; */
+    font-size: 3vw;
+  }
+  .fill select {
+    height: 5vh;
+    border-radius: 3.5vw;
+    text-indent: 5vw;
+    font-size: 3vw;
+    padding-left: 1.75vw;
+  }
+  input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
+    padding-left: -15px;
+  }
+  input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+    /* left: -2.5%; */
+    left: -23px;
+    font-size: 3.5vw;
+  }
+  .other p {
+    font-size: 11px;
+  }
+  .other input {
+    height: 5vh;
+    border-radius: 3.5vw;
+  }
+  .descr {
+    margin-top: 1.5vh;
+  }
+  .descr textarea {
+    height: 10vh;
+    padding: 20px;
+    border-radius: 3.5vw;
+    font-size: 3vw;
+  }
+  .descrel textarea {
+    height: 7vh;
+    padding: 10px;
+    border-radius: 3.5vw;
+    font-size: 3vw;
+  }
+  .eviden {
+    justify-content: space-evenly;
+  }
+  .eviden p{
+    font-size: 3.2vw;
+    width: 40%;
+  }
+  .couns{
+    font-size: 3.2vw;
+  }
+  button {
+    margin-bottom: 7.5vh;
+    height: 4vh;
+    width: 25vw;
+    font-size: 3.2vw;
+  }
+  button:hover {
+    transform: scale(1.05);
+    font-weight: bold;
   }
 }

@@ -10,6 +10,7 @@ export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
   userProfiles = ['Student', 'GenderDesk', 'Consultant', 'Police'];
   showPassword: boolean = false;
+  college: string = '0';
 
   constructor(private formBuilder: FormBuilder) { }
 
@@ -26,7 +27,7 @@ export class SignupComponent implements OnInit {
       userProfile: ['0', Validators.required],
       specificFields: this.formBuilder.group({
         registrationNumber: [''],
-        collegeOrSchool: ['0', Validators.required], // Ensure default value is '0'
+        collegeOrSchool: [this.college, Validators.required],
         staffNumber: [''],
         office: [''],
         policeNumber: [''],

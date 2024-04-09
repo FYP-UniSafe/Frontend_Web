@@ -2,7 +2,7 @@
     
     <div class="left">
         <div class="menu-icon" (click)="openMenu()">
-            <i class={{menu_icon}}></i>
+            <i class={{menu_icon}} style="cursor: pointer;"></i>
         </div>
         <div class="mobile-menu" [class.mobile-menu-active]="menuValue">
             <ul>
@@ -10,7 +10,7 @@
                 <!-- <li (click)="closeMenu()" routerLink="/about">About</li> -->
                 <li (click)="closeMenu()" style="color: red; font-weight: bold; "routerLink="/report">Report a GBV</li>
                 <li (click)="closeMenu()" routerLink="/genderdesk">GenderDesk</li>
-                <li (click)="closeMenu()" routerLink="/genderclub">Appointments</li>
+                <li (click)="closeMenu()" routerLink="/counselling">Seek Counsel</li>
                 <li (click)="closeMenu(); scrollToFooter()">Contact us</li>
                 <li (click)="closeMenu()" routerLink="/login">Login</li>
                 <li (click)="closeMenu()" routerLink="/signup">Signup</li>
@@ -23,7 +23,7 @@
         <!-- <button class="links" routerLink="/about">About</button> -->
         <button class="links" style="color: red; font-weight: bold;"routerLink="/report">Report a GBV</button>
         <button class="links" routerLink="/genderdesk">GenderDesk</button>
-        <button class="links" routerLink="/genderclub">Appointments</button>
+        <button class="links" routerLink="/counselling">Seek Counsel</button>
         <button class="links" (click)="scrollToFooter()">Contact us</button>
     </div>
     
