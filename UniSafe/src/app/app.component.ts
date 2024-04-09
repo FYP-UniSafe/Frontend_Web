@@ -14,7 +14,8 @@ export class AppComponent {
 
   isHomeRoute(): boolean{
     // return this.router.url === '/home';
-    return this.router.url === '/home' || this.router.url === '/report' || this.router.url === '/report-form';
+    return this.router.url === '/home' || this.router.url === '/report' || this.router.url === '/report-form' 
+    || this.router.url === '/counselling';
   }
 
 }

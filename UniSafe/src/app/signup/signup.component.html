@@ -43,7 +43,7 @@
                   <input type="text" placeholder="Registration Number" id="" formControlName="registrationNumber" />
                 </div>
                 <div class="colleges">
-                  <select  id="college" formControlName="collegeOrSchool">
+                  <select  id="college" formControlName="collegeOrSchool" [ngModel]="college">
                     <option value="0">College / School</option>
                     <option value="1">CoICT</option>
                     <option value="2">CoET</option>
