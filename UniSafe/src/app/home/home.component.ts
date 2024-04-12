@@ -1,10 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
+  // note = 'Welcome to UniSafe!'+{user}
+  note = 'Welcome to UniSafe!';
+  userFullName: string = '';
+  loggedIn: boolean = false;
 
+  constructor(
+    private authService: AuthService,
+  ) {}
+
+  ngOnInit(): void {
+    this.authService.user().subscribe({
+      next: (res: any) => {
+        this.userFullName = res.full_name;
+        this.note = `Welcome to UniSafe ${this.userFullName}!`;
+        this.loggedIn = true;
+      },
+      error: err => {
+        console.log(err);
+      } 
+    });
+  }
+
+  isLoggedIn(): boolean {
+    return this.loggedIn;
+  }
 }

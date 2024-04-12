@@ -1,7 +1,7 @@
 <body>
   <div class="div1">
     <div class="words">
-      <h1>Welcome to UniSafe!</h1>
+      <h1>{{note}}</h1>
 
       <p>
         In a world that should be free from fear and<br />
@@ -14,7 +14,7 @@
       <p class="p2">
         Empowering Voices<br class="br1" /><br class="br1" />
         Against Gender-Based Violence<br /><br class="br" /><br class="br1" />
-        <a href="/signup">Join us Today</a>
+        <a href="/signup" *ngIf="!isLoggedIn()">Join us Today</a>
       </p>
     </div>
 

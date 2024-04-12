@@ -62,7 +62,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "UniSafe:build:production"
+              "browserTarget": "UniSafe:build:production",
+              "proxyConfig": "src/proxy.conf.json"
             },
             "development": {
               "browserTarget": "UniSafe:build:development"

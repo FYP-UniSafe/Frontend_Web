@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core'
 import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+// import { HttpModule } from '@angular/http';
+// import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,8 +17,9 @@ import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { ReportComponent } from './report/report.component';
 import { ReportFormComponent } from './report-form/report-form.component';
 import { CounsellingComponent } from './counselling/counselling.component';
-// import { FormsModule, ReactiveFormsModule } from '@angular/forms'; 
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
+// import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -34,10 +38,15 @@ import { CounsellingComponent } from './counselling/counselling.component';
     BrowserModule,
     AppRoutingModule,
     SharedModule ,
-    ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
