@@ -52,7 +52,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: transparent;
 }
 .right button {
   height: 3.25vh;
@@ -71,6 +70,69 @@ body {
   font-weight: bold;
   color: #0f6cbf;
   transform: scale(1.05);
+}
+.auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 20%;
+}
+
+.profile {
+  height: 60%;
+  width: 50%;
+  border: 0.5px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25vw;
+  cursor: pointer;
+  transition: transform 0.5s;
+  /* position: relative; */
+}
+.profile:hover {
+  transform: scale(1.1);
+}
+.profopt {
+  height: auto;
+  width: 12.5vw;
+  top: 9vh;
+  background-color: white;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+  border-radius: 10px;
+  display: flex;
+  font-size: 0.8vw;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  transition: 0.4s ease-in-out;
+}
+.profopt .fas {
+  font-size: 2.5vw;
+  margin-top: 2vh;
+  margin-bottom: 1vh;
+}
+.profopt span {
+  border-top: 0.5px solid rgb(0, 0, 0);
+  width: 100%;
+}
+.profopt .links {
+  height: 2.5vh;
+  /* width: 10vw; */
+  position: sticky;
+  background-color: transparent;
+  color: black;
+  text-decoration: none;
+  font-size: 1vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.5s;
 }
 
 /* @media (max-width: 1349px){ */
@@ -171,6 +233,15 @@ body {
     display: none;
   }
   .signup {
+    display: none;
+  }
+  .auth {
+    display: none;
+  }
+  .profile {
+    display: none;
+  }
+  .profopt {
     display: none;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 
 @Component({
@@ -11,15 +12,20 @@ export class HeadComponent implements OnInit{
   menuValue: boolean = false;
   menu_icon: string = 'bi bi-list';
   authenticated = false;
+  user = 'User';
+  activeRoute: string = '';
+  profOpt: boolean = false;
 
   constructor(private el: ElementRef,
               private authService: AuthService,
+              private router: Router
   ) { }
 
   ngOnInit(): void {
     this.authService.user().subscribe({
       next: (res: any) => {
         this.authenticated = true;
+        this.user = res.full_name;
       },
       error: err => {
         this.authenticated = false;
@@ -34,6 +40,10 @@ export class HeadComponent implements OnInit{
     }
   }
 
+  toggleprofOpt() {
+    this.profOpt = !this.profOpt;
+  }
+
 
   openMenu(){
     this.menuValue = !this.menuValue;
@@ -45,7 +55,14 @@ export class HeadComponent implements OnInit{
     this.menu_icon = 'bi bi-list';
   }
 
-  // logout(){
-  //   this.authService.removeAccessToken();
-  // }
+  logout(): void {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error:', error);
+      }
+    });
+  }
 }
