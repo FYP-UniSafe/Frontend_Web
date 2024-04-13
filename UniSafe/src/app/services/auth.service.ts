@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -65,9 +65,28 @@ export class AuthService {
     }
   }
 
+  // logout(): Observable<any> {
+  //   this.removeAccessToken();
+  //   this.removeRefreshToken();
+  //   return this.http.post(`${environment.apiUrl}/users/logout`, {}, { withCredentials: true });
+  // }
   logout(): Observable<any> {
+    const accessToken = this.getAccessToken();
+    const refreshToken = this.getRefreshToken();
+    
+    if (!accessToken || !refreshToken) {
+      return throwError('Access token or refresh token not found');
+    }
+
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    const body = { refresh: refreshToken };
+
     this.removeAccessToken();
     this.removeRefreshToken();
-    return this.http.post(`${environment.apiUrl}/users/logout`, {}, { withCredentials: true });
+
+    return this.http.post(`${environment.apiUrl}/users/logout`, body, { headers });
   }
+
+
 }
+

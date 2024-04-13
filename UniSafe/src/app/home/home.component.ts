@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     this.authService.user().subscribe({
       next: (res: any) => {
-        this.userFullName = res.full_name;
-        this.note = `Welcome to UniSafe ${this.userFullName}!`;
+        this.userFullName = res.full_name + '!';
+        this.note = `Welcome to UniSafe`;
         this.loggedIn = true;
       },
       error: err => {

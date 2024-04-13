@@ -1,5 +1,7 @@
 <body>
-    
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    </head>
     <div class="left">
         <div class="menu-icon" (click)="openMenu()">
             <i class={{menu_icon}} style="cursor: pointer;"></i>
@@ -12,8 +14,10 @@
                 <li (click)="closeMenu()" routerLink="/genderdesk">GenderDesk</li>
                 <li (click)="closeMenu()" routerLink="/counselling">Seek Counsel</li>
                 <li (click)="closeMenu(); scrollToFooter()">Contact us</li>
-                <li (click)="closeMenu()" routerLink="/login">Login</li>
-                <li (click)="closeMenu()" routerLink="/signup">Signup</li>
+                <li (click)="closeMenu()" routerLink="/profile" *ngIf="authenticated">Profile</li>
+                <li (click)="closeMenu()" routerLink="/login" *ngIf="authenticated" (click)="logout()">Logout</li>
+                <li (click)="closeMenu()" routerLink="/login" *ngIf="!authenticated">Login</li>
+                <li (click)="closeMenu()" routerLink="/signup" *ngIf="!authenticated">Signup</li>
             </ul>
         </div>
     </div>
@@ -34,7 +38,21 @@
 
     <div class="right" *ngIf="authenticated">
         <!-- <button class="login" style="margin-right: 0.2vw;" (click)="logout()">Logout</button> -->
-        <button class="login" style="margin-right: 0.2vw;">Logout</button>
+        <!-- <button class="login" style="margin-right: 0.2vw;">Logout</button> -->
+        <div class="auth">
+            <div class="profile" (click)="toggleprofOpt()">
+                <i class="fas fa-user"></i>
+            </div>
+        </div>
+        <div class="profopt"  *ngIf="profOpt">
+            <i class="fas fa-user"></i>
+            <p><b>{{user}}</b></p>
+            <span></span>
+            <button class="links">Profile</button>
+            <span></span>
+            <button class="links" style="margin-bottom: 2vh;" (click)="logout()">Logout</button>
+
+        </div>
         <!-- <button class="login" style="background-color: #0F6CBF; color: white; margin-left: 0.2vw;" (click)="logout()">Logout</button> -->
         <!-- <button class="logout" (click)="logout()">Logout</button> -->
     </div>

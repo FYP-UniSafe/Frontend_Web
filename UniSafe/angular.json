@@ -62,11 +62,11 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "UniSafe:build:production",
+              "buildTarget": "UniSafe:build:production",
               "proxyConfig": "src/proxy.conf.json"
             },
             "development": {
-              "browserTarget": "UniSafe:build:development"
+              "buildTarget": "UniSafe:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -74,7 +74,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "UniSafe:build"
+            "buildTarget": "UniSafe:build"
           }
         },
         "test": {
