@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TimeoutService } from '../services/timeout.service';
 
 
 @Component({
@@ -6,6 +7,11 @@ import { Component } from '@angular/core';
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css']
 })
-export class ReportComponent {
+export class ReportComponent implements OnInit {
+  constructor(private timeoutService: TimeoutService) {}
+
+  ngOnInit(): void {
+    this.timeoutService.resetTimer();
+  }
 
 }
