@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { TimeoutService } from '../services/timeout.service';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,11 @@ export class HomeComponent implements OnInit{
 
   constructor(
     private authService: AuthService,
+    private timeoutService: TimeoutService
   ) {}
 
   ngOnInit(): void {
+    this.timeoutService.resetTimer();
     this.authService.user().subscribe({
       next: (res: any) => {
         this.userFullName = res.full_name + '!';

@@ -32,6 +32,7 @@ export class LoginComponent implements OnInit {
       },
       (error: any) => {
         console.log('Error logging in');
+        window.alert('Login failed. Please check your credentials and try again.');
       }
     );
   }

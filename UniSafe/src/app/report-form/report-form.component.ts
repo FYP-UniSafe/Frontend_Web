@@ -1,6 +1,7 @@
 import { NgPluralCase } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TimeoutService } from '../services/timeout.service';
 
 @Component({
   selector: 'app-report-form',
@@ -14,10 +15,13 @@ export class ReportFormComponent implements OnInit {
   gender: string = '0';
   college: string = '0';
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,
+              private timeoutService: TimeoutService,
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
+    this.timeoutService.resetTimer();
   }
 
   initForm(): void {

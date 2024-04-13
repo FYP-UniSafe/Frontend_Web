@@ -3,14 +3,19 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpErrorResponse
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
+import { TimeoutService } from '../services/timeout.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   refresh = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService,
+              private timeoutService: TimeoutService    
+  ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Reset idle timer on outgoing requests
+    this.timeoutService.resetTimer();
     if (this.authService.getAccessToken()) {
       const req = request.clone({
         setHeaders: {
