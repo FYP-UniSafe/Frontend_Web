@@ -13,6 +13,27 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+  signup(userData: any, profileType: string): Observable<any> {
+    let signupUrl: string;
+    switch (profileType) {
+      case 'Student':
+        signupUrl = `${environment.apiUrl}/users/signup/student`;
+        break;
+      case 'GenderDesk':
+        signupUrl = `${environment.apiUrl}/users/signup/genderdesk`;
+        break;
+      case 'Consultant':
+        signupUrl = `${environment.apiUrl}/users/signup/consultant`;
+        break;
+      case 'Police':
+        signupUrl = `${environment.apiUrl}/users/signup/police`;
+        break;
+      default:
+        throw new Error('Invalid profile type');
+    }
+    return this.http.post(signupUrl, userData);
+  }
+
   setAccessToken(token: string) {
     localStorage.setItem(this.accessTokenKey, token);
   }
@@ -65,11 +86,6 @@ export class AuthService {
     }
   }
 
-  // logout(): Observable<any> {
-  //   this.removeAccessToken();
-  //   this.removeRefreshToken();
-  //   return this.http.post(`${environment.apiUrl}/users/logout`, {}, { withCredentials: true });
-  // }
   logout(): Observable<any> {
     const accessToken = this.getAccessToken();
     const refreshToken = this.getRefreshToken();

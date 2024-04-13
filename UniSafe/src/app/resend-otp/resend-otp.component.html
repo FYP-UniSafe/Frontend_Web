@@ -1,0 +1,17 @@
+<body>
+    <head>
+    </head>
+    <form [formGroup]="resendForm" (submit)="submit()">
+        <div class="card">
+            <h2>Resent OTP</h2>
+            
+            <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
+            
+            <p class="p1">Please enter the email that was used for registration</p>
+
+            <input type="text" required id="Email" placeholder="Email" formControlName="email">
+
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</body>
