@@ -1,92 +1,91 @@
-body{
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    margin: 0;
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 0;
 }
-.card{
-    height: auto;
-    width: 30vw;
-    align-self: center;
-    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 2vw;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+.card {
+  height: auto;
+  width: 30vw;
+  align-self: center;
+  box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
-.card h2{
-    margin-top: 10vh;
+.card h2 {
+  margin-top: 10vh;
 }
-.card .p1{
-    margin-top: -0.7vw;
+.card .p1 {
+  margin-top: -0.7vw;
 }
-.card p{
-    font-size: 1vw;
+.card p {
+  font-size: 1vw;
 }
-.card img{
-    height: 7vw;
-    width: 7vw;
-    margin-bottom: 3vw;
+.card img {
+  height: 7vw;
+  width: 7vw;
+  margin-bottom: 3vw;
 }
-.card input{
-    height: 2vw;
-    width: 17.5vw;
-    margin-top: 0.5vw;
-    margin-bottom: 0.5vw;
-    border-radius: 0.7vw;
-    border: 0.5px solid black;
-    text-indent: 1vw;
-    color: #888;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: lighter;
-    font-size: 0.7vw;
+.card input {
+  height: 2vw;
+  width: 17.5vw;
+  margin-top: 0.5vw;
+  margin-bottom: 0.5vw;
+  border-radius: 0.7vw;
+  border: 0.5px solid black;
+  text-indent: 1vw;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
 }
-.card input::placeholder{
-    padding-left: 0.3vw;
+.card input::placeholder {
+  padding-left: 0.3vw;
 }
-.card input:focus{
-    border: 1px solid black;
+.card input:focus {
+  border: 1px solid black;
 }
-.card button{
-    margin-top: 1.5vw;
-    margin-bottom: 7vh;
-    height: 2.3vw;
-    width: 7.5vw;
-    font-size: 1vw;
-    color: white;
-    background-color: #0f6cbf;
-    font-weight: bold;
-    border-radius: 5vw;
-    cursor: pointer;
-    border: 0.5px solid black;
-    transition: transform 0.5s;
+.card button {
+  margin-top: 1.5vw;
+  margin-bottom: 7vh;
+  height: 2.3vw;
+  width: 7.5vw;
+  font-size: 1vw;
+  color: white;
+  background-color: #0f6cbf;
+  font-weight: bold;
+  border-radius: 5vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  transition: transform 0.5s;
 }
-.card button:hover{
-    transform: scale(1.05);
+.card button:hover {
+  transform: scale(1.05);
 }
-.card .p2{
-    margin-top: 1vw;
-    margin-bottom: 2.5vw;
+.card .p2 a {
+  text-decoration: none;
+  color: #0277bd;
+  font-size: 15px;
+  cursor: pointer;
 }
-.card .p2 a{
-    text-decoration: none;
-    color: #0277BD;
+.card .p2 a:active {
+  color: purple;
 }
-
 ::placeholder {
-    color: #888;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: lighter;
-    font-size: 0.7vw;
-    width: 15vw;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
+  width: 15vw;
 }
 
-
-@media (max-width: 819px){
-    .card{
+@media (max-width: 819px) {
+  .card {
     height: auto;
     width: 100vw;
     box-shadow: none;
@@ -94,20 +93,20 @@ body{
     border: none;
     justify-content: center;
     align-items: center;
-    }
-    .card h2{
+  }
+  .card h2 {
     font-size: 30px;
     margin-top: 0;
-    }
-    .card img{
+  }
+  .card img {
     height: 20vw;
     width: 20vw;
     margin-bottom: 5vh;
-    }
-    .card p{
+  }
+  .card p {
     font-size: 2.5vw;
-    }
-    .card input{
+  }
+  .card input {
     height: 4vh;
     width: 50vw;
     margin-top: 1vw;
@@ -117,12 +116,12 @@ body{
     text-indent: 3vw;
     color: #888;
     font-size: 1.5vw;
-    }
-    .card input::placeholder{
+  }
+  .card input::placeholder {
     padding-left: 0.3vw;
     font-size: 1.5vw;
-    }
-    .card select{
+  }
+  .card select {
     height: 4.5vh;
     width: 51vw;
     margin-top: 0.5vw;
@@ -133,33 +132,32 @@ body{
     font-size: 1.5vw;
     padding-left: 3.3vw;
     cursor: pointer;
-    } 
-    .card button{
+  }
+  .card button {
     margin-top: 2vh;
     height: 4.5vh;
     width: 15vw;
     font-size: 2vw;
     margin-bottom: 0;
-    }
+  }
 }
 
+@media (max-width: 451px) {
+  .card {
+    height: auto;
+    width: 100vw;
+    box-shadow: none;
+    border-radius: 0;
+    justify-content: center;
+    align-items: center;
+  }
+  .card img {
+    height: 30vw;
+    width: 30vw;
+    margin-bottom: 4vh;
+  }
 
-    @media (max-width: 451px){
-    .card{
-        height: auto;
-        width: 100vw;
-        box-shadow: none;
-        border-radius: 0;
-        justify-content: center;
-        align-items: center;
-    }
-    .card img{
-        height: 30vw;
-        width: 30vw;
-        margin-bottom: 4vh;
-    }
-    
-    .card input{
+  .card input {
     height: 5vh;
     width: 70vw;
     margin-top: 2vw;
@@ -167,17 +165,17 @@ body{
     border-radius: 3vw;
     border: 1px solid black;
     font-size: 3vw;
-    }
-    .card p{
-        font-size: 3.5vw;
-    }
-    .card input::placeholder{
+  }
+  .card p {
+    font-size: 3.5vw;
+  }
+  .card input::placeholder {
     font-size: 3vw;
-    }
-    .card button{
+  }
+  .card button {
     margin-top: 2vh;
     height: 4.5vh;
     width: 25vw;
     font-size: 3.5vw;
-    }
+  }
 }

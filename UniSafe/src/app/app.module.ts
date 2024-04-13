@@ -16,6 +16,8 @@ import { CounsellingComponent } from './counselling/counselling.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TimeoutService } from './services/timeout.service';
+import { ResendOtpComponent } from './resend-otp/resend-otp.component';
+import { OtpService } from './services/otp.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { TimeoutService } from './services/timeout.service';
     ReportComponent,
     ReportFormComponent,
     CounsellingComponent,
+    ResendOtpComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +44,8 @@ import { TimeoutService } from './services/timeout.service';
   providers: [
     { provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor, multi: true },
-    TimeoutService, // Provide the TimeoutService
+    TimeoutService,
+    OtpService,
   ],
   bootstrap: [AppComponent]
 })

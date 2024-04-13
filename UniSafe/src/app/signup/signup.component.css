@@ -38,7 +38,7 @@ body {
   margin-bottom: 0.5vw;
   border-radius: 0.7vw;
   border: 0.5px solid black;
-  text-indent: 1vw;
+  text-indent: 0.5vw;
   color: #888;
   font-family: "Montserrat", sans-serif;
   font-weight: lighter;
@@ -138,6 +138,14 @@ body {
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 0.8vw;
+}
+.conditions{
+  width: 17.5vw;
+  display: flex;
+  flex-direction: column;
+  color: red;
+  font-size: 12.5px;
+
 }
 
 @media (max-width: 819px) {

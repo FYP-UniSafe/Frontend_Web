@@ -3,8 +3,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
   </head>
-    <!-- <form [formGroup]="signupForm" (ngSubmit)="onSubmit"> -->
-      <form [formGroup]="signupForm">
+    <form [formGroup]="signupForm" (submit)="submit()">
         <div class="card">
             <h2>Sign up</h2>
             <p class="p1">Join a Supportive Community</p>
@@ -15,16 +14,25 @@
 
             <div class="Gender">
               <select id="gender" formControlName="gender" >
-                <option value="0">Gender</option>
-                <option value="1">Female</option>
-                <option value="2">Male</option>
+                <option value="">Gender</option>
+                <option value="Female">Female</option>
+                <option value="Male">Male</option>
               </select>
               <i class="fas fa-chevron-down"></i>
             </div>
             
-            <input type="text" placeholder="Email" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+            <input type="text" placeholder="Email" formControlName="email">
+            <div class="conditions" *ngIf="emailField && emailField.dirty && emailField.invalid">
+              <span class="block" *ngIf="emailField.errors?.['required']">• Email is required.</span>
+              <span class="block" *ngIf="emailField.errors?.['email']">• Invalid email format.</span>
+            </div>
+            
 
-            <input type="text" placeholder="Phone" formControlName="phone" pattern="^\+255\d{9}$">
+            <input type="text" placeholder="Phone" formControlName="phone">
+            <div class="conditions" *ngIf="phoneField && phoneField.dirty && phoneField.invalid">
+              <span class="block" *ngIf="phoneField.errors?.['required']">• Phone number is required.</span>
+              <span class="block" *ngIf="phoneField.errors?.['pattern']">• Invalid phone number format. Required: +255_</span>
+            </div>
 
             <div class="Profile">
               <select formControlName="userProfile" (change)="onProfileChange()">
@@ -44,25 +52,25 @@
                   <input type="text" placeholder="Reg-No" formControlName="registrationNumber" />
                 </div>
                 <div class="colleges">
-                  <select required id="college" formControlName="collegeOrSchool">
+                  <select formControlName="college">
                     <option value="0">College / School</option>
-                    <option value="1">CoICT</option>
-                    <option value="2">CoET</option>
-                    <option value="3">UDBS</option>
-                    <option value="4">CoNAS</option>
-                    <option value="5">CoSS</option>
-                    <option value="6">CoHU</option>
-                    <option value="7">CoAF</option>
-                    <option value="8">MUCE</option>
-                    <option value="9">DUCE</option>
-                    <option value="10">SoED</option>
-                    <option value="11">SoAF</option>
-                    <option value="12">UDSE</option>
-                    <option value="13">MCHAS</option>
-                    <option value="14">UDSoL</option>
-                    <option value="15">SJMC</option>
-                    <option value="16">SoMG</option>
-                    <option value="17">Other</option>
+                    <option value="CoICT">CoICT</option>
+                    <option value="CoET">CoET</option>
+                    <option value="UDBS">UDBS</option>
+                    <option value="CoNAS">CoNAS</option>
+                    <option value="CoSS">CoSS</option>
+                    <option value="CoHU">CoHU</option>
+                    <option value="CoAF">CoAF</option>
+                    <option value="MUCE">MUCE</option>
+                    <option value="DUCE">DUCE</option>
+                    <option value="SoED">SoED</option>
+                    <option value="SoAF">SoAF</option>
+                    <option value="UDSE">UDSE</option>
+                    <option value="MCHAS">MCHAS</option>
+                    <option value="UDSoL">UDSoL</option>
+                    <option value="SJMC">SJMC</option>
+                    <option value="SoMG">SoMG</option>
+                    <option value="Other">Other</option>
                   </select>
                   <i class="fas fa-chevron-down"></i>
                 </div>
@@ -87,32 +95,10 @@
               </div>
             </div>
 
-            <!-- <div class="password-container">
-              <input 
-                name="password"
-                [type]="showPassword ? 'text' : 'password'"
-                class="form-control pwd-control"
-                id="password-field"
-                placeholder="Password"
-              />
-              
-              <i
-                class="far fa-eye eye-show"
-                (click)="togglePasswordVisibility()"
-                [class.hide]="!showPassword"
-              ></i>
-
-              <i
-                class="far fa-eye-slash eye-hide"
-                (click)="togglePasswordVisibility()"
-                [class.hide]="showPassword"
-              ></i>
-          </div>  -->
           <div class="password-container">
             <input 
               name="password"
               [type]="showPassword ? 'text' : 'password'"
-              class="form-control pwd-control"
               placeholder="Password"
               formControlName="password"
               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
@@ -131,39 +117,18 @@
               [class.hide]="showPassword"
             ></i>
           </div> 
-      
-          <div class="password-container">
-            <input 
-              name="confirmPassword"
-              [type]="showPassword ? 'text' : 'password'"
-              class="form-control pwd-control"
-              placeholder="Confirm Password"
-              formControlName="confirmPassword"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
-              required
-            />
-            
-            <i
-              class="far fa-eye eye-show"
-              (click)="togglePasswordVisibility()"
-              [class.hide]="!showPassword"
-            ></i>
-      
-            <i
-              class="far fa-eye-slash eye-hide"
-              (click)="togglePasswordVisibility()"
-              [class.hide]="showPassword"
-            ></i>
-          </div>
 
-          <div *ngIf="signupForm.hasError('passwordMismatch') && signupForm.get('confirmPassword')?.dirty" class="password-mismatch-error">
-            Passwords do not match
-          </div>
+        <div class="conditions" *ngIf="passwordFormField?.dirty">
+          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('^(?=.*[A-Z])')">• At least one uppercase letter.</span>
+          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(?=.*[a-z])')">• At least one lowercase letter.</span>
+          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(.*[0-9].*)')">• At least one digit.</span>
+          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(?=.*[!@#$%^&*])')">• At least one special character.</span>
+          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('.{8,}')">• At least 8 characters long.</span>
+        </div>
 
-              <!-- <button type="submit" routerLink="/verify-otp">Sign up</button> -->
-              <button type="submit">Sign up</button>
+        <button type="submit">Sign up</button>
 
-              <p class="p2">Already have an account?<a href="/login">Login</a></p>
+        <p class="p2">Already have an account?<a routerLink="/login">Login</a></p>
 
         </div>
     </form>

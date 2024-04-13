@@ -1,7 +1,7 @@
 <body>
     <head>
     </head>
-    <form>
+    <form [formGroup]="verifyForm" (ngSubmit)="submit()">
         <div class="card">
             <h2>Activate your account</h2>
             
@@ -9,10 +9,11 @@
             
             <p class="p1">Please enter the OTP that was sent to your email</p>
 
-            <input type="text" required id="Email" placeholder="Email">
-            <input type="text" required id="OTP" placeholder="OTP _ _ _ _ _ _">
+            <input type="text" required id="Email" placeholder="Email" formControlName="email">
+            <input type="text" required id="OTP" placeholder="OTP _ _ _ _ _ _" formControlName="otp">
+            <p class="p2"><a routerLink="/resend-otp">Resend OTP code</a></p>
 
-            <button type="submit" routerLink="/login">Submit</button>
+            <button type="submit">Submit</button>
         </div>
     </form>
 </body>
