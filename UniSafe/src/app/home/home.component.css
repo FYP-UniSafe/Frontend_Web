@@ -26,7 +26,7 @@ body {
   font-size: 4vw;
   color: #0f6cbf;
   margin-left: 10vw;
-  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
+  /* text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5); */
 }
 .words p {
   font-size: 1.7vw;
@@ -108,7 +108,6 @@ body {
   color: #0f6cbf;
   display: flex;
   flex-direction: column;
-  /* background-color: rosybrown; */
 }
 .content div {
   width: 100%;

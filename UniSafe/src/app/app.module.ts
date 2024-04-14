@@ -18,6 +18,9 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TimeoutService } from './services/timeout.service';
 import { ResendOtpComponent } from './resend-otp/resend-otp.component';
 import { OtpService } from './services/otp.service';
+import { ProfileComponent } from './profile/profile.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,9 @@ import { OtpService } from './services/otp.service';
     ReportFormComponent,
     CounsellingComponent,
     ResendOtpComponent,
+    ProfileComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
   ],
   imports: [
     BrowserModule,
