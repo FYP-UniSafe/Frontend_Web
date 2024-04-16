@@ -1,5 +1,13 @@
 body {
   height: 100vh;
+  /* width: 100vw; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body form {
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,32 +19,177 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
-.menu{
-    width: 25%;
-    height: 90%;
-    background-color: aqua;
+.menu {
+  width: 25%;
+  height: 90%;
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.horizontal-line{
-    height: 90%;
-    border-left: 2px solid #0f6cbf;
+.auth {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 15vw;
+  width: 20vw;
+  /* background-color: yellow; */
+  line-height: 1.75vh;
+  border-bottom: 0.5px solid black;
 }
-.content{
-    height: 90%;
-    width: 70%;
-    background-color: blue;
+.auth p {
+  font-size: 17.5px;
 }
+.profile {
+  height: 60%;
+  width: 50%;
+  border: 0.5px solid black;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 3vw;
+  margin-bottom: 2vh;
+}
+.menu-item {
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 0.5px solid black;
+  transition: font-size 0.5s;
+  cursor: pointer;
+}
+.menu-item:hover {
+  font-size: 1vw;
+  font-weight: bold;
+}
+.menu-item.selected {
+  font-size: 1vw;
+  font-weight: bold;
+}
+.horizontal-line {
+  height: 90%;
+  border-left: 2px solid #0f6cbf;
+}
+.content {
+  height: 90%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.head {
+  height: 15%;
+  width: 90%;
+  border-bottom: 0.5px solid black;
+  display: flex;
+  align-items: center;
+}
+.mid {
+  height: 70%;
+  width: 75%;
+  /* background-color: #0f6cbf; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.input {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+.input h2 {
+  font-size: 17px;
+}
+.input input {
+  width: 90%;
+  height: 6.5vh;
+  align-self: center;
+  border: 1px solid rgb(80, 80, 80);
+  text-indent: 0.5vw;
+  border-radius: 0.7vw;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.9vw;
+}
+.input .nonupdate {
+  border: 1px solid rgba(216, 216, 216, 0.96);
+}
+.colleges {
+  width: 90%;
+  height: 6.5vh;
+  align-self: center;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
 
+}
+.colleges select {
+  appearance: none;
+  -webkit-appearance: none;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  color: #888;
+  border: 1px solid rgb(80, 80, 80);
+  border-radius: 0.7vw;
+  text-indent: 0.75vw;
+}
+option{
+  font-size: 1.2em;
+}
+.colleges i {
+  position: absolute;
+  color: #757575;
+  transform: translateY(-50%);
+  cursor: pointer;
+  margin-top: 2%;
+  margin-left: -2.5vw;
+  font-size: 20px;
+}
+.end {
+  height: 15%;
+  width: 75%;
+  border-top: 0.5px solid black;
+}
+.end button {
+  margin-top: 2vw;
+  margin-bottom: 3vh;
+  height: 2.3vw;
+  width: 7.5vw;
+  font-size: 1vw;
+  color: white;
+  background-color: #0f6cbf;
+  font-weight: bold;
+  border-radius: 5vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  transition: transform 0.5s;
+}
+.card button:hover {
+  transform: scale(1.05);
+}
 
 @media (max-width: 1023px) {
-    .card {
-        height: 100%;
-        width: 100%;
-        
-    }
+  .card {
+    height: 100%;
+    width: 100%;
+  }
 }
 
 @media (max-width: 600px) {
-
 }

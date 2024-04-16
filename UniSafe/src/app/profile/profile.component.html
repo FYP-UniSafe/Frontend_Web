@@ -1,14 +1,106 @@
 <body>
+    <form [formGroup]="profileForm" (ngSubmit)="submit()">
     <div class="card">
-
         <div class="menu">
             <!-- <div class="menu-item" (click)="changeTab('profile')">Profile</div> -->
-            <div class="menu-item" >Personal Details</div>
-            <div class="menu-item" >Change Password</div>
-            <!-- <div class="menu-item" >Settings</div> -->
-        </div>
-        <div class="horizontal-line"></div>
-        <div class="content"></div>
+            <div class="auth">
+                <div class="profile">
+                    <i class="fas fa-user"></i>
+                </div>
+                <p><b>{{name}}</b></p>
+                <p>Reported {{profileData.profile.report_count}} times</p>
+            </div>
 
+            <div class="menu-item" [class.selected]="selectedItem === 'Personal Details'" (click)="selectMenuItem('Personal Details')">Personal Details</div>
+            <div class="menu-item" [class.selected]="selectedItem === 'Profile Details'" (click)="selectMenuItem('Profile Details')">Profile Details</div>
+            <div class="menu-item" [class.selected]="selectedItem === 'Change Password'" (click)="selectMenuItem('Change Password')">Change Password</div>
+            <div class="menu-item" [class.selected]="selectedItem === 'Logout'" (click)="selectMenuItem('Logout')">Logout</div>
+        </div>
+
+        <div class="horizontal-line"></div>
+
+        <div class="content" *ngIf="selectedItem === 'Personal Details'">
+            <div class="head">
+                <h1>Personal Details</h1>
+            </div>
+            <div class="mid">
+                <div class="input">
+                    <h2>Full Name:</h2>
+                    <input class="nonupdate" type="text" id="" formControlName="full_name"  readonly>
+                </div>
+                <div class="input">
+                    <h2>Email:</h2>
+                    <input type="email" id="" formControlName="email">
+                </div>
+                <div class="input">
+                    <h2>Phone Number:</h2>
+                    <input type="text" id="" formControlName="phone_number">
+                </div>
+                <div class="input">
+                    <h2>Gender:</h2>
+                    <input class="nonupdate" type="text" id="" formControlName="gender" readonly>
+                </div>
+            </div>
+            <div class="end">
+                <button type="submit">Update</button>
+            </div>
+        </div>
+
+        <div class="content" *ngIf="selectedItem === 'Profile Details'">
+            <div class="head">
+                <h1>Profile Details</h1>
+            </div>
+            <div class="mid">
+                <div class="input">
+                    <h2>
+                        {{ isStudent ? 'Registration Number' : 
+                           (isGenderDesk || isConsultant ? 'Staff Number' : 
+                           (isPolice ? 'Police Number' : '')) }}:
+                    </h2>
+                    <input class="nonupdate" type="text" id="" formControlName="staff_no" *ngIf="isGenderDesk || isConsultant">
+                    <input class="nonupdate" type="text" id="" formControlName="police_no" *ngIf="isPolice"  readonly>
+                    <input class="nonupdate" type="text" id="" formControlName="reg_no" *ngIf="isStudent"  readonly>
+                </div>
+                <div class="input">
+                    <h2>
+                        {{ isStudent ? 'College' :
+                           (isGenderDesk || isConsultant ? 'Office' : 
+                           (isPolice ? 'Station' : '')) }}:
+                    </h2>
+                    <input type="text" id="" formControlName="office" *ngIf="isGenderDesk || isConsultant">
+                    <input type="text" id="" formControlName="station" *ngIf="isPolice">
+                    <div class="colleges" *ngIf="isStudent" >
+                        <select formControlName="college" [(ngModel)]="selectedCollege">
+                            <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="end">
+                <button type="submit">Update</button>
+            </div>
+        </div>
+
+        <div class="content" *ngIf="selectedItem === 'Change Password'">
+            <div class="head">
+                <h1>Change Password</h1>
+            </div>
+            <div class="mid">
+                <div class="input">
+                    <h2>Current Password:</h2>
+                    <input type="password" id="" formControlName="current_password">
+                </div>
+                <div class="input">
+                    <h2>New Password:</h2>
+                    <input type="password" id="" formControlName="new_password">
+                </div>
+            </div>
+            <div class="end">
+                <button type="submit">Update</button>
+            </div>
+        
+        </div>
     </div>
+</form>
 </body>

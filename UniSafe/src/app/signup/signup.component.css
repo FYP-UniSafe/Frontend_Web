@@ -71,6 +71,9 @@ body {
   padding-left: 1vw;
   cursor: pointer;
 }
+.card select option {
+  font-size: 14px;
+}
 
 .card button {
   margin-top: 1.5vw;

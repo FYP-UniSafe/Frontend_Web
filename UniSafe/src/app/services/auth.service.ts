@@ -124,4 +124,28 @@ export class AuthService {
       headers,
     });
   }
+
+  getStudentProfile(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users/student/profile`, {
+      withCredentials: true,
+    });
+  }
+
+  getGenderDeskProfile(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users/genderdesk/profile`, {
+      withCredentials: true,
+    });
+  }
+
+  getPoliceProfile(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users/police/profile`, {
+      withCredentials: true,
+    });
+  }
+
+  getConsultantProfile(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users/consultant/profile`, {
+      withCredentials: true,
+    });
+  }
 }

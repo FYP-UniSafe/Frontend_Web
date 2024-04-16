@@ -7,8 +7,6 @@ import { TimeoutService } from '../services/timeout.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  refresh = false;
-
   constructor(private authService: AuthService,
               private timeoutService: TimeoutService    
   ) {}
@@ -16,36 +14,43 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Reset idle timer on outgoing requests
     this.timeoutService.resetTimer();
-    if (this.authService.getAccessToken()) {
-      const req = request.clone({
+    
+    // Add Authorization header if access token is available
+    const accessToken = this.authService.getAccessToken();
+    if (accessToken) {
+      request = request.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.authService.getAccessToken()}`
+          Authorization: `Bearer ${accessToken}`
         }
       });
-
-      return next.handle(req).pipe(
-        catchError((error: HttpErrorResponse) => {
-          if (error.status === 401 && !this.refresh) {
-            this.refresh = true;
-            return this.handle401Error(request, next);
-          }
-          return throwError(error);
-        })
-      );
-    } else {
-      return next.handle(request);
     }
+
+    // Handle profile requests with credentials
+    if (request.url.includes('/profile')) {
+      request = request.clone({
+        withCredentials: true
+      });
+    }
+
+    return next.handle(request).pipe(
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 && !request.url.includes('/refresh-token')) {
+          return this.handle401Error(request, next);
+        }
+        return throwError(error);
+      })
+    );
   }
 
   private handle401Error(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.authService.refresh().pipe(
       switchMap(() => {
-        const req = request.clone({
-          setHeaders: {
-            Authorization: `Bearer ${this.authService.getAccessToken()}`
-          }
-        });
-        return next.handle(req);
+        if (request.url.includes('/profile')) {
+          request = request.clone({
+            withCredentials: true
+          });
+        }
+        return next.handle(request);
       }),
       catchError((error) => {
         // Handle refresh token error or any other errors
@@ -55,9 +60,3 @@ export class AuthInterceptor implements HttpInterceptor {
     );
   }
 }
-
-
-
-
-
-
