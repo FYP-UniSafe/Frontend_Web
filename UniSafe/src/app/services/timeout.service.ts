@@ -16,13 +16,12 @@ export class TimeoutService {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
       this.logout();
+      this.router.navigate(['/login']);
     }, 600000); // 10 minutes in milliseconds
   }
 
   logout(): void {
-    // Clear any session data
     this.authService.logout().subscribe(() => {
-      // Redirect to login page after logout
       this.router.navigate(['/login']);
     });
   }

@@ -8,13 +8,19 @@ import { ReportComponent } from './report/report.component';
 import { ReportFormComponent } from './report-form/report-form.component';
 import { CounsellingComponent } from './counselling/counselling.component';
 import { ResendOtpComponent } from './resend-otp/resend-otp.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'forgot-password', component: ForgotPasswordComponent},
+  {path: 'reset-password', component: ResetPasswordComponent},
   {path: 'report-form', component: ReportFormComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'profile', component: ProfileComponent},
   {path: 'verify-otp', component: VerifyOtpComponent},
   {path: 'resend-otp', component: ResendOtpComponent},
   {path: 'report', component: ReportComponent},

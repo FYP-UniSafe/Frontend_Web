@@ -59,13 +59,28 @@ export class AuthService {
   }
 
   login(body: any): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/users/login`, body, { withCredentials: true })
+    return this.http
+      .post(`${environment.apiUrl}/users/login`, body, {
+        withCredentials: true,
+      })
       .pipe(
         tap((res: any) => {
           this.setAccessToken(res.tokens.access);
           this.setRefreshToken(res.tokens.refresh);
         })
       );
+  }
+
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/users/password/forgot`, {
+      email,
+    });
+  }
+
+  resetPassword(email: string, otp: string, newPassword: string) {
+    const resetUrl = `${environment.apiUrl}/users/password/reset`;
+    const requestBody = { email, otp, new_password: newPassword };
+    return this.http.post(resetUrl, requestBody);
   }
 
   user(): Observable<any> {
@@ -75,7 +90,12 @@ export class AuthService {
   refresh(): Observable<any> {
     const refreshToken = this.getRefreshToken();
     if (refreshToken) {
-      return this.http.post(`${environment.apiUrl}/users/token/refresh`, { refresh: refreshToken }, { withCredentials: true })
+      return this.http
+        .post(
+          `${environment.apiUrl}/users/token/refresh`,
+          { refresh: refreshToken },
+          { withCredentials: true }
+        )
         .pipe(
           tap((res: any) => {
             this.setAccessToken(res.access);
@@ -89,7 +109,7 @@ export class AuthService {
   logout(): Observable<any> {
     const accessToken = this.getAccessToken();
     const refreshToken = this.getRefreshToken();
-    
+
     if (!accessToken || !refreshToken) {
       return throwError('Access token or refresh token not found');
     }
@@ -100,9 +120,32 @@ export class AuthService {
     this.removeAccessToken();
     this.removeRefreshToken();
 
-    return this.http.post(`${environment.apiUrl}/users/logout`, body, { headers });
+    return this.http.post(`${environment.apiUrl}/users/logout`, body, {
+      headers,
+    });
   }
 
+  getStudentProfile(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users/student/profile`, {
+      withCredentials: true,
+    });
+  }
 
+  getGenderDeskProfile(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users/genderdesk/profile`, {
+      withCredentials: true,
+    });
+  }
+
+  getPoliceProfile(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users/police/profile`, {
+      withCredentials: true,
+    });
+  }
+
+  getConsultantProfile(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/users/consultant/profile`, {
+      withCredentials: true,
+    });
+  }
 }
-

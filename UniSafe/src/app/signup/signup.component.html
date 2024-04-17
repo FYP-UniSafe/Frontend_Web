@@ -101,7 +101,6 @@
               [type]="showPassword ? 'text' : 'password'"
               placeholder="Password"
               formControlName="password"
-              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"
               required
             />
             
@@ -128,7 +127,7 @@
 
         <button type="submit">Sign up</button>
 
-        <p class="p2">Already have an account?<a routerLink="/login">Login</a></p>
+        <p class="p2">Already have an account? <a routerLink="/login">Login</a></p>
 
         </div>
     </form>
