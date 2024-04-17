@@ -18,10 +18,10 @@
                     <p>Who are you reporting for:*</p>
                     <div class="labels">
                         <input type="radio" name="reportfor" required id="option1" value="self" (change)="onReportingForChange('self')" />
-                        <label for="option1">Self</label>
+                        <label for="option1">Yourself</label>
                         <br>
                         <input type="radio" name="reportfor" required id="option2" value="else" (change)="onReportingForChange('else')" />
-                        <label for="option2">Else</label>
+                        <label for="option2">Someone Else</label>
                     </div>
                 </div>
 
@@ -35,29 +35,15 @@
                         </select>
                         <i class="fas fa-chevron-down"></i>
                     </div>
+
                     <div class="div">
-                        <select  id="college" formControlName="college" [ngModel]="college">
-                        <option value="0">College / School*</option>
-                        <option value="1">CoICT</option>
-                        <option value="2">CoET</option>
-                        <option value="3">UDBS</option>
-                        <option value="4">CoNAS</option>
-                        <option value="5">CoSS</option>
-                        <option value="6">CoHU</option>
-                        <option value="7">CoAF</option>
-                        <option value="8">MUCE</option>
-                        <option value="9">DUCE</option>
-                        <option value="10">SoED</option>
-                        <option value="11">SoAF</option>
-                        <option value="12">UDSE</option>
-                        <option value="13">MCHAS</option>
-                        <option value="14">UDSoL</option>
-                        <option value="15">SJMC</option>
-                        <option value="16">SoMG</option>
-                        <option value="17">Other</option>
+                        <select formControlName="college">
+                        <option disabled selected value="">College / School*</option>
+                        <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
                     </div>
+
                     <input  type="text" required id="" placeholder="Registration Number*" formControlName="registrationNumber"/>
                     <input  type="text" required id="" placeholder="Email*" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
                     <input  type="text" required id="" placeholder="Phone number*" formControlName="phoneNumber" pattern="^\+255\d{9}$"/>
@@ -83,24 +69,11 @@
                     </div>
 
                     <div class="div">
-                        <select  id="location" formControlName="loa" >
-                        <option value="0">Location of the Abuse*</option>
-                        <option value="1">Hall I</option>
-                        <option value="2">Hall II</option>
-                        <option value="3">Hall III</option>
-                        <option value="4">Hall IV</option>
-                        <option value="5">Hall V</option>
-                        <option value="6">Hall VI</option>
-                        <option value="7">Hall VII</option>
-                        <option value="8">Magufuli Hostels</option>
-                        <option value="9">Mabibo Hostels</option>
-                        <option value="10">Kunduchi Hostels</option>
-                        <option value="11">CoICT Hostels</option>
-                        <option value="12">Ubungo Hostels</option>
-                        <option value="13">Other</option>
+                        <select formControlName="loa" (change)="onLocationChange($event)">
+                          <option *ngFor="let location of locations" [value]="location">{{location}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
-                    </div>
+                      </div>
 
                     <div class="other">
                     <p>If the location is Other, please type the location below:</p>
