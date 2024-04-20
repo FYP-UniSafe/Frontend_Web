@@ -2,6 +2,7 @@ import { NgPluralCase } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TimeoutService } from '../services/timeout.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-report-form',
@@ -51,15 +52,25 @@ export class ReportFormComponent implements OnInit {
     'SoMG',
     'Other',
 ];
+authenticated = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private timeoutService: TimeoutService
+    private timeoutService: TimeoutService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.timeoutService.resetTimer();
+    this.authService.user().subscribe({
+      next: (res: any) => {
+        this.authenticated = true;
+      },
+      error: (err) => {
+        this.authenticated = false;
+      },
+    });
   }
 
   initForm(): void {

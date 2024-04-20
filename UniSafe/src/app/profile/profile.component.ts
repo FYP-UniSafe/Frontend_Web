@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TimeoutService } from '../services/timeout.service';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -38,11 +40,14 @@ export class ProfileComponent implements OnInit {
   isConsultant = false;
   profileForm!: FormGroup;
   profileData: any = {};
+  action: string = '';
+  StrongPasswordRegx: RegExp = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private timeoutService: TimeoutService
+    private timeoutService: TimeoutService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -61,12 +66,15 @@ export class ProfileComponent implements OnInit {
         }
 
         if (this.isStudent) {
+          this.action = 'Reported'
           this.fetchStudentProfile();
         } else if (this.isGenderDesk) {
+          this.action = 'Closed'
           this.fetchGenderDeskProfile();
         } else if (this.isConsultant) {
           this.fetchConsultantProfile();
         } else if (this.isPolice) {
+          this.action = 'Investigated'
           this.fetchPoliceProfile();
         }
       },
@@ -80,20 +88,6 @@ export class ProfileComponent implements OnInit {
     this.selectedItem = item;
   }
 
-  //   fetchStudentProfile(): void {
-  //     this.authService.getStudentProfile().subscribe({
-  //         next: (profileData: any) => {
-  //           console.log(profileData);
-  //             this.profileData = profileData;
-  //             this.initForm();
-  //             this.timeoutService.resetTimer();
-  //         // window.alert(this.profileData.profile.college);
-  //         },
-  //         error: error => {
-  //             console.error('Error fetching student profile:', error);
-  //         }
-  //     });
-  // }
   fetchStudentProfile(): void {
     this.authService.getStudentProfile().subscribe({
       next: (profileData: any) => {
@@ -149,19 +143,109 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  // updateUser() {
+  //   this.authService.updateUser(this.userData).subscribe(
+  //     (response) => {
+  //       console.log('User details updated successfully', response);
+  //     },
+  //     (error) => {
+  //       console.error('Error updating user details', error);
+  //     }
+  //   );
+  // }
+
   initForm(): void {
     this.profileForm = this.formBuilder.group({
       full_name: [this.profileData.full_name, Validators.required],
-      email: [this.profileData.email, Validators.required],
-      phone_number: [this.profileData.phone_number, Validators.required],
+      email: [this.profileData.email, Validators.required, Validators.email],
+      phone_number: [this.profileData.phone_number, Validators.required, Validators.pattern(/^\+255\d{9}$/)],
       gender: [this.profileData.gender, Validators.required],
       staff_no: [this.profileData.profile.staff_no, Validators.required],
       police_no: [this.profileData.profile.police_no, Validators.required],
       reg_no: [this.profileData.profile.reg_no, Validators.required],
       office: [this.profileData.profile.office, Validators.required],
       college: [this.profileData.profile.college, Validators.required],
+      old_password: ['', Validators.required],
+      new_password: ['', Validators.required],
     });
   }
 
   submit() {}
+
+  updateUser() {
+    const updatedUserData = this.profileForm.value;
+    this.authService.updateUser(updatedUserData).subscribe(
+      (response) => {
+        window.alert('User details updated successfully');
+        console.log('User details updated successfully', response);
+        this.profileData = { ...this.profileData, ...updatedUserData };
+      },
+      (error) => {
+        console.error('Error updating user details', error);
+      }
+    );
+  }
+
+  updatePersonalDetails() {
+    if (
+      this.profileForm.get('email')?.valid &&
+      this.profileForm.get('phone_number')?.valid
+    ) {
+      this.updateUser();
+    } else {
+      console.error('Invalid email or phone number');
+    }
+  }
+
+  updateProfileDetails() {
+    if (
+      this.profileForm.get('office')?.valid ||
+      this.profileForm.get('college')?.valid
+    ) {
+      let updateProfileMethod: Observable<any> | undefined;
+      if (this.isStudent) {
+        updateProfileMethod = this.authService.updateStudentProfile(
+          this.profileForm.value
+        );
+      } else if (this.isGenderDesk) {
+        updateProfileMethod = this.authService.updateGenderDeskProfile(
+          this.profileForm.value
+        );
+      } // Add other conditions here for other user types
+  
+      // Call the update method and subscribe to the returned Observable
+      updateProfileMethod?.subscribe(
+        (response) => {
+          window.alert('Profile details updated successfully');
+          console.log('Profile details updated successfully', response);
+          this.profileData = { ...this.profileData, ...this.profileForm.value };
+        },
+        (error) => {
+          console.error('Error updating profile details', error);
+        }
+      );
+    } else {
+      console.error('Invalid office or college');
+    }
+  }
+  
+
+
+  changePassword() {
+    const oldPassword = this.profileForm.get('old_password')?.value;
+    const newPassword = this.profileForm.get('new_password')?.value;
+    
+    this.authService.changePassword(oldPassword, newPassword).subscribe(
+      (response) => {
+        window.alert('Password changed successfully');
+        console.log('Password changed successfully', response);
+        // Clear password fields
+        this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Error changing password', error);
+        window.alert('Error changing password. Please try again.');
+      }
+    );
+  }
 }
