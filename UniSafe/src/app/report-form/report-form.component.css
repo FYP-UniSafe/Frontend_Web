@@ -103,6 +103,7 @@ body form {
 .datetimep {
   align-self: flex-start;
   margin-bottom: -0.3vh;
+  
 }
 input[type="datetime-local"]::-webkit-datetime-edit-fields-wrapper {
   padding-left: -20px;
@@ -112,6 +113,7 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   /* left: -2.5%; */
   left: -15px;
   font-size: 1vw;
+  cursor: pointer;
 }
 .other {
   height: auto;

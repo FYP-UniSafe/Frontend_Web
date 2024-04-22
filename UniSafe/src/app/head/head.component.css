@@ -4,6 +4,9 @@ body {
   display: flex;
   background-color: transparent;
 }
+.active {
+  font-weight: bolder;
+}
 
 .left {
   height: auto;
@@ -95,6 +98,9 @@ body {
 }
 .profile:hover {
   transform: scale(1.1);
+}
+.profile:hover .fas{
+  color: #0f6cbf;
 }
 .profopt {
   height: auto;
