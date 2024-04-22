@@ -80,20 +80,6 @@ export class ProfileComponent implements OnInit {
     this.selectedItem = item;
   }
 
-  //   fetchStudentProfile(): void {
-  //     this.authService.getStudentProfile().subscribe({
-  //         next: (profileData: any) => {
-  //           console.log(profileData);
-  //             this.profileData = profileData;
-  //             this.initForm();
-  //             this.timeoutService.resetTimer();
-  //         // window.alert(this.profileData.profile.college);
-  //         },
-  //         error: error => {
-  //             console.error('Error fetching student profile:', error);
-  //         }
-  //     });
-  // }
   fetchStudentProfile(): void {
     this.authService.getStudentProfile().subscribe({
       next: (profileData: any) => {
