@@ -19,10 +19,17 @@ export class HeadComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
+    this.activeRoute = this.router.url;
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.activeRoute = this.router.url;
+      }
+    });
     this.authService.user().subscribe({
       next: (res: any) => {
         this.authenticated = true;
