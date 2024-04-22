@@ -52,28 +52,11 @@
                   <input type="text" placeholder="Reg-No" formControlName="registrationNumber" />
                 </div>
                 <div class="colleges">
-                  <select formControlName="college">
-                    <option value="0">College / School</option>
-                    <option value="CoICT">CoICT</option>
-                    <option value="CoET">CoET</option>
-                    <option value="UDBS">UDBS</option>
-                    <option value="CoNAS">CoNAS</option>
-                    <option value="CoSS">CoSS</option>
-                    <option value="CoHU">CoHU</option>
-                    <option value="CoAF">CoAF</option>
-                    <option value="MUCE">MUCE</option>
-                    <option value="DUCE">DUCE</option>
-                    <option value="SoED">SoED</option>
-                    <option value="SoAF">SoAF</option>
-                    <option value="UDSE">UDSE</option>
-                    <option value="MCHAS">MCHAS</option>
-                    <option value="UDSoL">UDSoL</option>
-                    <option value="SJMC">SJMC</option>
-                    <option value="SoMG">SoMG</option>
-                    <option value="Other">Other</option>
+                  <select formControlName="college" [(ngModel)]="selectedCollege">
+                      <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
                   </select>
                   <i class="fas fa-chevron-down"></i>
-                </div>
+              </div>
               </div>
               <!-- GenderDesk and Consultant specific fields -->
               <div *ngIf="signupForm.get('userProfile')?.value === 'GenderDesk' || signupForm.get('userProfile')?.value === 'Consultant'">

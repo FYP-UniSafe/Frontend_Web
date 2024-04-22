@@ -12,6 +12,27 @@ export class SignupComponent implements OnInit {
   signupForm!: FormGroup;
   showPassword: boolean = false;
   StrongPasswordRegx: RegExp = /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
+  colleges = [
+    'College / School*',
+    'CoICT',
+    'CoET',
+    'UDBS',
+    'CoNAS',
+    'CoSS',
+    'CoHU',
+    'CoAF',
+    'MUCE',
+    'DUCE',
+    'SoED',
+    'SoAF',
+    'UDSE',
+    'MCHAS',
+    'UDSoL',
+    'SJMC',
+    'SoMG',
+    'Other',
+  ];
+  selectedCollege: string = 'College / School*';
 
   constructor(
     private formBuilder: FormBuilder,
