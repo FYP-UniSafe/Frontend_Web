@@ -10,6 +10,7 @@ import { Observable, of, throwError } from 'rxjs';
 export class AuthService {
   private accessTokenKey = 'accessToken';
   private refreshTokenKey = 'refreshToken';
+  private userKey = 'user';
 
   constructor(private http: HttpClient) {}
 
@@ -58,6 +59,33 @@ export class AuthService {
     localStorage.removeItem(this.refreshTokenKey);
   }
 
+
+  // login(body: any): Observable<any> {
+  //   return this.http
+  //     .post(`${environment.apiUrl}/users/login`, body, {
+  //       withCredentials: true,
+  //     })
+  //     .pipe(
+  //       tap((res: any) => {
+  //         this.setAccessToken(res.tokens.access);
+  //         this.setRefreshToken(res.tokens.refresh);
+  //       })
+  //     );
+  // }
+
+  setUser(user: any) {
+    localStorage.setItem(this.userKey, JSON.stringify(user));
+  }
+
+  getUser(): any {
+    const userString = localStorage.getItem(this.userKey);
+    return userString ? JSON.parse(userString) : null;
+  }
+
+  removeUser() {
+    localStorage.removeItem(this.userKey);
+  }
+  
   login(body: any): Observable<any> {
     return this.http
       .post(`${environment.apiUrl}/users/login`, body, {
@@ -67,6 +95,7 @@ export class AuthService {
         tap((res: any) => {
           this.setAccessToken(res.tokens.access);
           this.setRefreshToken(res.tokens.refresh);
+          this.setUser(res.user); // Store user data
         })
       );
   }
@@ -109,17 +138,18 @@ export class AuthService {
   logout(): Observable<any> {
     const accessToken = this.getAccessToken();
     const refreshToken = this.getRefreshToken();
-
+  
     if (!accessToken || !refreshToken) {
       return throwError('Access token or refresh token not found');
     }
-
+  
     const headers = { Authorization: `Bearer ${accessToken}` };
     const body = { refresh: refreshToken };
-
+  
     this.removeAccessToken();
     this.removeRefreshToken();
-
+    this.removeUser();
+  
     return this.http.post(`${environment.apiUrl}/users/logout`, body, {
       headers,
     });

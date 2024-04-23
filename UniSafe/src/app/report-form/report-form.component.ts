@@ -2,6 +2,7 @@ import { NgPluralCase } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TimeoutService } from '../services/timeout.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-report-form',
@@ -30,7 +31,7 @@ export class ReportFormComponent implements OnInit {
     'Ubungo Hostels',
     'Other',
   ];
-
+  selectedLocation: string = this.locations[0];
   colleges = [
     'College / School*',
     'CoICT',
@@ -50,67 +51,54 @@ export class ReportFormComponent implements OnInit {
     'SJMC',
     'SoMG',
     'Other',
-];
+  ];
+  selectedCollege: string = this.colleges[0];
+  genders = ['Gender*', 'Female', 'Male'];
+  selectedGender: string = this.genders[0];
+  authenticated = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private timeoutService: TimeoutService
+    private timeoutService: TimeoutService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
-    this.timeoutService.resetTimer();
+    this.authService.user().subscribe({
+      next: (res: any) => {
+        this.authenticated = true;
+        this.timeoutService.resetTimer();
+      },
+      error: (err) => {
+        this.authenticated = false;
+      },
+    });
   }
 
   initForm(): void {
     this.reportForm = this.formBuilder.group({
-      loa: ['Location of the Abuse*', Validators.required],
+      loa: [this.selectedLocation, Validators.required],
       fullName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      // gender: [this.gender, Validators.required],
+      vgender: [this.selectedGender, Validators.required],
       pgender: [this.gender, Validators.required],
       phoneNumber: ['', Validators.required],
       registrationNumber: ['', Validators.required],
-      college: ['', Validators.required],
+      college: [this.selectedCollege, Validators.required],
       abusetype: ['0', Validators.required],
       other: [''],
     });
   }
 
-//   setDefaultCollege(): void {
-//   // Set default college value after initializing the form group
-//   this.reportForm.patchValue({
-//     college: this.colleges[0] // Set the first college from the array as the default value
-//   });
-// }
-
-  onLocationChange(event: Event): void {
-    const value = (event.target as HTMLSelectElement)?.value;
-    const loaControl = this.reportForm.get('loa');
-    if (loaControl) {
-      loaControl.setValue(value);
-    }
-  }
-  
-
-  // onCollegeChange(event: Event): void {
-  //   const value = (event.target as HTMLSelectElement)?.value;
-  //   const collegeControl = this.reportForm.get('college');
-  //   if (collegeControl) {
-  //     collegeControl.setValue(value);
-  //   }
-  // }
-
   onReportingForChange(value: string) {
     this.reportingFor = value;
-}
+  }
 
   onSubmit(): void {
     if (this.reportForm.valid) {
-      // Process form data and send to backend
       console.log(this.reportForm.value);
     } else {
-      // Handle form validation errors
       console.log('Form validation failed');
     }
   }

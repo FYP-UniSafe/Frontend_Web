@@ -7,8 +7,9 @@
                 <div class="profile">
                     <i class="fas fa-user"></i>
                 </div>
-                <p><b>{{name}}</b></p>
-                <p>Reported {{profileData.profile.report_count}} times</p>
+                <p><b>{{user_id}}</b></p>
+                <!-- <p><b>{{user.email}}</b></p> -->
+                <p>Reported {{userData.profile.report_count}} times</p>
             </div>
 
             <div class="menu-item" [class.selected]="selectedItem === 'Personal Details'" (click)="selectMenuItem('Personal Details')">Personal Details</div>
@@ -26,7 +27,7 @@
             <div class="mid">
                 <div class="input">
                     <h2>Full Name:</h2>
-                    <input class="nonupdate" type="text" id="" formControlName="full_name"  readonly>
+                    <input class="nonupdate" type="text" id="" placeholder="{{userData.full_name}}"  readonly>
                 </div>
                 <div class="input">
                     <h2>Email:</h2>
@@ -70,7 +71,7 @@
                     <input type="text" id="" formControlName="office" *ngIf="isGenderDesk || isConsultant">
                     <input type="text" id="" formControlName="station" *ngIf="isPolice">
                     <div class="colleges" *ngIf="isStudent" >
-                        <select formControlName="college" [(ngModel)]="selectedCollege">
+                        <select formControlName="college">
                             <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
