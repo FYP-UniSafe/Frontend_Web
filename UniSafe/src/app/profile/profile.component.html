@@ -87,13 +87,22 @@
                 <h1>Change Password</h1>
             </div>
             <div class="mid">
-                <div class="input">
+                <div class="input pass">
                     <h2>Current Password:</h2>
-                    <input type="password" id="" formControlName="current_password">
+                    <input [type]="showPassword ? 'text' : 'password'" name="password" id="" formControlName="current_password">
+                    <i class="far fa-eye eye-show" (click)="togglePasswordVisibility()" [class.hide]="!showPassword"></i>
+                    <i class="far fa-eye-slash eye-hide" (click)="togglePasswordVisibility()" [class.hide]="showPassword"></i>
                 </div>
                 <div class="input">
                     <h2>New Password:</h2>
                     <input type="password" id="" formControlName="new_password">
+                </div>
+                <div class="conditions" *ngIf="passwordFormField?.dirty">
+                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('^(?=.*[A-Z])')">• At least one uppercase letter.</span>
+                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(?=.*[a-z])')">• At least one lowercase letter.</span>
+                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(.*[0-9].*)')">• At least one digit.</span>
+                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(?=.*[!@#$%^&*])')">• At least one special character.</span>
+                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('.{8,}')">• At least 8 characters long.</span>
                 </div>
             </div>
             <div class="end">
