@@ -41,6 +41,10 @@ export class ProfileComponent implements OnInit {
   profileForm!: FormGroup;
   userData: any = {};
   message: string = '';
+  StrongPasswordRegx: RegExp =
+    /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
+  showPassword: boolean = false;
+  isPasswordValid: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -95,8 +99,11 @@ export class ProfileComponent implements OnInit {
       reg_no: [this.userData.profile.reg_no],
       office: [this.userData.profile.office, Validators.required],
       college: [this.userData.profile.college, Validators.required],
-      current_password: [''],
-      new_password: [''],
+      current_password: ['', Validators.required],
+      new_password: [
+        '',
+        [Validators.required, Validators.pattern(this.StrongPasswordRegx)],
+      ],
     });
   }
 
@@ -173,6 +180,11 @@ export class ProfileComponent implements OnInit {
     const currentPassword = this.profileForm.get('current_password')?.value;
     const newPassword = this.profileForm.get('new_password')?.value;
 
+    if (!this.StrongPasswordRegx.test(newPassword)) {
+      window.alert('Wrong password format!');
+      return;
+    }
+
     this.authService.changePassword(currentPassword, newPassword).subscribe(
       (response) => {
         window.alert('Password changed successfully');
@@ -182,5 +194,21 @@ export class ProfileComponent implements OnInit {
         window.alert('Error changing password. Please try again.');
       }
     );
+  }
+
+  get phoneField() {
+    return this.profileForm.get('phone_number');
+  }
+
+  get emailField() {
+    return this.profileForm.get('email');
+  }
+
+  get passwordFormField() {
+    return this.profileForm.get('new_password');
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }
