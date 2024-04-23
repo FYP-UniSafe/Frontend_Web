@@ -11,7 +11,7 @@ export class HeadComponent implements OnInit {
   menuValue: boolean = false;
   menu_icon: string = 'bi bi-list';
   authenticated = false;
-  user = 'User';
+  userData: any = {};
   activeRoute: string = '';
   profOpt: boolean = false;
   isHovered: boolean = false;
@@ -19,7 +19,7 @@ export class HeadComponent implements OnInit {
   constructor(
     private el: ElementRef,
     private authService: AuthService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -30,15 +30,14 @@ export class HeadComponent implements OnInit {
         this.activeRoute = this.router.url;
       }
     });
-    this.authService.user().subscribe({
-      next: (res: any) => {
-        this.authenticated = true;
-        this.user = res.full_name;
-      },
-      error: (err) => {
-        this.authenticated = false;
-      },
-    });
+
+    const user = this.authService.getUser();
+    if (user) {
+      this.userData = user;
+      this.authenticated = true;
+    } else {
+      this.authenticated = false;
+    }
   }
 
   scrollToFooter() {

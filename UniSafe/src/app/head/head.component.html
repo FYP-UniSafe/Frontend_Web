@@ -44,7 +44,7 @@
         </div>
         <div class="profopt"  *ngIf="profOpt || isHovered" (mouseenter)="toggleprofOpt(true)" (mouseleave)="toggleprofOpt(false)">
             <i class="fas fa-user"></i>
-            <p><b>{{user}}</b></p>
+            <p><b>{{userData.full_name}}</b></p>
             <span></span>
             <button class="links"  routerLink="/profile">Profile</button>
             <span></span>

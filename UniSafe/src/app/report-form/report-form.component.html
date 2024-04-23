@@ -3,8 +3,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-3qmMVcNkx5Hezuk4YecfKrPm6dA+zArWhZMunGmG6jQgxYDLz7alccxcHS1nK1n+X9D21WL30VgYGewW9bPI9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    
-    <form [formGroup]="reportForm" (ngSubmit)="onSubmit">
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit" *ngIf="authenticated">
 
         <div class="head">
             <h2>Report a GBV</h2>
@@ -27,18 +26,17 @@
 
                 <div class="fill" *ngIf="reportingFor === 'else'">
                     <input  type="text" required id="" placeholder="Full name*" formControlName="fullname"/>
+
+
                     <div class="div">
-                        <select id="gender" formControlName="gender" [ngModel]="pgender">
-                        <option value="0">Gender*</option>
-                        <option value="1">Female</option>
-                        <option value="2">Male</option>
+                        <select id="gender" formControlName="vgender">
+                            <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
                     </div>
 
                     <div class="div">
                         <select formControlName="college">
-                        <option disabled selected value="">College / School*</option>
                         <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
@@ -69,11 +67,12 @@
                     </div>
 
                     <div class="div">
-                        <select formControlName="loa" (change)="onLocationChange($event)">
+                        <!-- <select formControlName="loa" (change)="onLocationChange($event)" [(ngModel)]="selectedLocation"> -->
+                        <select formControlName="loa">
                           <option *ngFor="let location of locations" [value]="location">{{location}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
-                      </div>
+                    </div>
 
                     <div class="other">
                     <p>If the location is Other, please type the location below:</p>
@@ -95,9 +94,9 @@
             <h3>3. Perpetrator details</h3>
 
                 <div class="fill">
-                    <input  type="text" required id="" placeholder="Full name*" formControlName="Perpetrator"/>
+                    <input  type="text" required id="" placeholder="Full name" formControlName="Perpetrator"/>
                     <div class="div">
-                        <select id="pgender" formControlName="pgender" [ngModel]="pgender">
+                        <select id="pgender" formControlName="pgender">
                         <option value="0">Gender*</option>
                         <option value="1">Female</option>
                         <option value="2">Male</option>
@@ -123,6 +122,82 @@
                 </div>
             </div>
 
+            <button type="submit" routerLink="/report">Submit</button>
+
+        </div>
+    </form>
+
+
+
+
+
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit" *ngIf="!authenticated">
+
+        <div class="head">
+            <h2>Report a GBV</h2>
+        </div>
+
+
+        <div class="main">
+            <h3>1. Description of the Abuse</h3>
+
+                <div class="fill">
+                    <div class="div">
+                        <select id="abusetype" formControlName="abusetype" >
+                        <option value="0">Abuse Type*</option>
+                        <option value="1">Physical Violence</option>
+                        <option value="2">Sexual Violence</option>
+                        <option value="3">Psychological Violence</option>
+                        <option value="4">Cyber Violence</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="div">
+                        <p class="datetimep">Date and Time*:</p>
+                        <input class="date" type="datetime-local" required id=""  formControlName="datetime"/>
+                    </div>
+
+                    <div class="div">
+                        <!-- <select formControlName="loa" (change)="onLocationChange($event)" [(ngModel)]="selectedLocation"> -->
+                        <select formControlName="loa">
+                          <option *ngFor="let location of locations" [value]="location">{{location}}</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+
+                    <div class="other">
+                    <p>If the location is Other, please type the location below:</p>
+                    <input type="text" id="" placeholder="" formControlName="other"/>
+                    </div>
+
+                    <div class="descr">
+                        <textarea  placeholder="Breifly describe what happened *"></textarea>
+                    </div>
+
+                    <div class="eviden">
+                        <p>Evidence (if any):</p>
+                        <div>
+                            <input type="file" id="evidence" name="evidence" multiple>
+                        </div>
+                    </div>
+                </div>
+
+            <h3>2. Perpetrator details</h3>
+
+                <div class="fill">
+                    <input  type="text" required id="" placeholder="Full name" formControlName="Perpetrator"/>
+                    <div class="div">
+                        <select id="pgender" formControlName="pgender">
+                        <option value="0">Gender*</option>
+                        <option value="1">Female</option>
+                        <option value="2">Male</option>
+                        </select>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="descrel">
+                        <textarea  placeholder="Describe your relationship with  the Perpetrator *"></textarea>
+                    </div>
+                </div>
             <button type="submit" routerLink="/report">Submit</button>
 
         </div>

@@ -20,16 +20,12 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.timeoutService.resetTimer();
-    this.authService.user().subscribe({
-      next: (res: any) => {
-        this.userFullName = res.full_name + '!';
-        this.note = `Welcome to UniSafe`;
-        this.loggedIn = true;
-      },
-      error: err => {
-        console.log(err);
-      } 
-    });
+    const user = this.authService.getUser();
+    if (user) {
+      this.userFullName = user.full_name + '!';
+      this.note = 'Welcome to UniSafe';
+      this.loggedIn = true;
+    }
   }
 
   isLoggedIn(): boolean {

@@ -51,7 +51,7 @@ export class SignupComponent implements OnInit {
         password: ['', [Validators.required, Validators.pattern(this.StrongPasswordRegx)]],
         specificFields: this.formBuilder.group({
           registrationNumber: [''],
-          college: ['0'],
+          college: [''],
           staffNumber: [''],
           office: [''],
           policeNumber: [''],

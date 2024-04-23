@@ -9,7 +9,7 @@ import { TimeoutService } from '../services/timeout.service';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  name = "User's Name";
+  user_id = "User's ID";
   selectedItem: string = 'Personal Details';
   colleges = [
     'CoICT',
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit {
   isPolice = false;
   isConsultant = false;
   profileForm!: FormGroup;
-  profileData: any = {};
+  userData: any = {};
 
   constructor(
     private authService: AuthService,
@@ -46,106 +46,37 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.user().subscribe({
-      next: (res: any) => {
-        this.name = res.full_name;
-        this.isStudent = res.is_student;
-        this.isGenderDesk = res.is_genderdesk;
-        this.isConsultant = res.is_consultant;
-        this.isPolice = res.is_police;
-        if (this.isStudent && this.profileData.college) {
-          this.profileForm = this.formBuilder.group({
-            college: [this.profileData.college, Validators.required],
-          });
-        } else {
-        }
+    this.timeoutService.resetTimer();
 
-        if (this.isStudent) {
-          this.fetchStudentProfile();
-        } else if (this.isGenderDesk) {
-          this.fetchGenderDeskProfile();
-        } else if (this.isConsultant) {
-          this.fetchConsultantProfile();
-        } else if (this.isPolice) {
-          this.fetchPoliceProfile();
-        }
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    // Get user details from local storage
+    const user = this.authService.getUser();
+    if (user) {
+      this.isStudent = user.is_student;
+      this.isGenderDesk = user.is_genderdesk;
+      this.isConsultant = user.is_consultant;
+      this.isPolice = user.is_police;
+      this.userData = user;
+      this.user_id = this.userData.profile.custom_id;
+
+      this.initForm();
+    }
   }
 
   selectMenuItem(item: string): void {
     this.selectedItem = item;
   }
 
-  fetchStudentProfile(): void {
-    this.authService.getStudentProfile().subscribe({
-      next: (profileData: any) => {
-        this.profileData = profileData;
-        this.initForm();
-        this.timeoutService.resetTimer();
-
-        if (this.profileData.profile && this.profileData.profile.college) {
-          this.selectedCollege = this.profileData.profile.college;
-        } else {
-          console.error('College information not found in profile data');
-        }
-      },
-      error: (error) => {
-        console.error('Error fetching student profile:', error);
-      },
-    });
-  }
-
-  fetchGenderDeskProfile(): void {
-    this.authService.getGenderDeskProfile().subscribe({
-      next: (profileData: any) => {
-        this.profileData = profileData;
-        this.initForm();
-      },
-      error: (error) => {
-        console.error('Error fetching gender desk profile:', error);
-      },
-    });
-  }
-
-  fetchPoliceProfile(): void {
-    this.authService.getPoliceProfile().subscribe({
-      next: (profileData: any) => {
-        this.profileData = profileData;
-        this.initForm();
-      },
-      error: (error) => {
-        console.error('Error fetching police profile:', error);
-      },
-    });
-  }
-
-  fetchConsultantProfile(): void {
-    this.authService.getConsultantProfile().subscribe({
-      next: (profileData: any) => {
-        this.profileData = profileData;
-        this.initForm();
-      },
-      error: (error) => {
-        console.error('Error fetching consultant profile:', error);
-      },
-    });
-  }
-
   initForm(): void {
     this.profileForm = this.formBuilder.group({
-      full_name: [this.profileData.full_name, Validators.required],
-      email: [this.profileData.email, Validators.required],
-      phone_number: [this.profileData.phone_number, Validators.required],
-      gender: [this.profileData.gender, Validators.required],
-      staff_no: [this.profileData.profile.staff_no, Validators.required],
-      police_no: [this.profileData.profile.police_no, Validators.required],
-      reg_no: [this.profileData.profile.reg_no, Validators.required],
-      office: [this.profileData.profile.office, Validators.required],
-      college: [this.profileData.profile.college, Validators.required],
+      full_name: [this.userData.full_name, Validators.required],
+      email: [this.userData.email, Validators.required],
+      phone_number: [this.userData.phone_number, Validators.required],
+      gender: [this.userData.gender, Validators.required],
+      staff_no: [this.userData.profile.staff_no, Validators.required],
+      police_no: [this.userData.profile.police_no, Validators.required],
+      reg_no: [this.userData.profile.reg_no, Validators.required],
+      office: [this.userData.profile.office, Validators.required],
+      college: [this.userData.profile.college, Validators.required],
     });
   }
 

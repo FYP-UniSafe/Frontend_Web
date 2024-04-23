@@ -15,7 +15,7 @@ export class ResendOtpComponent {
               private otpService: OtpService,
               private router: Router) {
     this.resendForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', Validators.required]
     });
   }
 
