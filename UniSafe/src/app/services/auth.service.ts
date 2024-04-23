@@ -179,4 +179,45 @@ export class AuthService {
       withCredentials: true,
     });
   }
+
+  updateUser(userData: any): Observable<any> {
+    return this.http.patch(`${environment.apiUrl}/users/user`, userData);
+  }
+
+  updateStudentProfile(profileData: any): Observable<any> {
+    return this.http.patch(
+      `${environment.apiUrl}/users/student/profile/update`,
+      profileData
+    );
+  }
+
+  updateGenderDeskProfile(profileData: any): Observable<any> {
+    return this.http.patch(
+      `${environment.apiUrl}/users/genderdesk/profile/update`,
+      profileData
+    );
+  }
+
+  updateConsultantProfile(profileData: any): Observable<any> {
+    return this.http.patch(
+      `${environment.apiUrl}/users/consultant/profile/update`,
+      profileData
+    );
+  }
+
+  updatePoliceProfile(profileData: any): Observable<any> {
+    return this.http.patch(
+      `${environment.apiUrl}/users/police/profile/update`,
+      profileData
+    );
+  }
+
+  changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    const requestBody = {
+      old_password: oldPassword,
+      new_password: newPassword,
+    };
+
+    return this.http.post(`${environment.apiUrl}/users/password/change`, requestBody);
+  }
 }
