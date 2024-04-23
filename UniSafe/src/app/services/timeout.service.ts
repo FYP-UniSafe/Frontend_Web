@@ -3,26 +3,26 @@ import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TimeoutService {
   private timer: any;
 
-  constructor(private authService: AuthService,
-    private router: Router)
-  {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   resetTimer(): void {
     clearTimeout(this.timer);
-    this.timer = setTimeout(() => {
-      this.logout();
-      this.router.navigate(['/login']);
+    this.timer = setTimeout(async () => {
+      await this.logout();
     }, 600000); // 10 minutes in milliseconds
   }
 
-  logout(): void {
-    this.authService.logout().subscribe(() => {
+  async logout(): Promise<void> {
+    try {
+      await this.authService.logout();
       this.router.navigate(['/login']);
-    });
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   }
 }

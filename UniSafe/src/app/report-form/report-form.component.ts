@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { TimeoutService } from '../services/timeout.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-report-form',
@@ -60,19 +61,23 @@ export class ReportFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private timeoutService: TimeoutService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.initForm();
-    this.authService.user().subscribe({
-      next: (res: any) => {
-        this.authenticated = true;
-        this.timeoutService.resetTimer();
-      },
-      error: (err) => {
-        this.authenticated = false;
-      },
+
+    const user = this.authService.getUser();
+    if (user) {
+      this.authenticated = true;
+      this.timeoutService.resetTimer();
+    } else {
+      this.authenticated = false;
+    }
+
+    this.authService.onLogout().subscribe(() => {
+      this.router.navigate(['/login']);
     });
   }
 

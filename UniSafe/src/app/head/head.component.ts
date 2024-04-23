@@ -38,6 +38,10 @@ export class HeadComponent implements OnInit {
     } else {
       this.authenticated = false;
     }
+
+    this.authService.onLogout().subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 
   scrollToFooter() {
