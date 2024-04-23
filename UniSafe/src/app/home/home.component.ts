@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { TimeoutService } from '../services/timeout.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
   // note = 'Welcome to UniSafe!'+{user}
   note = 'Welcome to UniSafe!';
   userFullName: string = '';
@@ -15,7 +16,8 @@ export class HomeComponent implements OnInit{
 
   constructor(
     private authService: AuthService,
-    private timeoutService: TimeoutService
+    private timeoutService: TimeoutService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +28,10 @@ export class HomeComponent implements OnInit{
       this.note = 'Welcome to UniSafe';
       this.loggedIn = true;
     }
+
+    this.authService.onLogout().subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 
   isLoggedIn(): boolean {

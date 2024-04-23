@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { TimeoutService } from '../services/timeout.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -38,11 +39,13 @@ export class ProfileComponent implements OnInit {
   isConsultant = false;
   profileForm!: FormGroup;
   userData: any = {};
+  message: string = '';
 
   constructor(
     private authService: AuthService,
     private formBuilder: FormBuilder,
-    private timeoutService: TimeoutService
+    private timeoutService: TimeoutService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -58,8 +61,22 @@ export class ProfileComponent implements OnInit {
       this.userData = user;
       this.user_id = this.userData.profile.custom_id;
 
+      if (user.is_student) {
+        this.message = `Reported ${this.userData.profile.report_count} Times`;
+      } else if (user.is_genderdesk || user.is_police) {
+        this.message = `Closed ${this.userData.profile.report_count} Reports`;
+      } else if (user.is_consultant) {
+        this.message = `Handled ${this.userData.profile.report_count} Meetings`;
+      } else {
+        this.message = '';
+      }
+
       this.initForm();
     }
+
+    this.authService.onLogout().subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 
   selectMenuItem(item: string): void {
@@ -81,4 +98,15 @@ export class ProfileComponent implements OnInit {
   }
 
   submit() {}
+
+  logout(): void {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error:', error);
+      },
+    });
+  }
 }

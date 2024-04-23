@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { tap } from 'rxjs/operators';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,9 @@ export class AuthService {
   private accessTokenKey = 'accessToken';
   private refreshTokenKey = 'refreshToken';
   private userKey = 'user';
+  private logoutSubject = new Subject<void>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   signup(userData: any, profileType: string): Observable<any> {
     let signupUrl: string;
@@ -59,20 +61,6 @@ export class AuthService {
     localStorage.removeItem(this.refreshTokenKey);
   }
 
-
-  // login(body: any): Observable<any> {
-  //   return this.http
-  //     .post(`${environment.apiUrl}/users/login`, body, {
-  //       withCredentials: true,
-  //     })
-  //     .pipe(
-  //       tap((res: any) => {
-  //         this.setAccessToken(res.tokens.access);
-  //         this.setRefreshToken(res.tokens.refresh);
-  //       })
-  //     );
-  // }
-
   setUser(user: any) {
     localStorage.setItem(this.userKey, JSON.stringify(user));
   }
@@ -85,7 +73,7 @@ export class AuthService {
   removeUser() {
     localStorage.removeItem(this.userKey);
   }
-  
+
   login(body: any): Observable<any> {
     return this.http
       .post(`${environment.apiUrl}/users/login`, body, {
@@ -135,24 +123,37 @@ export class AuthService {
     }
   }
 
+  triggerLogout() {
+    this.logoutSubject.next();
+  }
+
+  onLogout(): Observable<void> {
+    return this.logoutSubject.asObservable();
+  }
+
   logout(): Observable<any> {
     const accessToken = this.getAccessToken();
     const refreshToken = this.getRefreshToken();
-  
+
     if (!accessToken || !refreshToken) {
       return throwError('Access token or refresh token not found');
     }
-  
+
     const headers = { Authorization: `Bearer ${accessToken}` };
     const body = { refresh: refreshToken };
-  
+
     this.removeAccessToken();
     this.removeRefreshToken();
     this.removeUser();
-  
-    return this.http.post(`${environment.apiUrl}/users/logout`, body, {
-      headers,
-    });
+
+    return this.http
+      .post(`${environment.apiUrl}/users/logout`, body, { headers })
+      .pipe(
+        tap(() => {
+          // After successful logout, navigate to login page
+          this.router.navigate(['/login']);
+        })
+      );
   }
 
   getStudentProfile(): Observable<any> {
