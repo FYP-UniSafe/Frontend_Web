@@ -32,7 +32,6 @@ export class ReportFormComponent implements OnInit {
     'Ubungo Hostels',
     'Other',
   ];
-  selectedLocation: string = this.locations[0];
   colleges = [
     'College / School*',
     'CoICT',
@@ -53,6 +52,7 @@ export class ReportFormComponent implements OnInit {
     'SoMG',
     'Other',
   ];
+  selectedLocation: string = this.locations[0];
   selectedCollege: string = this.colleges[0];
   genders = ['Gender*', 'Female', 'Male'];
   selectedGender: string = this.genders[0];
