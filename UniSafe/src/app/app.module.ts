@@ -18,6 +18,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TimeoutService } from './services/timeout.service';
 import { ResendOtpComponent } from './resend-otp/resend-otp.component';
 import { OtpService } from './services/otp.service';
+import { ReportService } from './services/report.service';
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
@@ -52,6 +53,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
       useClass: AuthInterceptor, multi: true },
     TimeoutService,
     OtpService,
+    ReportService
   ],
   bootstrap: [AppComponent]
 })

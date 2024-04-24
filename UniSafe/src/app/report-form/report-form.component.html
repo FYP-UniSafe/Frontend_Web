@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-3qmMVcNkx5Hezuk4YecfKrPm6dA+zArWhZMunGmG6jQgxYDLz7alccxcHS1nK1n+X9D21WL30VgYGewW9bPI9A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <form [formGroup]="reportForm" (ngSubmit)="onSubmit" *ngIf="authenticated">
+    <form [formGroup]="reportForm" (ngSubmit)="onSubmit()" *ngIf="authenticated">
 
         <div class="head">
             <h2>Report a GBV</h2>
@@ -16,35 +16,31 @@
                 <div class="who">
                     <p>Who are you reporting for:*</p>
                     <div class="labels">
-                        <input type="radio" name="reportfor" required id="option1" value="self" (change)="onReportingForChange('self')" />
+                        <input type="radio" name="reportfor" formControlName="reportFor" id="" value="Self" (change)="onReportingForChange('Self')" />
                         <label for="option1">Yourself</label>
                         <br>
-                        <input type="radio" name="reportfor" required id="option2" value="else" (change)="onReportingForChange('else')" />
+                        <input type="radio" name="reportfor" formControlName="reportFor" id="" value="Else" (change)="onReportingForChange('Else')" />
                         <label for="option2">Someone Else</label>
                     </div>
                 </div>
 
-                <div class="fill" *ngIf="reportingFor === 'else'">
-                    <input  type="text" required id="" placeholder="Full name*" formControlName="fullname"/>
-
-
+                <div class="fill" *ngIf="reportingFor === 'Else'">
+                    <input  type="text" id="" placeholder="Full name*" formControlName="fullname" [ngClass]="{ 'invalid': submitted && reportForm.controls['fullname'].errors }"/>
                     <div class="div">
-                        <select id="gender" formControlName="vgender">
+                        <select id="gender" formControlName="vgender" [ngClass]="{ 'invalid': submitted && reportForm.controls['vgender'].errors }">
                             <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-
                     <div class="div">
-                        <select formControlName="college">
-                        <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
+                        <select formControlName="college" [ngClass]="{ 'invalid': submitted && reportForm.controls['college'].errors }">
+                            <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-
-                    <input  type="text" required id="" placeholder="Registration Number*" formControlName="registrationNumber"/>
-                    <input  type="text" required id="" placeholder="Email*" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"/>
-                    <input  type="text" required id="" placeholder="Phone number*" formControlName="phoneNumber" pattern="^\+255\d{9}$"/>
+                    <input  type="text" id="" placeholder="Registration Number*" formControlName="registrationNumber" [ngClass]="{ 'invalid': submitted && reportForm.controls['registrationNumber'].errors }"/>
+                    <input  type="text" id="" placeholder="Email*" formControlName="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}" [ngClass]="{ 'invalid': submitted && reportForm.controls['email'].errors }"/>
+                    <input  type="text" id="" placeholder="Phone number*" formControlName="phoneNumber" pattern="^\+255\d{9}$" [ngClass]="{ 'invalid': submitted && reportForm.controls['phoneNumber'].errors }"/>
                 </div>
 
 
@@ -54,10 +50,11 @@
                     <div class="div">
                         <select id="abusetype" formControlName="abusetype" >
                         <option value="0">Abuse Type*</option>
-                        <option value="1">Physical Violence</option>
-                        <option value="2">Sexual Violence</option>
-                        <option value="3">Psychological Violence</option>
-                        <option value="4">Cyber Violence</option>
+                        <option value="Physical Violence">Physical Violence</option>
+                        <option value="Sexual Violence">Sexual Violence</option>
+                        <option value="Psychological Violence">Psychological Violence</option>
+                        <option value="Online Harassment">Online Harassment</option>
+                        <option value="Societal Violence">Societal Violence</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
                     </div>
@@ -67,7 +64,6 @@
                     </div>
 
                     <div class="div">
-                        <!-- <select formControlName="loa" (change)="onLocationChange($event)" [(ngModel)]="selectedLocation"> -->
                         <select formControlName="loa">
                           <option *ngFor="let location of locations" [value]="location">{{location}}</option>
                         </select>
@@ -76,11 +72,11 @@
 
                     <div class="other">
                     <p>If the location is Other, please type the location below:</p>
-                    <input type="text" id="" placeholder="" formControlName="other"/>
+                    <input type="text" id="" placeholder="" formControlName="otherLocation"/>
                     </div>
 
                     <div class="descr">
-                        <textarea  placeholder="Breifly describe what happened *"></textarea>
+                        <textarea  placeholder="Breifly describe what happened *" formControlName="description"></textarea>
                     </div>
 
                     <div class="eviden">
@@ -94,17 +90,15 @@
             <h3>3. Perpetrator details</h3>
 
                 <div class="fill">
-                    <input  type="text" required id="" placeholder="Full name" formControlName="Perpetrator"/>
+                    <input  type="text" id="" placeholder="Full name" formControlName="Perpetrator"/>
                     <div class="div">
-                        <select id="pgender" formControlName="pgender">
-                        <option value="0">Gender*</option>
-                        <option value="1">Female</option>
-                        <option value="2">Male</option>
+                        <select id="" formControlName="pgender">
+                            <option *ngFor="let gender of genders" [value]="gender">{{gender}}</option>
                         </select>
                         <i class="fas fa-chevron-down"></i>
                     </div>
                     <div class="descrel">
-                        <textarea  placeholder="Describe your relationship with  the Perpetrator *"></textarea>
+                        <textarea  placeholder="Describe your relationship with  the Perpetrator *" formControlName="relationship"></textarea>
                     </div>
                 </div>
 
@@ -114,15 +108,15 @@
                 <p>Are you in demand of counseling services from the UDSM Counseling Unit?</p>
 
                 <div class="labels">
-                    <input type="radio" name="counselling" required id="" value="" />
+                    <input type="radio" name="counselling" id="" value="" />
                     <label for="option1">Yes</label>
                     <br>
-                    <input type="radio" name="counselling" required id="" value="" />
+                    <input type="radio" name="counselling" id="" value="" />
                     <label for="option2">No</label>
                 </div>
             </div>
 
-            <button type="submit" routerLink="/report">Submit</button>
+            <button type="submit">Submit</button>
 
         </div>
     </form>
@@ -185,7 +179,7 @@
             <h3>2. Perpetrator details</h3>
 
                 <div class="fill">
-                    <input  type="text" required id="" placeholder="Full name" formControlName="Perpetrator"/>
+                    <input  type="text" id="" placeholder="Full name" formControlName="Perpetrator"/>
                     <div class="div">
                         <select id="pgender" formControlName="pgender">
                         <option value="0">Gender*</option>
