@@ -11,11 +11,6 @@ import { ReportService } from '../services/report.service';
   styleUrls: ['./report-form.component.css'],
 })
 export class ReportFormComponent implements OnInit {
-  reportForm!: FormGroup;
-  reportingFor: string = '';
-  pgender: string = '0';
-  gender: string = '0';
-  college: string = '0';
   locations = [
     'Location of the Abuse*',
     'Hall I',
@@ -52,9 +47,14 @@ export class ReportFormComponent implements OnInit {
     'SoMG',
     'Other',
   ];
+  genders = ['Gender*', 'Female', 'Male'];
+  reportForm!: FormGroup;
+  reportingFor: string = '';
+  pgender: string = '0';
+  gender: string = '0';
+  college: string = '0';
   selectedLocation: string = this.locations[0];
   selectedCollege: string = this.colleges[0];
-  genders = ['Gender*', 'Female', 'Male'];
   selectedGender: string = this.genders[0];
   authenticated = false;
   submitted = false;
@@ -84,6 +84,7 @@ export class ReportFormComponent implements OnInit {
   }
 
   initForm(): void {
+    this.timeoutService.resetTimer();
     this.reportForm = this.formBuilder.group({
       reportFor: ['', Validators.required],
       fullname: ['', Validators.required],
@@ -112,6 +113,9 @@ export class ReportFormComponent implements OnInit {
       relationship: ['', Validators.required],
     });
     this.disableValidators();
+    this.authService.onLogout().subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 
   disableValidators() {
@@ -168,6 +172,12 @@ export class ReportFormComponent implements OnInit {
     this.reportForm.updateValueAndValidity();
   }
 
+  onFileChange(event: any) {
+    if (event.target.files && event.target.files.length) {
+      this.reportForm.get('evidence')?.setValue(event.target.files);
+    }
+  }
+
   onSubmit(): void {
     this.submitted = true;
     if (this.reportForm.valid) {
@@ -190,7 +200,7 @@ export class ReportFormComponent implements OnInit {
       reportData.relationship = reportData.relationship;
       reportData.location = reportData.loa;
       reportData.other_location = reportData.otherLocation;
-      
+
       // Remove unused keys from data object
       delete reportData.reportFor;
       delete reportData.abusetype;
@@ -200,10 +210,20 @@ export class ReportFormComponent implements OnInit {
       delete reportData.loa;
       delete reportData.otherLocation;
 
+      // Remove unnecessary fields if reporting for "Self"
+      if (reportData.reportFor === 'Self') {
+        delete reportData.victim_email;
+        delete reportData.victim_full_name;
+        delete reportData.victim_phone;
+        delete reportData.victim_gender;
+        delete reportData.victim_reg_no;
+        delete reportData.victim_college;
+      }
+
       const formData = new FormData();
       Object.entries(reportData).forEach(([key, value]) => {
         if (key === 'evidence') {
-          const files = value as File[];
+          const files = value as FileList;
           for (let i = 0; i < files.length; i++) {
             formData.append('evidence', files[i], files[i].name);
           }
