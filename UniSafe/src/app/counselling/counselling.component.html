@@ -1,25 +1,86 @@
 <body>
     <div class="top"></div>
     <div class="main">
-        <img class="topimg" src="../../assets/media/UDSM.jpg" alt="">
-        <div>
+        <img class="topimg" src="../../assets/media/nkr.png" alt="">
+        <div  class="afterimg">
             <div class="notalon">
-                <h3>You Are Not Alone...</h3>
-                <p>Welcome to our counselling services, 
-                    a safe space where your journey towards
-                    healing begins.<br >
-                    We understand the courage it takes to seek
-                    support, and we’re here to offer compassionate 
-                    guidance as you navigate your healing process.<br >
-                    
-                    Our dedicated team is committed to 
-                    providing you with confidential,
-                    non-judgmental support tailored to your needs.
-                    Please feel free to schedule a meeting
-                     at your convenience.</p>
+                <div class="left">
+                    <img class="timg" src="../../assets/media/consultation.png" alt="">
+                </div>
+                <div class="right">
+                    <div class="horizontal-line"></div>
+                    <div class="message">
+                        <h1>You Are Not Alone...</h1>
+                        <br>
+                        <p>Welcome to UDSM Counselling Unit,
+                            a safe space where your journey towards
+                            healing begins.
+                            We understand the courage it takes to seek
+                            support, and we’re here to offer compassionate 
+                            guidance as you navigate your healing process.
+                            <br>
+                            <br>
+                            Our dedicated team is committed to 
+                            providing you with confidential,
+                            non-judgmental support tailored to your needs.
+                            Please feel free to schedule a meeting
+                            at your convenience.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="main2"></div>
-    <div class="main"></div>
+    <div class="main2">
+        <div class="book">
+            <div class="bookhead">
+                <h1>Book an Online or Physical<br>
+                    Counselling Session</h1>
+                </div>
+                <div class="bookmain">
+                    <div class="bookleft">
+                        <h2>Ready to book a session?</h2>
+                        <br>
+                        <p>Using our booking form, just select the type
+                            of appointment you wish to book
+                            and complete the booking process, which
+                            we’ve tried to make it as simple as possible.</p>
+                    </div>
+                    <div class="bookright">
+                        <div class="card">
+                            <form>
+                                <h2>Make an Appointment</h2>
+                                <div class="container one">
+                                    <input type="text" id="" placeholder="Full name *" formControlName="Phone"/>
+                                    <input type="text" id="" placeholder="Registration Number *" formControlName="Email"/>
+                                </div>
+                                <div class="container two">
+                                    <input type="text" id="" placeholder="Phone *" formControlName="Phone"/>
+                                    <input type="text" id="" placeholder="Email *" formControlName="Email"/>
+                                </div>
+                                <div class="container three">
+                                    <input type="text" id="" placeholder="Repor ID" formControlName="ReportID"/>
+                                </div>
+                                <div class="container four">
+                                    <p class="datetimep">Date and Time*:</p>
+                                    <input class="date" type="date" required id=""  formControlName="datetime"/>
+                                </div>
+                                <div class="five">
+                                    <p>Preferred Session Type:</p>
+                                    <div class="labels">
+                                        <input type="radio" name="counselling" id="" value="" />
+                                        <label for="option1">Physical</label>
+                                        <br>
+                                        <input type="radio" name="counselling" id="" value="" />
+                                        <label for="option2">Online</label>
+                                    </div>
+                                </div>
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="appointments"></div>
+    </div>
+    <!-- <div class="main3"></div> -->
 </body>

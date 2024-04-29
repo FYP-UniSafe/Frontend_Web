@@ -1,6 +1,6 @@
 body {
   height: auto;
-  /* height: auto; */
+  width: 100%;
   display: flex;
   flex-direction: column;
 }
@@ -10,18 +10,204 @@ body {
   position: fixed;
   height: 6vh;
   width: 100%;
-  background-color: rgba(0, 89, 134, 0.2);
+  background-color: rgba(0, 69, 118, 0.296);
   backdrop-filter: blur(5px);
-}
-.main {
-  height: 100vh;
-  width: 100%;
-}
-.main2 {
-  height: 40vh;
-  width: 100%;
 }
 .topimg {
   height: 35vh;
   width: 100%;
+}
+.main {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  position: fixed;
+}
+.afterimg{
+  display: flex;
+  flex: 1;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+.notalon{
+  height: 100%;
+  width: 60%;
+  background: linear-gradient(to bottom right, #0f6cbf, #ffffff);
+  display: flex;
+}
+.left{
+  height: 100%;
+  width: 45%;
+  position: relative;
+  display: flex;
+}
+.right{
+  height: 100%;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+.timg{
+  height: 70%;
+  width: 120%;
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  align-self: center;
+  margin-left: -30%;
+  box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.25);
+}
+.horizontal-line {
+  height: 90%;
+  align-self: center;
+  border-left: 2px solid #0f6cbf;
+}
+.message{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* color: #0f6cbf; */
+}
+.message h1{
+  font-size: 40px;
+  text-align: start;
+  margin-left: 10%;
+  max-width: 80%;
+}
+.message p{
+  font-size: 20px;
+  text-align: start;
+  margin-left: 10%;
+  max-width: 80%;
+}
+.main2{
+  height: 200vh;
+  width: 100%;
+  margin-top: 100vh;
+  z-index: 4;
+  position: sticky;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+}
+.appointments{
+  height: 100vh;
+  background-color: white;
+  /* box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5); */
+}
+.book{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.bookhead{
+  height: 15%;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0f6cbf;
+  color: white;
+}
+.bookmain{
+  flex: 1;
+  width: 100%;
+  background: linear-gradient(to bottom right, #ffffff, #0f6cbf);
+  display: flex;
+  align-items: center;
+}
+.bookleft{
+  width: 50%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+}
+.bookleft h2{
+  font-size: 40px;
+  text-align: start;
+  margin-left: 20%;
+  max-width: 90%;
+}
+.bookleft p{
+  font-size: 25px;
+  text-align: start;
+  margin-left: 20%;
+  max-width: 80%;
+}
+.bookright{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.card{
+  height: 90%;
+  width: 75%;
+  margin-right: 10%;
+  background-color: #f0f8ff;
+  box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+}
+.card form{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.card form .container{
+  height: 12%;
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+}
+.card form .container input{
+  height: 70%;
+}
+.card form .one{
+  margin-top: 2.5%;
+  background-color: yellow;
+}
+.card form .two{
+  background-color: red;
+}
+.card form .three{
+  background-color: green;
+}
+.card form .four{
+  background-color: blueviolet;
+  flex-direction: column;
+}
+.five{
+  margin-top: 1vw;
+  width: 100%;
+  margin-left: 20%;
+  font-size: 17.5px;
+}
+button {
+  margin-top: 3vh;
+  height: 5vh;
+  width: 6vw;
+  justify-self: center;
+  align-self: center;
+  font-size: 1vw;
+  color: white;
+  background-color: #0f6cbf;
+  border-radius: 5vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  transition: transform 0.5s;
+}
+button:hover {
+  transform: scale(1.05);
+  font-weight: bold;
 }
