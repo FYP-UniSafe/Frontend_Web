@@ -11,6 +11,7 @@ body form {
   flex-direction: column;
   /* color: #362555; */
   align-items: center;
+  /* background: linear-gradient(to bottom right, #0f6cbf, #ffffff); */
 }
 .head {
   height: auto;

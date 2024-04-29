@@ -116,6 +116,7 @@ body {
   align-items: center;
   position: absolute;
   transition: 0.4s ease-in-out;
+  z-index: 10;
 }
 .profopt .fas {
   font-size: 2.5vw;
