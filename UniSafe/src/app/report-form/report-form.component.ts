@@ -112,7 +112,9 @@ export class ReportFormComponent implements OnInit {
       pgender: [this.selectedGender, Validators.required],
       relationship: ['', Validators.required],
     });
-    this.disableValidators();
+    if (!this.authenticated) {
+      this.disableValidators();
+    }
     this.authService.onLogout().subscribe(() => {
       this.router.navigate(['/login']);
     });
@@ -125,6 +127,7 @@ export class ReportFormComponent implements OnInit {
     this.reportForm.get('registrationNumber')?.clearValidators();
     this.reportForm.get('email')?.clearValidators();
     this.reportForm.get('phoneNumber')?.clearValidators();
+    this.reportForm.get('reportFor')?.clearValidators();
     this.reportForm.get('otherLocation')?.clearValidators();
     this.reportForm.updateValueAndValidity();
   }
@@ -156,7 +159,7 @@ export class ReportFormComponent implements OnInit {
 
   onReportingForChange(value: string) {
     this.reportingFor = value;
-    if (value === 'Else') {
+    if (value === 'Else' && this.authenticated) {
       this.enableValidators();
     } else {
       this.disableValidators();
@@ -174,7 +177,12 @@ export class ReportFormComponent implements OnInit {
 
   onFileChange(event: any) {
     if (event.target.files && event.target.files.length) {
-      this.reportForm.get('evidence')?.setValue(event.target.files);
+      const files = event.target.files;
+      const evidenceArray: File[] = [];
+      for (let i = 0; i < files.length; i++) {
+        evidenceArray.push(files[i]);
+      }
+      this.reportForm.get('evidence')?.setValue(evidenceArray);
     }
   }
 
@@ -186,7 +194,6 @@ export class ReportFormComponent implements OnInit {
       reportData.date_and_time = this.formatDate(reportData.datetime);
       delete reportData.datetime;
 
-      // Rename keys to match Django model field names
       reportData.report_for = reportData.reportFor;
       reportData.victim_email = reportData.email;
       reportData.victim_full_name = reportData.fullname;
@@ -201,7 +208,6 @@ export class ReportFormComponent implements OnInit {
       reportData.location = reportData.loa;
       reportData.other_location = reportData.otherLocation;
 
-      // Remove unused keys from data object
       delete reportData.reportFor;
       delete reportData.abusetype;
       delete reportData.Perpetrator;
@@ -210,8 +216,7 @@ export class ReportFormComponent implements OnInit {
       delete reportData.loa;
       delete reportData.otherLocation;
 
-      // Remove unnecessary fields if reporting for "Self"
-      if (reportData.reportFor === 'Self') {
+      if (reportData.report_for === 'Self') {
         delete reportData.victim_email;
         delete reportData.victim_full_name;
         delete reportData.victim_phone;
@@ -222,26 +227,42 @@ export class ReportFormComponent implements OnInit {
 
       const formData = new FormData();
       Object.entries(reportData).forEach(([key, value]) => {
+        console.log('Key:', key);
+        console.log('Value:', value);
         if (key === 'evidence') {
-          const files = value as FileList;
+          const files = value as File[];
           for (let i = 0; i < files.length; i++) {
-            formData.append('evidence', files[i], files[i].name);
+            const file = files[i];
+            console.log('File:', file);
+            formData.append('evidence', file, file.name);
           }
         } else {
           formData.append(key, value as string);
         }
       });
+      console.log('FormData:', formData);
 
-      this.reportService.createReport(formData).subscribe(
-        (response) => {
-          window.alert('Report submitted successfully');
-          console.log(response);
-          this.router.navigate(['/report']);
-        },
-        (error) => {
-          console.error('Error submitting report:', error);
-        }
-      );
+      if (!this.authenticated) {
+        this.reportService.createAnonymousReport(formData).subscribe(
+          (response) => {
+            window.alert('Anonymous report submitted successfully');
+            console.log(response);
+          },
+          (error) => {
+            console.error('Error submitting anonymous report:', error);
+          }
+        );
+      } else {
+        this.reportService.createReport(formData).subscribe(
+          (response) => {
+            window.alert('Report submitted successfully');
+            console.log(response);
+          },
+          (error) => {
+            console.error('Error submitting report:', error);
+          }
+        );
+      }
     } else {
       console.log('Form validation failed');
       console.log(this.reportForm.errors);
@@ -260,7 +281,6 @@ export class ReportFormComponent implements OnInit {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
-  // Custom validator for datetime field
   dateTimeValidator() {
     return (control: any): { [key: string]: any } | null => {
       const validDate = !isNaN(Date.parse(control.value));
