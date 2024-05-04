@@ -47,25 +47,128 @@ body {
 .div2 {
   height: auto;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .head {
   height: 7.5vh;
-  background-color: white;
+  width: 100%;
+  background-color: #0F6CBF;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .head span {
-  border-top: 5px solid #0F6CBF;
+  border-top: 5px solid #ffffff;
   width: 15vw;
   margin-bottom: 1vh;
   margin-left: 10vw;
 }
 .head h2 {
-  color: #0F6CBF;
+  color: #ffffff;
   margin-left: 10vw;
   font-size: 1.2vw;
 }
+.reports{
+  flex-grow: 1;
+  width: 80%;
+  margin-bottom: 5vh;
+  /* background-color: rebeccapurple; */
+  display: flex;
+  flex-direction: column;
+}
+.selection{
+  height: 6vh;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
+}
+.butns{
+  height: 100%;
+  width: 60%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.butns button{
+  height: 3.25vh;
+  width: 4vw;
+  position: sticky;
+  background-color: transparent;
+  color: black;
+  text-decoration: none;
+  font-size: 0.6vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  border-radius: 50vw;
+  transition: transform 0.5s;
+}
+.butns button:hover {
+  font-weight: bold;
+  background-color: #0F6CBF;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+.butns button.active {
+  background-color: #0F6CBF;
+  color: #ffffff;
+}
+.card{
+  /* flex-grow: 1; */
+  height: auto;
+  width: 100%;
+  margin-right: 10%;
+  background-color: #f0f8ff;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+}
+.card table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.card table th,
+.card table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.card table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.card table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.card table tbody tr{
+  transition: transform 0.5s;
+}
+
+.card table tbody tr:hover {
+  background-color: #0F6CBF;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
+}
+
+
+
+
+
+
+
+
+
+
 
 /* @media (max-width: 1349px) { */
 @media (max-width: 1023px) {

@@ -71,6 +71,9 @@ body form {
   width: 100%;
   position: relative;
 }
+.conditions{
+  color: red;
+}
 .fas {
   position: absolute;
   color: #757575;

@@ -111,6 +111,7 @@ export class ReportFormComponent implements OnInit {
       Perpetrator: [''],
       pgender: [this.selectedGender, Validators.required],
       relationship: ['', Validators.required],
+      counselling: ['', Validators.required]
     });
     if (!this.authenticated) {
       this.disableValidators();
@@ -143,7 +144,7 @@ export class ReportFormComponent implements OnInit {
       .get('email')
       ?.setValidators([
         Validators.required,
-        Validators.pattern('[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}'),
+        Validators.email,
       ]);
     this.reportForm
       .get('phoneNumber')
@@ -245,8 +246,10 @@ export class ReportFormComponent implements OnInit {
       if (!this.authenticated) {
         this.reportService.createAnonymousReport(formData).subscribe(
           (response) => {
-            window.alert('Anonymous report submitted successfully');
+            window.alert('Your Anonymous Report was submitted successfully');
             console.log(response);
+            this.router.navigate(['/report'])
+            
           },
           (error) => {
             console.error('Error submitting anonymous report:', error);
@@ -255,8 +258,14 @@ export class ReportFormComponent implements OnInit {
       } else {
         this.reportService.createReport(formData).subscribe(
           (response) => {
-            window.alert('Report submitted successfully');
+            window.alert('Your Report was submitted successfully');
             console.log(response);
+            this.reportService.reportId = response.report.report_id;
+            if (this.reportForm.value.counselling === 'yes') {
+              this.router.navigate(['/counselling']);
+            }else{
+              this.router.navigate(['/report'])
+            }
           },
           (error) => {
             console.error('Error submitting report:', error);
@@ -287,4 +296,13 @@ export class ReportFormComponent implements OnInit {
       return validDate ? null : { invalidDateTime: { value: control.value } };
     };
   }
+
+  get phoneField() {
+    return this.reportForm.get('phoneNumber');
+  }
+
+  get emailField() {
+    return this.reportForm.get('email');
+  }
+
 }
