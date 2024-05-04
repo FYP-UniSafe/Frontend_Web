@@ -31,10 +31,18 @@
                 <div class="input">
                     <h2>Email:</h2>
                     <input type="email" id="" formControlName="email">
+                    <div class="conditions" *ngIf="emailField && emailField.dirty && emailField.invalid">
+                      <span class="block" *ngIf="emailField.errors?.['required']">• Email is required.</span>
+                      <span class="block" *ngIf="emailField.errors?.['email']">• Invalid email format.</span>
+                    </div>
                 </div>
                 <div class="input">
                     <h2>Phone Number:</h2>
                     <input type="text" id="" formControlName="phone_number">
+                    <div class="conditions" *ngIf="phoneField && phoneField.dirty && phoneField.invalid">
+                        <span class="block" *ngIf="phoneField.errors?.['required']">• Phone number is required.</span>
+                        <span class="block" *ngIf="phoneField.errors?.['pattern']">• Required format: +255(last 9 digits)</span>
+                    </div>
                 </div>
                 <div class="input">
                     <h2>Gender:</h2>
@@ -93,9 +101,11 @@
                     <i class="far fa-eye eye-show" (click)="togglePasswordVisibility()" [class.hide]="!showPassword"></i>
                     <i class="far fa-eye-slash eye-hide" (click)="togglePasswordVisibility()" [class.hide]="showPassword"></i>
                 </div>
-                <div class="input">
+                <div class="input pass2">
                     <h2>New Password:</h2>
-                    <input type="password" id="" formControlName="new_password">
+                    <input [type]="showPassword ? 'text' : 'password'" name="password" id="" formControlName="new_password">
+                    <i class="far fa-eye eye-show2" (click)="togglePasswordVisibility()" [class.hide]="!showPassword"></i>
+                    <i class="far fa-eye-slash eye-hide2" (click)="togglePasswordVisibility()" [class.hide]="showPassword"></i>
                 </div>
                 <div class="conditions" *ngIf="passwordFormField?.dirty">
                     <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('^(?=.*[A-Z])')">• At least one uppercase letter.</span>

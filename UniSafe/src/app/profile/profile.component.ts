@@ -45,6 +45,7 @@ export class ProfileComponent implements OnInit {
     /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
   showPassword: boolean = false;
   isPasswordValid: boolean = false;
+  authenticated = false;
 
   constructor(
     private authService: AuthService,
@@ -54,8 +55,6 @@ export class ProfileComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.timeoutService.resetTimer();
-
     // Get user details from local storage
     const user = this.authService.getUser();
     if (user) {
@@ -77,6 +76,9 @@ export class ProfileComponent implements OnInit {
       }
 
       this.initForm();
+    } else {
+      this.authenticated = false;
+      this.router.navigate(['/home']);
     }
 
     this.authService.onLogout().subscribe(() => {
@@ -91,8 +93,11 @@ export class ProfileComponent implements OnInit {
   initForm(): void {
     this.profileForm = this.formBuilder.group({
       full_name: [this.userData.full_name],
-      email: [this.userData.email, Validators.required],
-      phone_number: [this.userData.phone_number, Validators.required],
+      email: [this.userData.email, [Validators.required, Validators.email]],
+      phone_number: [
+        this.userData.phone_number,
+        [Validators.required, Validators.pattern(/^\+255\d{9}$/)],
+      ],
       gender: [this.userData.gender],
       staff_no: [this.userData.profile.staff_no],
       police_no: [this.userData.profile.police_no],
@@ -127,6 +132,7 @@ export class ProfileComponent implements OnInit {
         window.alert('User details updated successfully');
         console.log('User details updated successfully', response);
         this.userData = { ...this.userData, ...updatedUserData };
+        this.logout();
       },
       (error) => {
         console.error('Error updating user details', error);
@@ -155,10 +161,12 @@ export class ProfileComponent implements OnInit {
         updateProfileMethod = this.authService.updateStudentProfile(
           this.profileForm.value
         );
+        // this.logout();
       } else if (this.isGenderDesk) {
         updateProfileMethod = this.authService.updateGenderDeskProfile(
           this.profileForm.value
         );
+        // this.logout();
       }
 
       updateProfileMethod?.subscribe(
@@ -166,6 +174,7 @@ export class ProfileComponent implements OnInit {
           window.alert('Profile details updated successfully');
           console.log('Profile details updated successfully', response);
           this.userData = { ...this.userData, ...this.profileForm.value };
+          this.logout();
         },
         (error) => {
           console.error('Error updating profile details', error);

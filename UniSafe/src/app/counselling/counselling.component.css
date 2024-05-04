@@ -134,6 +134,7 @@ body {
   text-align: start;
   margin-left: 20%;
   max-width: 90%;
+
 }
 .bookleft p{
   font-size: 25px;
@@ -147,6 +148,9 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.bookright h2{
+   font-weight: bold;
 }
 .card{
   height: 90%;
@@ -169,29 +173,65 @@ body {
   width: 80%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .card form .container input{
-  height: 70%;
+  height: 65%;
+  width: 45%;
+  padding: 15px;
+  font-size: 15px;
 }
+.conditions{
+  justify-self: center;
+  width: 100%;
+  text-align: center;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  color: red;
+  font-size: 15px;
+}
+
 .card form .one{
   margin-top: 2.5%;
-  background-color: yellow;
+  /* background-color: yellow; */
 }
 .card form .two{
-  background-color: red;
+  /* background-color: red; */
 }
 .card form .three{
-  background-color: green;
+  /* background-color: green; */
+  align-items: center;
+}
+.card form .three input{
+  width: 100%;
 }
 .card form .four{
-  background-color: blueviolet;
+  /* background-color: blueviolet; */
   flex-direction: column;
+  align-items: flex-start;
+}
+.datetimep{
+  font-size: 17px;
+  font-weight: 600;
+
 }
 .five{
   margin-top: 1vw;
   width: 100%;
   margin-left: 20%;
-  font-size: 17.5px;
+  font-size: 17px;
+  line-height: 3vh;
+  padding: 15px;
+}
+.five p{
+  font-weight: 600;
+}
+.five input{
+  margin-left: 5%;
+}
+.five label{
+  margin-left: 15px;
 }
 button {
   margin-top: 3vh;

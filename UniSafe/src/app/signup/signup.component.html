@@ -31,7 +31,7 @@
             <input type="text" placeholder="Phone" formControlName="phone">
             <div class="conditions" *ngIf="phoneField && phoneField.dirty && phoneField.invalid">
               <span class="block" *ngIf="phoneField.errors?.['required']">• Phone number is required.</span>
-              <span class="block" *ngIf="phoneField.errors?.['pattern']">• Invalid phone number format. Required: +255_</span>
+              <span class="block" *ngIf="phoneField.errors?.['pattern']">• Required format: +255(last 9 digits)</span>
             </div>
 
             <div class="Profile">

@@ -15,6 +15,10 @@ export class HeadComponent implements OnInit {
   activeRoute: string = '';
   profOpt: boolean = false;
   isHovered: boolean = false;
+  isStudent: boolean = false;
+  isGenderDesk: boolean = false;
+  isConsultant: boolean = false;
+  isPolice: boolean = false;
 
   constructor(
     private el: ElementRef,
@@ -35,6 +39,10 @@ export class HeadComponent implements OnInit {
     if (user) {
       this.userData = user;
       this.authenticated = true;
+      this.isStudent = this.userData.is_student;
+      this.isGenderDesk = this.userData.is_genderdesk;
+      this.isConsultant = this.userData.is_consultant;
+      this.isPolice = this.userData.is_police;
     } else {
       this.authenticated = false;
     }

@@ -132,6 +132,7 @@ export class AuthService {
   }
 
   logout(): Observable<any> {
+    this.router.navigate(['/login']);
     const accessToken = this.getAccessToken();
     const refreshToken = this.getRefreshToken();
 

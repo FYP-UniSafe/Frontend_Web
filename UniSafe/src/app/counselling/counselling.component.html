@@ -47,33 +47,41 @@
                     </div>
                     <div class="bookright">
                         <div class="card">
-                            <form>
+                            <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
                                 <h2>Make an Appointment</h2>
                                 <div class="container one">
-                                    <input type="text" id="" placeholder="Full name *" formControlName="Phone"/>
-                                    <input type="text" id="" placeholder="Registration Number *" formControlName="Email"/>
+                                    <input type="text" id="" placeholder="Full name *" formControlName="fullName"/>
+                                    <input type="text" id="" placeholder="Registration Number *" formControlName="regNo"/>
                                 </div>
                                 <div class="container two">
-                                    <input type="text" id="" placeholder="Phone *" formControlName="Phone"/>
-                                    <input type="text" id="" placeholder="Email *" formControlName="Email"/>
+                                    <input type="text" id="" placeholder="Phone *" formControlName="phone"/>
+                                    <input type="text" id="" placeholder="Email *" formControlName="email"/>
+                                </div>
+                                <div class="conditions" *ngIf="phoneField && phoneField.dirty && phoneField.invalid">
+                                    <span class="block" *ngIf="phoneField.errors?.['required']">• Phone number is required.</span>
+                                    <span class="block" *ngIf="phoneField.errors?.['pattern']">• Required format: +255(last 9 digits)</span>
+                                </div>
+                                <div class="conditions" *ngIf="emailField && emailField.dirty && emailField.invalid">
+                                    <span class="block" *ngIf="emailField.errors?.['required']">• Email is required.</span>
+                                    <span class="block" *ngIf="emailField.errors?.['email']">• Invalid email format.</span>
                                 </div>
                                 <div class="container three">
-                                    <input type="text" id="" placeholder="Repor ID" formControlName="ReportID"/>
+                                    <input type="text" id="" placeholder="Report ID" formControlName="reportId"/>
                                 </div>
                                 <div class="container four">
-                                    <p class="datetimep">Date and Time*:</p>
-                                    <input class="date" type="date" required id=""  formControlName="datetime"/>
+                                    <p class="datetimep">Date *:</p>
+                                    <input class="date" type="date" required id=""  formControlName="date"/>
                                 </div>
                                 <div class="five">
                                     <p>Preferred Session Type:</p>
                                     <div class="labels">
-                                        <input type="radio" name="counselling" id="" value="" />
-                                        <label for="option1">Physical</label>
-                                        <br>
-                                        <input type="radio" name="counselling" id="" value="" />
-                                        <label for="option2">Online</label>
+                                      <input type="radio" formControlName="sessionType" id="option1" value="physical" />
+                                      <label for="option1">Physical</label>
+                                      <br>
+                                      <input type="radio" formControlName="sessionType" id="option2" value="online" />
+                                      <label for="option2">Online</label>
                                     </div>
-                                </div>
+                                  </div>
                                 <button type="submit">Submit</button>
                             </form>
                         </div>

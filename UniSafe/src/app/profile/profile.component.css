@@ -186,12 +186,25 @@ option{
 .pass{
   position: relative;
 }
+.pass2{
+  position: relative;
+}
 .eye-show,
 .eye-hide {
   position: absolute;
   color: #757575;
-  top: 50%;
-  right: 20px;
+  top: 65%;
+  right: 10%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 0.8vw;
+}
+.eye-show2,
+.eye-hide2 {
+  position: absolute;
+  color: #757575;
+  top: 65%;
+  right: 10%;
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 0.8vw;

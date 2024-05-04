@@ -33,10 +33,56 @@
   </div>
 
   <div class="div2">
+
     <div class="head">
         <h2>Your Reports</h2>
         <span></span>
       </div>
+      
+      <div class="reports">
+              <div class="selection">
+                <div class="butns">
+                  <button [class.active]="activeStatus === null" (click)="filterReports()">All Reports</button>
+                  <button [class.active]="activeStatus === 'PENDING'" (click)="filterReports('PENDING')">Pending</button>
+                  <button [class.active]="activeStatus === 'IN PROGRESS'" (click)="filterReports('IN PROGRESS')">In Progress</button>
+                  <button [class.active]="activeStatus === 'RESOLVED'" (click)="filterReports('RESOLVED')">Resolved</button>
+                  <button [class.active]="activeStatus === 'REJECTED'" (click)="filterReports('REJECTED')">Rejected</button>
+                </div>
+              </div>
+
+              <div class="card" *ngIf="filteredReports.length > 0">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Report ID</th>
+                      <th>Abuse Type</th>
+                      <th>Reported On</th>
+                      <th>Status</th>
+                      <th>Assigned Gender Desk</th>
+                      <th>Police Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let report of filteredReports">
+                      <td>{{ report.report_id }}</td>
+                      <td>{{ report.abuse_type}}</td>
+                      <td>{{ report.created_on | date: 'shortDate' }}</td>
+                      <td>{{ report.status }}</td>
+                      <td>{{ report.assigned_gd }}</td>
+                      <td>{{ report.police_status }}</td>
+                      <!-- Add other columns as needed -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="card" *ngIf="filteredReports.length === 0">
+                <p>No report found!.</p>
+              </div>
+
+      </div>
+
+
   </div>
   
 </body>
