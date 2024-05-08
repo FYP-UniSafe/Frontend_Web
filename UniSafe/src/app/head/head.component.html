@@ -25,7 +25,7 @@
     <div class="mid">
         <button class="links" routerLink="/home"  [ngClass]="{ 'active': activeRoute === '/home' }">Home</button>
         <button class="links" routerLink="/report" [ngClass]="{ 'active': activeRoute === '/report'|| activeRoute === '/report-form' }" *ngIf="authenticated && isStudent">Report a GBV</button>
-        <button class="links" routerLink="/report" [ngClass]="{ 'active': activeRoute === '/report'|| activeRoute === '/report-form' }" *ngIf="!authenticated && isStudent">Report Anonymously</button>
+        <button class="links" routerLink="/report" [ngClass]="{ 'active': activeRoute === '/report'|| activeRoute === '/report-form' }" *ngIf="!authenticated">Report Anonymously</button>
         <button class="links" routerLink="/genderdesk" [ngClass]="{ 'active': activeRoute === '/genderdesk' }" *ngIf="authenticated && isGenderDesk">GenderDesk</button>
         <button class="links" *ngIf="authenticated && (isStudent || isConsultant)" routerLink="/counselling" [ngClass]="{ 'active': activeRoute === '/counselling' }">Seek Counsel</button>
         <button class="links" (click)="scrollToFooter()">Contact us</button>

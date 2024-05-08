@@ -29,7 +29,10 @@
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/bootstrap-icons/font/bootstrap-icons.min.css"
             ],
-            "scripts": []
+            "scripts": [
+              { "input": "src/assets/javascripts/test.js"},
+              { "input": "src/assets/javascripts/chart1.js"}
+            ]
           },
           "configurations": {
             "production": {

@@ -2,6 +2,7 @@ export interface Report {
   report_id: string;
   report_for: string;
   created_on: string;
+  created_on_date: Date;
   status: string;
   rejection_reason: string | null;
   reporter_full_name: string;

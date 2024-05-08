@@ -3,6 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { TimeoutService } from '../services/timeout.service';
 import { Router } from '@angular/router';
 
+// declare function test(): void;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -17,8 +18,11 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private timeoutService: TimeoutService,
-    private router: Router
-  ) {}
+    private router: Router,
+    
+  ) {
+    // test();
+  }
 
   ngOnInit(): void {
     this.timeoutService.resetTimer();

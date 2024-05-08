@@ -22,6 +22,7 @@ import { ReportService } from './services/report.service';
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AgoraComponent } from './agora/agora.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ProfileComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    AgoraComponent,
   ],
   imports: [
     BrowserModule,
