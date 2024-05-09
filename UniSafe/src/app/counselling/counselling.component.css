@@ -70,7 +70,6 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* color: #0f6cbf; */
 }
 .message h1{
   font-size: 40px;
@@ -85,20 +84,16 @@ body {
   max-width: 80%;
 }
 .main2{
-  height: 200vh;
+  height: auto;
   width: 100%;
   margin-top: 100vh;
   z-index: 4;
   position: sticky;
   display: flex;
   flex-direction: column;
-  background-color: #ffffff;
+  background-color: #e30000;
 }
-.appointments{
-  height: 100vh;
-  background-color: white;
-  /* box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.5); */
-}
+
 .book{
   height: 100vh;
   display: flex;
@@ -150,7 +145,7 @@ body {
   align-items: center;
 }
 .bookright h2{
-   font-weight: bold;
+  font-weight: bold;
 }
 .card{
   height: 90%;
@@ -184,6 +179,7 @@ body {
 .conditions{
   justify-self: center;
   width: 100%;
+  position: sticky;
   text-align: center;
   height: auto;
   display: flex;
@@ -194,22 +190,50 @@ body {
 
 .card form .one{
   margin-top: 2.5%;
-  /* background-color: yellow; */
 }
-.card form .two{
-  /* background-color: red; */
-}
+/* .card form .two{
+} */
 .card form .three{
-  /* background-color: green; */
   align-items: center;
 }
 .card form .three input{
   width: 100%;
 }
 .card form .four{
-  /* background-color: blueviolet; */
-  flex-direction: column;
+  flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
+}
+.card form .four .left{
+  width: 50%;
+  flex-direction: column;
+  
+}
+.card form .four .left input{
+  width: 90%;
+  padding: 0;
+  padding: 15px;
+}
+.card form .four .right{
+  width: 50%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.card form .four .right select{
+  height: 65%;
+  width: 90%;
+  font-size: 15px;
+  padding: 10px;
+  justify-self: flex-end;
+  align-self: flex-end;
+}
+.card form .four .right p{
+  font-size: 17px;
+  font-weight: 600;
+  margin-left: 10%;
 }
 .datetimep{
   font-size: 17px;
@@ -250,4 +274,134 @@ button {
 button:hover {
   transform: scale(1.05);
   font-weight: bold;
+}
+.appointments{
+  z-index: 4;
+  height: auto;
+  width: 100%;
+  position: sticky;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.appointments .head {
+  height: 7.5vh;
+  width: 100%;
+  background-color: #0F6CBF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.head {
+  height: 7.5vh;
+  width: 100%;
+  background-color: #0F6CBF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.head span {
+  border-top: 5px solid #ffffff;
+  width: 15vw;
+  margin-bottom: 1vh;
+  margin-left: 10vw;
+}
+.head h2 {
+  color: #ffffff;
+  margin-left: 10vw;
+  font-size: 1.2vw;
+}
+.reports{
+  flex-grow: 1;
+  width: 80%;
+  margin-bottom: 5vh;
+  display: flex;
+  flex-direction: column;
+}
+.selection{
+  height: 6vh;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.butns{
+  height: 100%;
+  width: 60%;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.butns button{
+  height: 3.25vh;
+  width: 4vw;
+  margin: 0;
+  position: sticky;
+  background-color: transparent;
+  color: black;
+  text-decoration: none;
+  font-size: 0.6vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  border-radius: 50vw;
+  transition: transform 0.5s;
+}
+.butns button:hover {
+  font-weight: bold;
+  background-color: #0F6CBF;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+.butns button.active {
+  background-color: #0F6CBF;
+  color: #ffffff;
+}
+.cardt{
+  height: auto;
+  width: 100%;
+  margin-right: 10%;
+  background-color: #f0f8ff;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.cardt table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.cardt table th,
+.cardt table td {
+  padding: 12px 15px;
+  text-align: center;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+}
+
+.cardt table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: #333;
+  text-transform: uppercase;
+}
+
+.cardt table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.cardt table tbody tr{
+  transition: transform 0.5s;
+}
+
+.cardt table tbody tr:hover {
+  background-color: #0F6CBF;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.3);
+  transform: scale(1.02);
 }

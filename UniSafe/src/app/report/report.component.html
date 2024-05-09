@@ -46,6 +46,7 @@
                   <button [class.active]="activeStatus === 'PENDING'" (click)="filterReports('PENDING')">Pending</button>
                   <button [class.active]="activeStatus === 'IN PROGRESS'" (click)="filterReports('IN PROGRESS')">In Progress</button>
                   <button [class.active]="activeStatus === 'RESOLVED'" (click)="filterReports('RESOLVED')">Resolved</button>
+                  <button [class.active]="activeStatus === 'FORWARDED TO POLICE'" (click)="filterReports('FORWARDED TO POLICE')">Forwarded</button>
                   <button [class.active]="activeStatus === 'REJECTED'" (click)="filterReports('REJECTED')">Rejected</button>
                 </div>
               </div>

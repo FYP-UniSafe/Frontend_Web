@@ -69,16 +69,25 @@
                                     <input type="text" id="" placeholder="Report ID" formControlName="reportId"/>
                                 </div>
                                 <div class="container four">
-                                    <p class="datetimep">Date *:</p>
-                                    <input class="date" type="date" required id=""  formControlName="date"/>
+                                    <div class="left">
+                                        <p class="datetimep">Date *:</p>
+                                        <input class="date" type="date" required id=""  formControlName="date"/>
+                                    </div>
+                                    <div class="right">
+                                        <p>Gender *:</p>
+                                        <select formControlName="gender">
+                                            <option value="Male">Male</option>
+                                            <option value="Female">Female</option>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="five">
                                     <p>Preferred Session Type:</p>
                                     <div class="labels">
-                                      <input type="radio" formControlName="sessionType" id="option1" value="physical" />
+                                      <input type="radio" formControlName="sessionType" id="option1" value="Physical" />
                                       <label for="option1">Physical</label>
                                       <br>
-                                      <input type="radio" formControlName="sessionType" id="option2" value="online" />
+                                      <input type="radio" formControlName="sessionType" id="option2" value="Online" />
                                       <label for="option2">Online</label>
                                     </div>
                                   </div>
@@ -88,7 +97,57 @@
                     </div>
                 </div>
         </div>
-        <div class="appointments"></div>
+    </div>
+    <div class="appointments">
+
+        <div class="head">
+            <h2>Your Appointments</h2>
+            <span></span>
+        </div>
+
+        <div class="reports">
+            <div class="selection">
+              <div class="butns">
+                <button [class.active]="activeStatus === null" (click)="filterAppointments()" style="width: 7vw;">All Appointments</button>
+                <button [class.active]="activeStatus === 'REQUESTED'" (click)="filterAppointments('REQUESTED')">Requested</button>
+                <button [class.active]="activeStatus === 'SCHEDULED'" (click)="filterAppointments('SCHEDULED')">Scheduled</button>
+                <button [class.active]="activeStatus === 'CLOSED'" (click)="filterAppointments('CLOSED')">Closed</button>
+                <button [class.active]="activeStatus === 'CANCELLED'" (click)="filterAppointments('CANCELLED')">Cancelled</button>
+              </div>
+            </div>
+
+            <div class="cardt" *ngIf="filteredAppointments.length > 0">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Appointment ID</th>
+                    <th>Session Type</th>
+                    <th>Created On</th>
+                    <th>Status</th>
+                    <th>Assigned Consultant</th>
+                    <!-- <th>Police Status</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let appointment of filteredAppointments">
+                    <td>{{ appointment.appointment_id }}</td>
+                    <td>{{ appointment.session_type}}</td>
+                    <td>{{ appointment.created_on_date | date:'dd/MM/yyyy' }} | {{ appointment.created_on_date | date:'HH:mm' }}</td>
+                    <td>{{ appointment.status }}</td>
+                    <td>{{ appointment.consultant }}</td>
+                    <!-- <td>{{ report.police_status }}</td> -->
+                    <!-- Add other columns as needed -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="cardt" *ngIf="filteredAppointments.length === 0">
+              <p>No appointment found!.</p>
+            </div>
+
+    </div>
+
     </div>
     <!-- <div class="main3"></div> -->
 </body>

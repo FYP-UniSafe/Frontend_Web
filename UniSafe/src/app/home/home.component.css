@@ -159,8 +159,10 @@ body {
 
 .div4 {
   height: 92.5vh;
-  background-color: blanchedalmond;
+  background-color: white;
   z-index: 9;
+  display: flex;
+  flex-direction: column;
 }
 .div4 .head {
   height: 7.5vh;
@@ -169,6 +171,20 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+.charts{
+  /* flex: 1; */
+  height: 85vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+
+
 
 /* @media (max-width: 1349px) { */
 @media (max-width: 1023px) {

@@ -23,6 +23,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AgoraComponent } from './agora/agora.component';
+import { ChartModule } from '@syncfusion/ej2-angular-charts';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { AgoraComponent } from './agora/agora.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ChartModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,
