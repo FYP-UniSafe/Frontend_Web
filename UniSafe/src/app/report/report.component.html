@@ -32,7 +32,7 @@
     <button routerLink="/report-form">Report Now</button>
   </div>
 
-  <div class="div2">
+  <div class="div2" *ngIf="authenticated">
 
     <div class="head">
         <h2>Your Reports</h2>
@@ -46,6 +46,7 @@
                   <button [class.active]="activeStatus === 'PENDING'" (click)="filterReports('PENDING')">Pending</button>
                   <button [class.active]="activeStatus === 'IN PROGRESS'" (click)="filterReports('IN PROGRESS')">In Progress</button>
                   <button [class.active]="activeStatus === 'RESOLVED'" (click)="filterReports('RESOLVED')">Resolved</button>
+                  <button [class.active]="activeStatus === 'FORWARDED TO POLICE'" (click)="filterReports('FORWARDED TO POLICE')">Forwarded</button>
                   <button [class.active]="activeStatus === 'REJECTED'" (click)="filterReports('REJECTED')">Rejected</button>
                 </div>
               </div>
@@ -60,16 +61,18 @@
                       <th>Status</th>
                       <th>Assigned Gender Desk</th>
                       <th>Police Status</th>
+                      <!-- <th>Action</th> -->
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let report of filteredReports">
                       <td>{{ report.report_id }}</td>
                       <td>{{ report.abuse_type}}</td>
-                      <td>{{ report.created_on | date: 'shortDate' }}</td>
+                      <td>{{ report.created_on_date | date:'dd/MM/yyyy' }} | {{ report.created_on_date | date:'HH:mm' }}</td>
                       <td>{{ report.status }}</td>
                       <td>{{ report.assigned_gd }}</td>
                       <td>{{ report.police_status }}</td>
+                      <!-- <td></td> -->
                       <!-- Add other columns as needed -->
                     </tr>
                   </tbody>

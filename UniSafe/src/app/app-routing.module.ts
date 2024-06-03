@@ -11,6 +11,7 @@ import { ResendOtpComponent } from './resend-otp/resend-otp.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AgoraComponent } from './agora/agora.component';
 
 
 const routes: Routes = [
@@ -25,6 +26,7 @@ const routes: Routes = [
   {path: 'resend-otp', component: ResendOtpComponent},
   {path: 'report', component: ReportComponent},
   {path: 'counselling', component: CounsellingComponent},
+  {path: 'agora', component: AgoraComponent},
   {path: '**', redirectTo: 'home'}
 ];
 

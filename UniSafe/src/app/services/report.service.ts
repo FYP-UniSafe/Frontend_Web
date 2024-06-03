@@ -14,9 +14,8 @@ export class ReportService {
 
   constructor(
     private http: HttpClient,
-    private router: Router
-  ) // private authService: AuthService
-  {}
+    private router: Router // private authService: AuthService
+  ) {}
 
   createReport(report: any): Observable<any> {
     return this.http.post(`${environment.apiUrl}/reports/create`, report, {
@@ -38,4 +37,11 @@ export class ReportService {
     );
   }
 
+  getReportsPerLocation(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/reports/per/location`);
+  }
+
+  getReportsPerCaseType(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/reports/per/casetype`);
+  }
 }

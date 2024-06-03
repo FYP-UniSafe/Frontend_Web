@@ -129,7 +129,9 @@ export class ReportFormComponent implements OnInit {
     this.reportForm.get('email')?.clearValidators();
     this.reportForm.get('phoneNumber')?.clearValidators();
     this.reportForm.get('reportFor')?.clearValidators();
+    this.reportForm.get('college')?.clearValidators();
     this.reportForm.get('otherLocation')?.clearValidators();
+    this.reportForm.get('counselling')?.clearValidators();
     this.reportForm.updateValueAndValidity();
   }
 
