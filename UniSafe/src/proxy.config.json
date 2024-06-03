@@ -1,6 +1,6 @@
 {
-    "/api": {
-      "target": "https://unisafe.nucci.live",
-      "secure": true
-    }
+  "/api": {
+    "target": "https://unisafe.nucci.live",
+    "secure": true
   }
+}

@@ -78,14 +78,29 @@
       <span></span>
     </div>
   </div>
+
   <div class="div4">
     <div class="head">
       <h2>Statistics</h2>
       <span></span>
     </div>
     <div class="charts">
-      <canvas id="piechart" style="width: 100%; height: 200%;"></canvas>
+      <div class="perloc" [style.display]="selectedChart === 'perloc' ? 'block' : 'none'">
+        <p class="charhead">Reports per Location</p>
+        <canvas id="locationChart"></canvas>
+        <p>The Bar Chart showing the number of cases reported through UniSafe per Location  i.e., UDSM Hostels since August 2024.</p>
+      </div>
+      <div class="pertype" [style.display]="selectedChart === 'pertype' ? 'block' : 'none'">
+        <p class="charhead">Reports per GBV Type</p>
+        <div class="pie">
+          <canvas id="caseTypeChart"></canvas>
+        </div>
+        <p>The Pie Chart showing the number of cases reported since August 2024 through UniSafe, per GBV Type .</p>
+      </div>
     </div>
-    <!-- <ejs-chart></ejs-chart> -->
+    <div class="nav">
+      <span [class.active]="selectedChart === 'perloc'" (click)="showChart('perloc')"></span>
+      <span [class.active]="selectedChart === 'pertype'" (click)="showChart('pertype')"></span>
+    </div>
   </div>
 </body>

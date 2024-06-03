@@ -172,12 +172,71 @@ body {
   justify-content: center;
 }
 .charts{
-  /* flex: 1; */
-  height: 85vh;
+  height: 78vh;
   width: 100%;
+  justify-self: flex-end;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* background-color: red; */
+}
+.perloc{
+  height: 100%;
+  width: 70%;
+  /* background-color: green; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.pertype{
+  height: 100%;
+  width: 70%;
+  /* background-color: green; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.pertype div{
+  height: 85%;
+  width: 100%;
+  /* background-color: red; */
+}
+.pertype p{
+  margin-top: 2vh;
+}
+.charhead{
+  margin-top: 3vh;
+  font-weight: bold;
+  font-size: 25px;
+}
+.nav{
+  height: 7;
+  width: 100%;
+  margin-top: 3vh;
+  justify-self: flex-end;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+}
+.nav span {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin: 0 5px;
+  border-radius: 50%;
+  border: 0.5px solid black;
+  background-color: white;
+  cursor: pointer;
+}
+
+.nav span.active {
+  background-color: #0f6cbf;
 }
 
 
