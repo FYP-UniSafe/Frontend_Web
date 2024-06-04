@@ -25,6 +25,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { AgoraComponent } from './agora/agora.component';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
 
+
 @NgModule({
   declarations: [
     AppComponent,
