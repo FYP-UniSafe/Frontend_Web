@@ -156,6 +156,22 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+.divmap{
+  height: 85vh;
+  width: 100%;
+  /* background-color: red; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.map{
+  height: 90%;
+  width: 80%;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .div4 {
   height: 92.5vh;

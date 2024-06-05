@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Chart, registerables } from 'node_modules/chart.js';
 import { ReportService } from '../services/report.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
+import { Loader } from '@googlemaps/js-api-loader';
 Chart.register(...registerables, ChartDataLabels);
 
 // declare function test(): void;
@@ -45,7 +46,22 @@ export class HomeComponent implements OnInit {
     });
 
     this.fetchReportData();
-    // this.RanderChart();
+
+    let loader = new Loader ({
+      apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8'
+    })
+
+    loader.load().then(() => {
+      const mapElement = document.getElementById("map");
+      if (mapElement) {
+        new google.maps.Map(mapElement as HTMLElement, {
+          center: { lat: -6.776635073401401, lng: 39.2138884875903},
+          zoom: 15
+        });
+      } else {
+        console.error('Element with id "map" not found');
+      }
+    });
   }
 
   isLoggedIn(): boolean {
@@ -90,14 +106,14 @@ export class HomeComponent implements OnInit {
       'Ubungo Hostels',
       'Other',
     ];
-  
+
     // Map the location data to labels and counts
     const labels = this.locationData.map((item) => item.location);
     const data = this.locationData.map((item) => item.count);
-  
+
     // Sort the labels array based on the desired order
     labels.sort((a, b) => desiredOrder.indexOf(a) - desiredOrder.indexOf(b));
-  
+
     new Chart('locationChart', {
       type: 'bar',
       data: {
@@ -162,39 +178,7 @@ export class HomeComponent implements OnInit {
       },
     });
   }
-  
-  
 
-  // renderCaseTypeChart(): void {
-  //   const labels = this.caseTypeData.map((item) => item.abuse_type);
-  //   const data = this.caseTypeData.map((item) => item.count);
-
-  //   new Chart('caseTypeChart', {
-  //     type: 'pie',
-  //     data: {
-  //       labels: labels,
-  //       datasets: [
-  //         {
-  //           label: 'Reports per GBV Type',
-  //           data: data,
-  //           backgroundColor: [
-  //             'Red',
-  //             'Blue',
-  //             'Yellow',
-  //             'Green',
-  //             'Purple',
-  //             'Orange',
-  //           ],
-  //         },
-  //       ],
-  //     },
-  //     options: {
-  //       responsive: true,
-  //       aspectRatio: 5,
-  //       maintainAspectRatio: false,
-  //     },
-  //   });
-  // }
   renderCaseTypeChart(): void {
     const labels = this.caseTypeData.map((item) => item.abuse_type);
     const data = this.caseTypeData.map((item) => item.count);
@@ -207,14 +191,7 @@ export class HomeComponent implements OnInit {
           {
             label: 'Reports per GBV Type',
             data: data,
-            backgroundColor: [
-              'Red',
-              'Blue',
-              'Orange',
-              'Green',
-              'Purple',
-              
-            ],
+            backgroundColor: ['Red', 'Blue', 'Orange', 'Green', 'Purple'],
           },
         ],
       },
