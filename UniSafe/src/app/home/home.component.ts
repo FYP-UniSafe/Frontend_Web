@@ -107,51 +107,11 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
-  //   let loader = new Loader({
-  //     apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8',
-  //   });
-
-  //   loader.load().then(() => {
-  //     const mapElement = document.getElementById('map1');
-  //     if (mapElement) {
-  //       this.map = new google.maps.Map(mapElement as HTMLElement, {
-  //         center: { lat: -6.7974259, lng: 39.2054525 },
-  //         zoom: 13,
-  //         // mapTypeId: 'hybrid',
-  //         mapTypeId: 'satellite',
-  //       });
-
-  //       for (let hostel in this.hostelsLocations) {
-  //         let hostelData = this.hostelsLocations[hostel];
-  //         new google.maps.Circle({
-  //           strokeColor: '#FF0000',
-  //           strokeOpacity: 0.8,
-  //           strokeWeight: 2,
-  //           fillColor: '#FF0000',
-  //           fillOpacity: 0.35,
-  //           map: this.map,
-  //           center: hostelData.center,
-  //           radius: Math.sqrt(hostelData.cases) * 100, // Adjust the multiplier as per your needs
-  //         });
-
-  //         const infoWindow = new google.maps.InfoWindow({
-  //           content: `<div style="text-align: center;">${this.hostelsLocations[hostel].cases}</div>`,
-  //           position: this.hostelsLocations[hostel].center,
-  //         });
-
-  //         infoWindow.open(this.map);
-  //       }
-  //     } else {
-  //       console.error('Element with id "map" not found');
-  //     }
-  //   });
-  // }
   createMap(): void {
     let loader = new Loader({
       apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8',
     });
-
+  
     loader.load().then(() => {
       const mapElement = document.getElementById('map1');
       if (mapElement) {
@@ -160,32 +120,48 @@ export class HomeComponent implements OnInit {
           zoom: 14,
           mapTypeId: 'satellite',
         });
-
+  
         for (let hostel in this.hostelsLocations) {
           let hostelData = this.hostelsLocations[hostel];
-          new google.maps.Circle({
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#FF0000',
-            fillOpacity: 0.35,
-            map: this.map,
-            center: hostelData.center,
-            radius: Math.sqrt(hostelData.cases) * 100,
-          });
-
-          // const infoWindow = new google.maps.InfoWindow({
-          //   content: `<div style="text-align: center;">${this.hostelsLocations[hostel].cases}</div>`,
-          //   position: this.hostelsLocations[hostel].center,
-          // });
-
-          // infoWindow.open(this.map);
+  
+          // Only create markers for locations with cases > 0
+          if (hostelData.cases > 0) {
+            let marker = new google.maps.Marker({
+              position: hostelData.center,
+              map: this.map,
+              label: {
+                text: hostelData.cases.toString(),
+                color: 'white',
+                fontSize: '12px',
+                fontWeight: 'bold',
+              },
+              icon: {
+                path: google.maps.SymbolPath.CIRCLE,
+                fillColor: '#FF0000',
+                fillOpacity: 0.6,
+                strokeColor: '#FF0000',
+                strokeWeight: 1,
+                scale: Math.sqrt(hostelData.cases) * 25,
+              },
+            });
+  
+            // Create InfoWindow to show the number of cases when marker is clicked
+            let infoWindow = new google.maps.InfoWindow({
+              content: `<div style="text-align: center;">${hostelData.cases}</div>`,
+            });
+  
+            // Add a listener to the marker to open the InfoWindow on click
+            marker.addListener('click', () => {
+              infoWindow.open(this.map, marker);
+            });
+          }
         }
       } else {
-        console.error('Element with id "map" not found');
+        console.error('Element with id "map1" not found');
       }
     });
   }
+  
 
   renderYearlyReportsChart(): void {
     const labels = this.reportsYearData.map((item) => item.year);
