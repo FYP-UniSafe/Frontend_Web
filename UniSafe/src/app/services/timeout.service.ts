@@ -11,10 +11,13 @@ export class TimeoutService {
   constructor(private authService: AuthService, private router: Router) {}
 
   resetTimer(): void {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(async () => {
-      await this.logout();
-    }, 600000); // 10 minutes in milliseconds
+    // Check if the user is logged in
+    if (this.authService.getAccessToken()) {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(async () => {
+        await this.logout();
+      }, 600000); // 10 minutes in milliseconds
+    }
   }
 
   async logout(): Promise<void> {

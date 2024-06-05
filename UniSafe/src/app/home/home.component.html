@@ -78,7 +78,15 @@
       <span></span>
     </div>
     <div class="divmap">
-      <div class="map" id="map"></div>
+      <div class="heading">
+        <p>{{heading}}</p>
+      </div>
+      <div class="map" id="map1" [style.display]="selectedMap === 'map1' ? 'block' : 'none'"></div>
+      <div class="map" id="map2" [style.display]="selectedMap === 'map2' ? 'block' : 'none'"></div>
+      <div class="nav">
+        <span [class.active]="selectedMap === 'map1'" (click)="showMap('map1')"></span>
+        <span [class.active]="selectedMap === 'map2'" (click)="showMap('map2')"></span>
+      </div>
     </div>
   </div>
 

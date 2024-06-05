@@ -156,16 +156,21 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+.heading{
+  font-weight: bold;
+  font-size: 25px;
+}
 .divmap{
   height: 85vh;
   width: 100%;
   /* background-color: red; */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 .map{
-  height: 90%;
+  height: 80%;
   width: 80%;
   background-color: green;
   display: flex;
