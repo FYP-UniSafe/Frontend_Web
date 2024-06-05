@@ -96,10 +96,10 @@
       <span></span>
     </div>
     <div class="charts">
-      <div class="perloc" [style.display]="selectedChart === 'perloc' ? 'block' : 'none'">
-        <p class="charhead">Reports per Location</p>
-        <canvas id="locationChart"></canvas>
-        <p>The Bar Chart showing the number of cases reported through UniSafe per Location  i.e., UDSM Hostels since August 2024.</p>
+      <div class="peryear" [style.display]="selectedChart === 'peryear' ? 'block' : 'none'">
+        <p class="charhead">Reports per Year of Study</p>
+        <canvas id="yearlyReportsChart"></canvas>
+        <p>The Bar Chart showing the number of cases reported through UniSafe per Year of Study since August 1, 2023.</p>
       </div>
       <div class="pertype" [style.display]="selectedChart === 'pertype' ? 'block' : 'none'">
         <p class="charhead">Reports per GBV Type</p>
@@ -110,8 +110,8 @@
       </div>
     </div>
     <div class="nav">
-      <span [class.active]="selectedChart === 'perloc'" (click)="showChart('perloc')"></span>
       <span [class.active]="selectedChart === 'pertype'" (click)="showChart('pertype')"></span>
+      <span [class.active]="selectedChart === 'peryear'" (click)="showChart('peryear')"></span>
     </div>
   </div>
 </body>

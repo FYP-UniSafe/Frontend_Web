@@ -4,6 +4,7 @@ import { TimeoutService } from '../services/timeout.service';
 import { Router } from '@angular/router';
 import { Chart, registerables } from 'node_modules/chart.js';
 import { ReportService } from '../services/report.service';
+import { StatisticsService } from '../services/statistics.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Loader } from '@googlemaps/js-api-loader';
 Chart.register(...registerables, ChartDataLabels);
@@ -15,81 +16,33 @@ Chart.register(...registerables, ChartDataLabels);
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  // note = 'Welcome to UniSafe!'+{user}
+  yearlyReportsChart: Chart | undefined;
   note = 'Welcome to UniSafe!';
   userFullName: string = '';
   loggedIn: boolean = false;
-  locationData: any[] = [];
   caseTypeData: any[] = [];
-  selectedChart: string = 'perloc';
+  reportCount: any[] = [];
+  reportsYearData: any[] = [];
+  selectedChart: string = 'pertype';
   selectedMap: string = 'map1';
-  heading: string = 'Map showing cases in UDSM\'s Hostels';
+  heading: string = "Map showing cases in UDSM's Hostels";
   private map: google.maps.Map | undefined;
-
   hostelsLocations: {
-    [key: string]: { 
-      center: { lat: number, lng: number }, 
-      cases: number 
-    }
-  } = {
-    hall1: {
-      center: { lat: -6.777830275857019, lng: 39.20674868360372 },
-      cases: 8,
-    },
-    hall12: {
-      center: { lat: -6.776433326520683, lng: 39.20761758999947 },
-      cases: 2,
-    },
-    hall3: {
-      center: { lat: -6.775460021509301, lng: 39.206156004132886 },
-      cases: 3,
-    },
-    hall4: {
-      center: { lat: -6.776342493802564, lng: 39.205924524550916 },
-      cases: 6,
-    },
-    hall5: {
-      center: { lat: -6.776252280774953, lng: 39.20715725250724 },
-      cases: 0,
-    },
-    hall6: {
-      center: { lat: -6.775709422827955, lng: 39.202819099746364 },
-      cases: 1,
-    },
-    hall7: {
-      center: { lat: -6.7773403337781986, lng: 39.20301746116488 },
-      cases: 5,
-    },
-    magufuli: {
-      center: { lat: -6.781932907748147, lng: 39.21320137083932 },
-      cases: 3,
-    },
-    mabibo: {
-      center: { lat: -6.804887157350432, lng: 39.20856607018921 },
-      cases: 60,
-    },
-    kunduchi: {
-      center: { lat: -6.6641503479942354, lng: 39.216198491764985 },
-      cases: 6,
-    },
-    coict: {
-      center: { lat: -6.772251650594132, lng: 39.241099878854385 },
-      cases: 10,
-    },
-    ubungo: {
-      center: { lat: -6.792457483174008, lng: 39.21243123112793 },
-      cases: 2,
-    },
-  };
+    [key: string]: {
+      center: { lat: number; lng: number };
+      cases: number;
+    };
+  } = {};
+  // note = 'Welcome to UniSafe!'+{user}
+  // locationData: any[] = [];
 
   constructor(
     private authService: AuthService,
     private timeoutService: TimeoutService,
     private router: Router,
-    private reportService: ReportService
-  ) {
-    // test();
-  }
+    private reportService: ReportService,
+    private statisticsService: StatisticsService
+  ) {}
 
   ngOnInit(): void {
     this.timeoutService.resetTimer();
@@ -105,50 +58,6 @@ export class HomeComponent implements OnInit {
     });
 
     this.fetchReportData();
-
-    let loader = new Loader({
-      apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8',
-    });
-
-    loader.load().then(() => {
-      const mapElement = document.getElementById('map1');
-      if (mapElement) {
-        this.map = new google.maps.Map(mapElement as HTMLElement, {
-          center: { lat: -6.7974259, lng: 39.2054525 },
-          zoom: 11.5,
-          // mapTypeId: 'hybrid',
-          mapTypeId: 'satellite',
-        });
-    
-        // Iterate over hostelsLocations and create a circle for each location
-        for (const location in this.hostelsLocations) {
-          if (this.hostelsLocations.hasOwnProperty(location)) {
-            new google.maps.Circle({
-              strokeColor: '#FF0000',
-              strokeOpacity: 0.8,
-              strokeWeight: 2,
-              fillColor: '#FF0000',
-              fillOpacity: 0.35,
-              map: this.map,
-              center: this.hostelsLocations[location].center,
-              radius: Math.sqrt(this.hostelsLocations[location].cases) * 100, // Adjust the multiplier as needed
-            });
-
-            // Create an InfoWindow to show the number of cases
-            const infoWindow = new google.maps.InfoWindow({
-              content: `<div style="text-align: center;">${this.hostelsLocations[location].cases}</div>`,
-              position: this.hostelsLocations[location].center,
-            });
-            
-            // Display the InfoWindow above the circle
-            infoWindow.open(this.map);
-
-          }
-        }
-      } else {
-        console.error('Element with id "map" not found');
-      }
-    });
   }
 
   isLoggedIn(): boolean {
@@ -156,17 +65,19 @@ export class HomeComponent implements OnInit {
   }
 
   fetchReportData(): void {
-    this.reportService.getReportsPerLocation().subscribe(
+    this.statisticsService.getReportsPerLocation().subscribe(
       (data: any) => {
-        this.locationData = data;
-        this.renderLocationChart();
+        // this.locationData = data;
+        this.hostelsLocations = data;
+        console.log(this.hostelsLocations);
+        this.createMap();
       },
       (error: any) => {
         console.error('Error fetching reports per location:', error);
       }
     );
 
-    this.reportService.getReportsPerCaseType().subscribe(
+    this.statisticsService.getReportsPerCaseType().subscribe(
       (data: any) => {
         this.caseTypeData = data;
         this.renderCaseTypeChart();
@@ -175,33 +86,112 @@ export class HomeComponent implements OnInit {
         console.error('Error fetching reports per case type:', error);
       }
     );
+
+    this.statisticsService.getReportsCount().subscribe(
+      (data: any) => {
+        this.reportCount = data;
+      },
+      (error: any) => {
+        console.error('Error fetching reports count:', error);
+      }
+    );
+
+    this.statisticsService.getReportsPerYear().subscribe(
+      (data: any) => {
+        this.reportsYearData = data;
+        // this.renderLocationChart();
+        this.renderYearlyReportsChart();
+      },
+      (error: any) => {
+        console.error('Error fetching reports per year:', error);
+      }
+    );
   }
 
-  renderLocationChart(): void {
-    const desiredOrder = [
-      'Hall I',
-      'Hall II',
-      'Hall III',
-      'Hall IV',
-      'Hall V',
-      'Hall VI',
-      'Hall VII',
-      'Magufuli Hostels',
-      'Mabibo Hostels',
-      'Kunduchi Hostels',
-      'CoICT Hostels',
-      'Ubungo Hostels',
-      'Other',
-    ];
+  //   let loader = new Loader({
+  //     apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8',
+  //   });
 
-    // Map the location data to labels and counts
-    const labels = this.locationData.map((item) => item.location);
-    const data = this.locationData.map((item) => item.count);
+  //   loader.load().then(() => {
+  //     const mapElement = document.getElementById('map1');
+  //     if (mapElement) {
+  //       this.map = new google.maps.Map(mapElement as HTMLElement, {
+  //         center: { lat: -6.7974259, lng: 39.2054525 },
+  //         zoom: 13,
+  //         // mapTypeId: 'hybrid',
+  //         mapTypeId: 'satellite',
+  //       });
 
-    // Sort the labels array based on the desired order
-    labels.sort((a, b) => desiredOrder.indexOf(a) - desiredOrder.indexOf(b));
+  //       for (let hostel in this.hostelsLocations) {
+  //         let hostelData = this.hostelsLocations[hostel];
+  //         new google.maps.Circle({
+  //           strokeColor: '#FF0000',
+  //           strokeOpacity: 0.8,
+  //           strokeWeight: 2,
+  //           fillColor: '#FF0000',
+  //           fillOpacity: 0.35,
+  //           map: this.map,
+  //           center: hostelData.center,
+  //           radius: Math.sqrt(hostelData.cases) * 100, // Adjust the multiplier as per your needs
+  //         });
 
-    new Chart('locationChart', {
+  //         const infoWindow = new google.maps.InfoWindow({
+  //           content: `<div style="text-align: center;">${this.hostelsLocations[hostel].cases}</div>`,
+  //           position: this.hostelsLocations[hostel].center,
+  //         });
+
+  //         infoWindow.open(this.map);
+  //       }
+  //     } else {
+  //       console.error('Element with id "map" not found');
+  //     }
+  //   });
+  // }
+  createMap(): void {
+    let loader = new Loader({
+      apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8',
+    });
+
+    loader.load().then(() => {
+      const mapElement = document.getElementById('map1');
+      if (mapElement) {
+        this.map = new google.maps.Map(mapElement as HTMLElement, {
+          center: { lat: -6.7856611, lng: 39.2289924 },
+          zoom: 14,
+          mapTypeId: 'satellite',
+        });
+
+        for (let hostel in this.hostelsLocations) {
+          let hostelData = this.hostelsLocations[hostel];
+          new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: '#FF0000',
+            fillOpacity: 0.35,
+            map: this.map,
+            center: hostelData.center,
+            radius: Math.sqrt(hostelData.cases) * 100,
+          });
+
+          // const infoWindow = new google.maps.InfoWindow({
+          //   content: `<div style="text-align: center;">${this.hostelsLocations[hostel].cases}</div>`,
+          //   position: this.hostelsLocations[hostel].center,
+          // });
+
+          // infoWindow.open(this.map);
+        }
+      } else {
+        console.error('Element with id "map" not found');
+      }
+    });
+  }
+
+  renderYearlyReportsChart(): void {
+    const labels = this.reportsYearData.map((item) => item.year);
+    const data = this.reportsYearData.map((item) => item.count);
+
+    new Chart('yearlyReportsChart', {
       type: 'bar',
       data: {
         labels: labels,
@@ -231,7 +221,7 @@ export class HomeComponent implements OnInit {
           x: {
             title: {
               display: true,
-              text: 'Locations',
+              text: 'Academic Years',
               font: {
                 size: 14,
                 weight: 'bold',
@@ -320,30 +310,4 @@ export class HomeComponent implements OnInit {
         'Map showing location Auxiliary Police and Gender Offices in UDSM';
     }
   }
-
-  // renderMap(): void {
-  //   if (this.map) {
-  //     const cases = [
-  //       { location: { lat: -6.778347, lng: 39.205453 }, count: 10 },
-  //       // Add more cases here
-  //     ];
-
-  //     cases.forEach((caseItem) => {
-  //       if (typeof caseItem.count === 'number') {
-  //         new google.maps.Circle({
-  //           strokeColor: '#FF0000',
-  //           strokeOpacity: 0.8,
-  //           strokeWeight: 2,
-  //           fillColor: '#FF0000',
-  //           fillOpacity: 0.35,
-  //           map: this.map,
-  //           center: caseItem.location,
-  //           radius: Math.sqrt(caseItem.count) * 1000, // Adjust the multiplier as needed
-  //         });
-  //       }
-  //     });
-  //   } else {
-  //     console.error('Map instance is not available');
-  //   }
-  // }
 }
