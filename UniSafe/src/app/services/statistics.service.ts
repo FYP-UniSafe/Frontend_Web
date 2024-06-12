@@ -24,4 +24,8 @@ export class StatisticsService {
   getReportsPerYear(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/statistics/per/year`);
   }
+
+  getPoliceLocations(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/statistics/police-locations`);
+  }
 }
