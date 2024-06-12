@@ -37,11 +37,11 @@ export class ReportService {
     );
   }
 
-  getReportsPerLocation(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/reports/per/location`);
-  }
+  // getReportsPerLocation(): Observable<any> {
+  //   return this.http.get(`${environment.apiUrl}/reports/per/location`);
+  // }
 
-  getReportsPerCaseType(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/reports/per/casetype`);
-  }
+  // getReportsPerCaseType(): Observable<any> {
+  //   return this.http.get(`${environment.apiUrl}/reports/per/casetype`);
+  // }
 }

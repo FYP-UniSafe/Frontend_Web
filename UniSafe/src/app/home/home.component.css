@@ -156,6 +156,27 @@ body {
   flex-direction: column;
   justify-content: center;
 }
+.heading{
+  font-weight: bold;
+  font-size: 25px;
+}
+.divmap{
+  height: 85vh;
+  width: 100%;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.map{
+  height: 80%;
+  width: 80%;
+  background-color: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .div4 {
   height: 92.5vh;
@@ -181,7 +202,7 @@ body {
   align-items: center;
   /* background-color: red; */
 }
-.perloc{
+.peryear{
   height: 100%;
   width: 70%;
   /* background-color: green; */
