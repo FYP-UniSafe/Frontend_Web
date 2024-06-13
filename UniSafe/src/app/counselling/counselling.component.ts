@@ -19,6 +19,7 @@ export class CounsellingComponent implements OnInit {
   appointments: Appointment[] = [];
   filteredAppointments: Appointment[] = [];
   activeStatus: string | null = null;
+  showChat = false;
 
   constructor(
     private timeoutService: TimeoutService,
@@ -125,6 +126,10 @@ export class CounsellingComponent implements OnInit {
       } else {
         this.filteredAppointments = this.appointments;
       }
+    }
+
+    toggleChat(): void {
+      this.showChat = !this.showChat;
     }
 
 }

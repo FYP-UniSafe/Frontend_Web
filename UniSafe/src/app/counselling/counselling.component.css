@@ -25,32 +25,86 @@ body {
   z-index: 1;
   position: fixed;
 }
-.afterimg{
+.afterimg {
   display: flex;
   flex: 1;
   width: 100%;
   align-items: center;
   justify-content: center;
 }
-.notalon{
+.ai-trigger {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: rgba(15, 108, 191, 0.8);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  z-index: 7;
+  transition: transform 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ai-trigger:hover {
+  cursor: pointer;
+  transform: scale(1.05);
+}
+.ai-trigger img {
+  height: 55%;
+  width: 55%;
+  transition: transform 0.3s ease;
+}
+.ai-trigger:hover img {
+  transform: scale(1.2);
+}
+.aichat {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0s, opacity 0.5s linear;
+  position: fixed;
+  align-self: flex-end;
+  top: 8vh;
+  right: 8vw;
+  background-color: rgba(15, 108, 191, 0.8);
+  backdrop-filter: blur(5px);
+  box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);
+  height: 90vh;
+  width: 35vw;
+  z-index: 7;
+  border-radius: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.aichat.show {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+.notalon {
   height: 100%;
   width: 60%;
   background: linear-gradient(to bottom right, #0f6cbf, #ffffff);
   display: flex;
 }
-.left{
+.left {
   height: 100%;
   width: 45%;
   position: relative;
   display: flex;
 }
-.right{
+.right {
   height: 100%;
   width: 60%;
   display: flex;
   justify-content: center;
 }
-.timg{
+.timg {
   height: 70%;
   width: 120%;
   background-size: cover;
@@ -65,25 +119,25 @@ body {
   align-self: center;
   border-left: 2px solid #0f6cbf;
 }
-.message{
+.message {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
-.message h1{
+.message h1 {
   font-size: 40px;
   text-align: start;
   margin-left: 10%;
   max-width: 80%;
 }
-.message p{
+.message p {
   font-size: 20px;
   text-align: start;
   margin-left: 10%;
   max-width: 80%;
 }
-.main2{
+.main2 {
   height: auto;
   width: 100%;
   margin-top: 100vh;
@@ -91,15 +145,14 @@ body {
   position: sticky;
   display: flex;
   flex-direction: column;
-  background-color: #e30000;
 }
 
-.book{
+.book {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
-.bookhead{
+.bookhead {
   height: 15%;
   width: 100%;
   text-align: center;
@@ -109,45 +162,43 @@ body {
   background-color: #0f6cbf;
   color: white;
 }
-.bookmain{
+.bookmain {
   flex: 1;
   width: 100%;
   background: linear-gradient(to bottom right, #ffffff, #0f6cbf);
   display: flex;
   align-items: center;
 }
-.bookleft{
+.bookleft {
   width: 50%;
   height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-
 }
-.bookleft h2{
+.bookleft h2 {
   font-size: 40px;
   text-align: start;
   margin-left: 20%;
   max-width: 90%;
-
 }
-.bookleft p{
+.bookleft p {
   font-size: 25px;
   text-align: start;
   margin-left: 20%;
   max-width: 80%;
 }
-.bookright{
+.bookright {
   width: 50%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.bookright h2{
+.bookright h2 {
   font-weight: bold;
 }
-.card{
+.card {
   height: 90%;
   width: 75%;
   margin-right: 10%;
@@ -155,7 +206,7 @@ body {
   box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);
   display: flex;
 }
-.card form{
+.card form {
   height: 100%;
   width: 100%;
   display: flex;
@@ -163,20 +214,20 @@ body {
   justify-content: center;
   align-items: center;
 }
-.card form .container{
+.card form .container {
   height: 12%;
   width: 80%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.card form .container input{
+.card form .container input {
   height: 65%;
   width: 45%;
   padding: 15px;
   font-size: 15px;
 }
-.conditions{
+.conditions {
   justify-self: center;
   width: 100%;
   position: sticky;
@@ -188,33 +239,32 @@ body {
   font-size: 15px;
 }
 
-.card form .one{
+.card form .one {
   margin-top: 2.5%;
 }
 /* .card form .two{
 } */
-.card form .three{
+.card form .three {
   align-items: center;
 }
-.card form .three input{
+.card form .three input {
   width: 100%;
 }
-.card form .four{
+.card form .four {
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
 }
-.card form .four .left{
+.card form .four .left {
   width: 50%;
   flex-direction: column;
-  
 }
-.card form .four .left input{
+.card form .four .left input {
   width: 90%;
   padding: 0;
   padding: 15px;
 }
-.card form .four .right{
+.card form .four .right {
   width: 50%;
   padding: 0;
   margin: 0;
@@ -222,7 +272,7 @@ body {
   flex-direction: column;
 }
 
-.card form .four .right select{
+.card form .four .right select {
   height: 65%;
   width: 90%;
   font-size: 15px;
@@ -230,17 +280,16 @@ body {
   justify-self: flex-end;
   align-self: flex-end;
 }
-.card form .four .right p{
+.card form .four .right p {
   font-size: 17px;
   font-weight: 600;
   margin-left: 10%;
 }
-.datetimep{
+.datetimep {
   font-size: 17px;
   font-weight: 600;
-
 }
-.five{
+.five {
   margin-top: 1vw;
   width: 100%;
   margin-left: 20%;
@@ -248,13 +297,13 @@ body {
   line-height: 3vh;
   padding: 15px;
 }
-.five p{
+.five p {
   font-weight: 600;
 }
-.five input{
+.five input {
   margin-left: 5%;
 }
-.five label{
+.five label {
   margin-left: 15px;
 }
 button {
@@ -275,7 +324,7 @@ button:hover {
   transform: scale(1.05);
   font-weight: bold;
 }
-.appointments{
+.appointments {
   z-index: 4;
   height: auto;
   width: 100%;
@@ -288,7 +337,7 @@ button:hover {
 .appointments .head {
   height: 7.5vh;
   width: 100%;
-  background-color: #0F6CBF;
+  background-color: #0f6cbf;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -296,7 +345,7 @@ button:hover {
 .head {
   height: 7.5vh;
   width: 100%;
-  background-color: #0F6CBF;
+  background-color: #0f6cbf;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -312,21 +361,21 @@ button:hover {
   margin-left: 10vw;
   font-size: 1.2vw;
 }
-.reports{
+.reports {
   flex-grow: 1;
   width: 80%;
   margin-bottom: 5vh;
   display: flex;
   flex-direction: column;
 }
-.selection{
+.selection {
   height: 6vh;
   width: 100%;
   display: flex;
   justify-content: flex-start;
   align-items: center;
 }
-.butns{
+.butns {
   height: 100%;
   width: 60%;
   margin: 0;
@@ -334,7 +383,7 @@ button:hover {
   justify-content: space-evenly;
   align-items: center;
 }
-.butns button{
+.butns button {
   height: 3.25vh;
   width: 4vw;
   margin: 0;
@@ -350,15 +399,15 @@ button:hover {
 }
 .butns button:hover {
   font-weight: bold;
-  background-color: #0F6CBF;
+  background-color: #0f6cbf;
   color: #ffffff;
   transform: scale(1.05);
 }
 .butns button.active {
-  background-color: #0F6CBF;
+  background-color: #0f6cbf;
   color: #ffffff;
 }
-.cardt{
+.cardt {
   height: auto;
   width: 100%;
   margin-right: 10%;
@@ -394,12 +443,12 @@ button:hover {
   background-color: #f9f9f9;
 }
 
-.cardt table tbody tr{
+.cardt table tbody tr {
   transition: transform 0.5s;
 }
 
 .cardt table tbody tr:hover {
-  background-color: #0F6CBF;
+  background-color: #0f6cbf;
   color: white;
   cursor: pointer;
   box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.3);
