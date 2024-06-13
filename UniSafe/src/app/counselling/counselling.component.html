@@ -1,5 +1,11 @@
 <body>
-    <div class="top"></div>
+    <!-- <div class="top"></div> -->
+    <div class="aichat" [class.show]="showChat"></div>
+    <div class="ai-trigger" (click)="toggleChat()">
+         <!-- <img src="../../assets/media/chat.png" alt="open">
+         <img src="../../assets/media/close.png" alt=""close> -->
+         <img [src]="showChat ? '../../assets/media/close.png' : '../../assets/media/chat.png'" alt="Toggle Chat">
+    </div> 
     <div class="main">
         <img class="topimg" src="../../assets/media/nkr.png" alt="">
         <div  class="afterimg">
