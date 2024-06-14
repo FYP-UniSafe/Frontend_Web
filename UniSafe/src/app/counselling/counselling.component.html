@@ -1,159 +1,256 @@
 <body>
-    <!-- <div class="top"></div> -->
-    <div class="aichat" [class.show]="showChat"></div>
-    <div class="ai-trigger" (click)="toggleChat()">
-         <!-- <img src="../../assets/media/chat.png" alt="open">
-         <img src="../../assets/media/close.png" alt=""close> -->
-         <img [src]="showChat ? '../../assets/media/close.png' : '../../assets/media/chat.png'" alt="Toggle Chat">
-    </div> 
-    <div class="main">
-        <img class="topimg" src="../../assets/media/nkr.png" alt="">
-        <div  class="afterimg">
-            <div class="notalon">
+  <!-- <div class="top"></div> -->
+  <div class="aichat" [class.show]="showChat">
+    <div class="chatboard">
+        <div class="messages">
+          </div>
+          <div class="input-area">
+            <textarea type="text"  placeholder="Type a message..." class="chat-input"></textarea>
+            <img src="../../assets/media/send.png" alt="send">
+          </div>
+    </div>
+  </div>
+  <span class="ai-label" [class.hide]="showChat">Conversational AI</span>
+  <div class="ai-trigger" (click)="toggleChat()">
+    <img
+      [src]="
+        showChat
+          ? '../../assets/media/close.png'
+          : '../../assets/media/chat.png'
+      "
+      alt="Toggle Chat"
+    />
+  </div>
+  <div class="main">
+    <img class="topimg" src="../../assets/media/nkr.png" alt="" />
+    <div class="afterimg">
+      <div class="notalon">
+        <div class="left">
+          <img class="timg" src="../../assets/media/consultation.png" alt="" />
+        </div>
+        <div class="right">
+          <div class="horizontal-line"></div>
+          <div class="message">
+            <h1>You Are Not Alone...</h1>
+            <br />
+            <p>
+              Welcome to UDSM Counselling Unit, a safe space where your journey
+              towards healing begins. We understand the courage it takes to seek
+              support, and we’re here to offer compassionate guidance as you
+              navigate your healing process.
+              <br />
+              <br />
+              Our dedicated team is committed to providing you with
+              confidential, non-judgmental support tailored to your needs.
+              Please feel free to schedule a meeting at your convenience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main2">
+    <div class="book">
+      <div class="bookhead">
+        <h1>
+          Book an Online or Physical<br />
+          Counselling Session
+        </h1>
+      </div>
+      <div class="bookmain">
+        <div class="bookleft">
+          <h2>Ready to book a session?</h2>
+          <br />
+          <p>
+            Using our booking form, just select the type of appointment you wish
+            to book and complete the booking process, which we’ve tried to make
+            it as simple as possible.
+          </p>
+        </div>
+        <div class="bookright">
+          <div class="card">
+            <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
+              <h2>Make an Appointment</h2>
+              <div class="container one">
+                <input
+                  type="text"
+                  id=""
+                  placeholder="Full name *"
+                  formControlName="fullName"
+                />
+                <input
+                  type="text"
+                  id=""
+                  placeholder="Registration Number *"
+                  formControlName="regNo"
+                />
+              </div>
+              <div class="container two">
+                <input
+                  type="text"
+                  id=""
+                  placeholder="Phone *"
+                  formControlName="phone"
+                />
+                <input
+                  type="text"
+                  id=""
+                  placeholder="Email *"
+                  formControlName="email"
+                />
+              </div>
+              <div
+                class="conditions"
+                *ngIf="phoneField && phoneField.dirty && phoneField.invalid"
+              >
+                <span class="block" *ngIf="phoneField.errors?.['required']"
+                  >• Phone number is required.</span
+                >
+                <span class="block" *ngIf="phoneField.errors?.['pattern']"
+                  >• Required format: +255(last 9 digits)</span
+                >
+              </div>
+              <div
+                class="conditions"
+                *ngIf="emailField && emailField.dirty && emailField.invalid"
+              >
+                <span class="block" *ngIf="emailField.errors?.['required']"
+                  >• Email is required.</span
+                >
+                <span class="block" *ngIf="emailField.errors?.['email']"
+                  >• Invalid email format.</span
+                >
+              </div>
+              <div class="container three">
+                <input
+                  type="text"
+                  id=""
+                  placeholder="Report ID"
+                  formControlName="reportId"
+                />
+              </div>
+              <div class="container four">
                 <div class="left">
-                    <img class="timg" src="../../assets/media/consultation.png" alt="">
+                  <p class="datetimep">Date *:</p>
+                  <input
+                    class="date"
+                    type="date"
+                    required
+                    id=""
+                    formControlName="date"
+                  />
                 </div>
                 <div class="right">
-                    <div class="horizontal-line"></div>
-                    <div class="message">
-                        <h1>You Are Not Alone...</h1>
-                        <br>
-                        <p>Welcome to UDSM Counselling Unit,
-                            a safe space where your journey towards
-                            healing begins.
-                            We understand the courage it takes to seek
-                            support, and we’re here to offer compassionate 
-                            guidance as you navigate your healing process.
-                            <br>
-                            <br>
-                            Our dedicated team is committed to 
-                            providing you with confidential,
-                            non-judgmental support tailored to your needs.
-                            Please feel free to schedule a meeting
-                            at your convenience.</p>
-                    </div>
+                  <p>Gender *:</p>
+                  <select formControlName="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
                 </div>
-            </div>
-        </div>
-    </div>
-    <div class="main2">
-        <div class="book">
-            <div class="bookhead">
-                <h1>Book an Online or Physical<br>
-                    Counselling Session</h1>
-                </div>
-                <div class="bookmain">
-                    <div class="bookleft">
-                        <h2>Ready to book a session?</h2>
-                        <br>
-                        <p>Using our booking form, just select the type
-                            of appointment you wish to book
-                            and complete the booking process, which
-                            we’ve tried to make it as simple as possible.</p>
-                    </div>
-                    <div class="bookright">
-                        <div class="card">
-                            <form [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
-                                <h2>Make an Appointment</h2>
-                                <div class="container one">
-                                    <input type="text" id="" placeholder="Full name *" formControlName="fullName"/>
-                                    <input type="text" id="" placeholder="Registration Number *" formControlName="regNo"/>
-                                </div>
-                                <div class="container two">
-                                    <input type="text" id="" placeholder="Phone *" formControlName="phone"/>
-                                    <input type="text" id="" placeholder="Email *" formControlName="email"/>
-                                </div>
-                                <div class="conditions" *ngIf="phoneField && phoneField.dirty && phoneField.invalid">
-                                    <span class="block" *ngIf="phoneField.errors?.['required']">• Phone number is required.</span>
-                                    <span class="block" *ngIf="phoneField.errors?.['pattern']">• Required format: +255(last 9 digits)</span>
-                                </div>
-                                <div class="conditions" *ngIf="emailField && emailField.dirty && emailField.invalid">
-                                    <span class="block" *ngIf="emailField.errors?.['required']">• Email is required.</span>
-                                    <span class="block" *ngIf="emailField.errors?.['email']">• Invalid email format.</span>
-                                </div>
-                                <div class="container three">
-                                    <input type="text" id="" placeholder="Report ID" formControlName="reportId"/>
-                                </div>
-                                <div class="container four">
-                                    <div class="left">
-                                        <p class="datetimep">Date *:</p>
-                                        <input class="date" type="date" required id=""  formControlName="date"/>
-                                    </div>
-                                    <div class="right">
-                                        <p>Gender *:</p>
-                                        <select formControlName="gender">
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="five">
-                                    <p>Preferred Session Type:</p>
-                                    <div class="labels">
-                                      <input type="radio" formControlName="sessionType" id="option1" value="Physical" />
-                                      <label for="option1">Physical</label>
-                                      <br>
-                                      <input type="radio" formControlName="sessionType" id="option2" value="Online" />
-                                      <label for="option2">Online</label>
-                                    </div>
-                                  </div>
-                                <button type="submit">Submit</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-    <div class="appointments">
-
-        <div class="head">
-            <h2>Your Appointments</h2>
-            <span></span>
-        </div>
-
-        <div class="reports">
-            <div class="selection">
-              <div class="butns">
-                <button [class.active]="activeStatus === null" (click)="filterAppointments()" style="width: 7vw;">All Appointments</button>
-                <button [class.active]="activeStatus === 'REQUESTED'" (click)="filterAppointments('REQUESTED')">Requested</button>
-                <button [class.active]="activeStatus === 'SCHEDULED'" (click)="filterAppointments('SCHEDULED')">Scheduled</button>
-                <button [class.active]="activeStatus === 'CLOSED'" (click)="filterAppointments('CLOSED')">Closed</button>
-                <button [class.active]="activeStatus === 'CANCELLED'" (click)="filterAppointments('CANCELLED')">Cancelled</button>
               </div>
-            </div>
-
-            <div class="cardt" *ngIf="filteredAppointments.length > 0">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Appointment ID</th>
-                    <th>Session Type</th>
-                    <th>Created On</th>
-                    <th>Status</th>
-                    <th>Assigned Consultant</th>
-                    <!-- <th>Police Status</th> -->
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let appointment of filteredAppointments">
-                    <td>{{ appointment.appointment_id }}</td>
-                    <td>{{ appointment.session_type}}</td>
-                    <td>{{ appointment.created_on_date | date:'dd/MM/yyyy' }} | {{ appointment.created_on_date | date:'HH:mm' }}</td>
-                    <td>{{ appointment.status }}</td>
-                    <td>{{ appointment.consultant }}</td>
-                    <!-- <td>{{ report.police_status }}</td> -->
-                    <!-- Add other columns as needed -->
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <div class="cardt" *ngIf="filteredAppointments.length === 0">
-              <p>No appointment found!.</p>
-            </div>
-
+              <div class="five">
+                <p>Preferred Session Type:</p>
+                <div class="labels">
+                  <input
+                    type="radio"
+                    formControlName="sessionType"
+                    id="option1"
+                    value="Physical"
+                  />
+                  <label for="option1">Physical</label>
+                  <br />
+                  <input
+                    type="radio"
+                    formControlName="sessionType"
+                    id="option2"
+                    value="Online"
+                  />
+                  <label for="option2">Online</label>
+                </div>
+              </div>
+              <button type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="appointments">
+    <div class="head">
+      <h2>Your Appointments</h2>
+      <span></span>
     </div>
 
+    <div class="reports">
+      <div class="selection">
+        <div class="butns">
+          <button
+            [class.active]="activeStatus === null"
+            (click)="filterAppointments()"
+            style="width: 7vw"
+          >
+            All Appointments
+          </button>
+          <button
+            [class.active]="activeStatus === 'REQUESTED'"
+            (click)="filterAppointments('REQUESTED')"
+          >
+            Requested
+          </button>
+          <button
+            [class.active]="activeStatus === 'SCHEDULED'"
+            (click)="filterAppointments('SCHEDULED')"
+          >
+            Scheduled
+          </button>
+          <button
+            [class.active]="activeStatus === 'CLOSED'"
+            (click)="filterAppointments('CLOSED')"
+          >
+            Closed
+          </button>
+          <button
+            [class.active]="activeStatus === 'CANCELLED'"
+            (click)="filterAppointments('CANCELLED')"
+          >
+            Cancelled
+          </button>
+        </div>
+      </div>
+
+      <div class="cardt" *ngIf="filteredAppointments.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Appointment ID</th>
+              <th>Session Type</th>
+              <th>Created On</th>
+              <th>Status</th>
+              <th>Assigned Consultant</th>
+              <!-- <th>Police Status</th> -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appointment of filteredAppointments">
+              <td>{{ appointment.appointment_id }}</td>
+              <td>{{ appointment.session_type }}</td>
+              <td>
+                {{ appointment.created_on_date | date : "dd/MM/yyyy" }} |
+                {{ appointment.created_on_date | date : "HH:mm" }}
+              </td>
+              <td>{{ appointment.status }}</td>
+              <td>{{ appointment.consultant }}</td>
+              <!-- <td>{{ report.police_status }}</td> -->
+              <!-- Add other columns as needed -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cardt" *ngIf="filteredAppointments.length === 0">
+        <p>No appointment found!.</p>
+      </div>
     </div>
-    <!-- <div class="main3"></div> -->
+  </div>
+  <!-- <div class="main3"></div> -->
 </body>
