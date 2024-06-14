@@ -117,7 +117,7 @@ body form {
   border: 1px solid rgb(80, 80, 80);
   text-indent: 0.5vw;
   border-radius: 0.7vw;
-  color: #888;
+  color: black;
   font-family: "Montserrat", sans-serif;
   font-weight: lighter;
   font-size: 0.9vw;
@@ -129,7 +129,7 @@ body form {
   width: 90%;
   height: 6.5vh;
   align-self: center;
-  color: #888;
+  color: black;
   font-family: "Montserrat", sans-serif;
   font-weight: lighter;
 
@@ -144,7 +144,7 @@ body form {
   position: relative;
   height: 100%;
   width: 100%;
-  color: #888;
+  color: black;
   border: 1px solid rgb(80, 80, 80);
   border-radius: 0.7vw;
   text-indent: 0.75vw;

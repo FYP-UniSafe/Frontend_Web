@@ -37,7 +37,7 @@ body {
   border-radius: 0.7vw;
   border: 0.5px solid black;
   text-indent: 1vw;
-  color: #888;
+  color: black;
   font-family: "Montserrat", sans-serif;
   font-weight: lighter;
   font-size: 0.7vw;
@@ -137,7 +137,7 @@ body {
     border-radius: 1.8vw;
     border: 1px solid black;
     text-indent: 3vw;
-    color: #888;
+    /* color: bl; */
     font-size: 1.5vw;
   }
   .a {

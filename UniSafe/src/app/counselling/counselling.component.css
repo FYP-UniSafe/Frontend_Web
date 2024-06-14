@@ -43,7 +43,7 @@ body {
   backdrop-filter: blur(5px);
   box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);
   cursor: pointer;
-  z-index: 7;
+  z-index: 50;
   transition: transform 0.3s ease;
   display: flex;
   justify-content: center;
@@ -74,17 +74,84 @@ body {
   backdrop-filter: blur(5px);
   box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.5);
   height: 90vh;
-  width: 35vw;
-  z-index: 7;
+  width: 30vw;
+  z-index: 50;
   border-radius: 5%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 .aichat.show {
-  display: block;
+  display: flex;
+  justify-content: center;
   opacity: 1;
   visibility: visible;
+  z-index: 50;
+}
+.chatboard{
+  height: 85%;
+  width: 100%;
+  align-self: flex-end;
+  background-color: rgba(255, 255, 255);
+  box-shadow: inset 0px 10px 10px -5px rgba(0, 0, 0, 0.5);
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.input-area{
+  height: 15%;
+  width: 85%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  border-bottom-left-radius: 5%;
+  border-bottom-right-radius: 5%;
+  border-top: 0.5px solid rgb(55, 55, 55);
+}
+.input-area textarea{
+  height: 50%;
+  width: 85%;
+  padding: 10px;
+  font-size: 12.5px;
+  resize: vertical;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  /* border: none; */
+  border-radius: 10px;
+}
+.input-area img{
+  height: 30%;
+  width: 8%;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.input-area:hover img {
+  transform: scale(1.2);
+}
+/* .hide {
+  display: none;
+} */
+.ai-label {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.5s ease, visibility 0s linear 0.5s;
+  opacity: 1;
+  font-size: 100px;
+  visibility: visible;
+  z-index: 7;
+}
+
+.ai-label.hide {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0s;
 }
 .notalon {
   height: 100%;
