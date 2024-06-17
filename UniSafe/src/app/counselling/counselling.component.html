@@ -2,12 +2,22 @@
   <!-- <div class="top"></div> -->
   <div class="aichat" [class.show]="showChat">
     <div class="chatboard">
-        <div class="messages">
-          </div>
-          <div class="input-area">
-            <textarea type="text"  placeholder="Type a message..." class="chat-input"></textarea>
-            <img src="../../assets/media/send.png" alt="send">
-          </div>
+      <div class="messages">
+        <div class="message message-sender">
+          Hi
+        </div>
+        <div class="message message-ai">
+          Sure, I'd be happy to help. What do you need?
+        </div>
+      </div>
+      <div class="input-area">
+        <textarea
+          type="text"
+          placeholder="Type a message..."
+          class="chat-input"
+        ></textarea>
+        <img src="../../assets/media/send.png" alt="send" />
+      </div>
     </div>
   </div>
   <span class="ai-label" [class.hide]="showChat">Conversational AI</span>
@@ -19,6 +29,8 @@
           : '../../assets/media/chat.png'
       "
       alt="Toggle Chat"
+      [style.height]="showChat ? '40%' : null"
+      [style.width]="showChat ? '40%' : null"
     />
   </div>
   <div class="main">
