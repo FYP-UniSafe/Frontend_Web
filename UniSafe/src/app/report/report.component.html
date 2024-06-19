@@ -117,7 +117,10 @@
                 <button class="view" (click)="showReport(report)">
                   <i class="far fa-eye eye-show"></i>
                 </button>
-                <button class="download" (click)="prepareAndDownloadReport(report)">
+                <button
+                  class="download"
+                  (click)="prepareAndDownloadReport(report)"
+                >
                   <i class="fas fa-download"></i>
                 </button>
                 <!-- </button>
@@ -151,40 +154,26 @@
       <div class="report-section">
         <table>
           <tr>
-            <td class="label-cell"><strong>Full Name:</strong></td>
+            <td class="label-cell"><strong>Report ID:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.report_id }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Report For:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.report_for }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Created On:</strong></td>
             <td class="handwritten-style">
-              {{ selectedReport.reporter_full_name }}
+              {{ selectedReport.created_on | date : "medium" }}
             </td>
           </tr>
           <tr>
-            <td class="label-cell"><strong>Gender:</strong></td>
-            <td class="handwritten-style">
-              {{ selectedReport.reporter_gender }}
-            </td>
+            <td class="label-cell"><strong>Status:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.status }}</td>
           </tr>
           <tr>
-            <td class="label-cell"><strong>College:</strong></td>
-            <td class="handwritten-style">
-              {{ selectedReport.reporter_college }}
-            </td>
-          </tr>
-          <tr>
-            <td class="label-cell"><strong>Registration No:</strong></td>
-            <td class="handwritten-style">
-              {{ selectedReport.reporter_reg_no }}
-            </td>
-          </tr>
-          <tr>
-            <td class="label-cell"><strong>Email:</strong></td>
-            <td class="handwritten-style">
-              {{ selectedReport.reporter_email }}
-            </td>
-          </tr>
-          <tr>
-            <td class="label-cell"><strong>Phone:</strong></td>
-            <td class="handwritten-style">
-              {{ selectedReport.reporter_phone }}
-            </td>
+            <td class="label-cell"><strong>Assigned GD:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.assigned_gd }}</td>
           </tr>
         </table>
       </div>
