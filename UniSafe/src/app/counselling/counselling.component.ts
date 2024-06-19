@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { TimeoutService } from '../services/timeout.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -6,6 +6,7 @@ import { ReportService } from '../services/report.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Appointment } from '../models/appointment';
 import { AppointmentsService } from '../services/appointments.service';
+import { GeminiService } from '../services/gemini.service';
 
 @Component({
   selector: 'app-counselling',
@@ -20,6 +21,9 @@ export class CounsellingComponent implements OnInit {
   filteredAppointments: Appointment[] = [];
   activeStatus: string | null = null;
   showChat = false;
+  prompt: string = '';
+  messageText: string = '';
+  messages: { text: string; sender: 'user' | 'ai' }[] = [];
 
   constructor(
     private timeoutService: TimeoutService,
@@ -27,7 +31,8 @@ export class CounsellingComponent implements OnInit {
     private router: Router,
     private reportService: ReportService,
     private formBuilder: FormBuilder,
-    private appointmentService: AppointmentsService
+    private appointmentService: AppointmentsService,
+    private geminiService: GeminiService
   ) {}
 
   ngOnInit(): void {
@@ -48,20 +53,23 @@ export class CounsellingComponent implements OnInit {
     this.filterAppointments();
   }
 
-  initForm(): void{
+  initForm(): void {
     this.appointmentForm = this.formBuilder.group({
       fullName: [this.userData.full_name],
       regNo: [this.userData.profile.reg_no],
       email: [this.userData.email, [Validators.required, Validators.email]],
-      phone: [this.userData.phone_number, [Validators.required, Validators.pattern(/^\+255\d{9}$/)]],
+      phone: [
+        this.userData.phone_number,
+        [Validators.required, Validators.pattern(/^\+255\d{9}$/)],
+      ],
       reportId: [this.reportId],
       date: ['', Validators.required],
       gender: [this.userData.gender],
-      sessionType: ['', Validators.required]
+      sessionType: ['', Validators.required],
     });
   }
 
-  onSubmit(){
+  onSubmit() {
     if (this.appointmentForm.valid) {
       const appointmentData = {
         report_id: this.appointmentForm.value.reportId,
@@ -94,42 +102,57 @@ export class CounsellingComponent implements OnInit {
   }
 
   fetchAppointments(): void {
-      this.appointmentService.getAppointments()
-        .subscribe(
-          (data: Appointment[]) => {
-            this.appointments = data;
+    this.appointmentService.getAppointments().subscribe(
+      (data: Appointment[]) => {
+        this.appointments = data;
 
-             // Convert the created_on string to a Date object for each report
-          this.appointments.forEach(appointment => {
-            appointment.created_on_date = new Date(appointment.created_on);
-          });
-  
-          this.filterAppointments(null);
-          },
-          (error) => {
-            console.error('Error loading appointments:', error);
-          }
-        );
-    }
+        this.appointments.forEach((appointment) => {
+          appointment.created_on_date = new Date(appointment.created_on);
+        });
 
-    filterAppointments(status: string | null = null) {
-      if (status === this.activeStatus) {
-        this.activeStatus = null;
-      } else {
-        this.activeStatus = status;
+        this.filterAppointments(null);
+      },
+      (error) => {
+        console.error('Error loading appointments:', error);
       }
-  
-      if (this.activeStatus) {
-        this.filteredAppointments = this.appointments.filter(
-          (appointment) => appointment.status === this.activeStatus
-        );
-      } else {
-        this.filteredAppointments = this.appointments;
-      }
+    );
+  }
+
+  filterAppointments(status: string | null = null) {
+    if (status === this.activeStatus) {
+      this.activeStatus = null;
+    } else {
+      this.activeStatus = status;
     }
 
-    toggleChat(): void {
-      this.showChat = !this.showChat;
+    if (this.activeStatus) {
+      this.filteredAppointments = this.appointments.filter(
+        (appointment) => appointment.status === this.activeStatus
+      );
+    } else {
+      this.filteredAppointments = this.appointments;
     }
+  }
 
+  toggleChat(): void {
+    this.showChat = !this.showChat;
+  }
+
+  sendData() {
+    if (this.messageText.trim()) {
+      // Add user message to the messages array
+      this.messages.push({ text: this.messageText, sender: 'user' });
+
+      this.geminiService.generateText(this.messageText).subscribe(
+        (response: string) => {
+          // Add AI response to the messages array
+          this.messages.push({ text: response, sender: 'ai' });
+        },
+        (error: any) => {
+          console.error('Error:', error);
+        }
+      );
+      this.messageText = '';
+    }
+  }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import { Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,12 +14,17 @@ export class GeminiService {
     );
   }
 
-  async generateText(prompt: string){
-    const model = this.generativeAI.getGenerativeModel({model: 'gemini-pro'});
+  generateText(prompt: string): Observable<string> {
+    return from(this.generateTextAsync(prompt));
+  }
 
+  private async generateTextAsync(prompt: string): Promise<string> {
+    const model = this.generativeAI.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+    });
     const result = await model.generateContent(prompt);
     const response = await result.response;
-    const text = response.text();
-    console.log(text);
+    const text = await response.text();
+    return text;
   }
 }
