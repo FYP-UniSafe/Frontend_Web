@@ -4,11 +4,10 @@ import { ReportService } from '../services/report.service';
 import { Report } from '../models/report';
 import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-// import html2pdf from 'html2pdf.js';
-// import { EventEmitter, Output } from '@angular/core';
-// import jsPDF from 'jspdf';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
+import { HttpClient } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-report',
@@ -16,7 +15,6 @@ import html2canvas from 'html2canvas';
   styleUrls: ['./report.component.css'],
 })
 export class ReportComponent implements OnInit, OnDestroy {
-  // @Output() reportReady: EventEmitter<void> = new EventEmitter<void>();
   reports: Report[] = [];
   filteredReports: Report[] = [];
   // activeStatus: string | undefined = '';
@@ -30,7 +28,8 @@ export class ReportComponent implements OnInit, OnDestroy {
     private reportService: ReportService,
     private authService: AuthService,
     private router: Router,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -117,9 +116,9 @@ export class ReportComponent implements OnInit, OnDestroy {
 
     if (thereport) {
       html2canvas(thereport, {
-        scale: 2, // Increase resolution
-        scrollY: -window.scrollY, // Capture the entire scrollable content
-        useCORS: true // Enable if you are fetching resources like images from different origins
+        scale: 2,
+        scrollY: -window.scrollY,
+        useCORS: true,
       }).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
@@ -127,7 +126,9 @@ export class ReportComponent implements OnInit, OnDestroy {
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
         const imgProps = pdf.getImageProperties(imgData);
-        const numPages = Math.ceil(pdfHeight / pdf.internal.pageSize.getHeight());
+        const numPages = Math.ceil(
+          pdfHeight / pdf.internal.pageSize.getHeight()
+        );
 
         for (let i = 0; i < numPages; i++) {
           const heightLeft = i * pdf.internal.pageSize.getHeight();
@@ -147,5 +148,13 @@ export class ReportComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.downloadReport();
     }, 500); // Adjust timing as needed to ensure HTML is fully rendered
+  }
+
+  downloadEvidence(evidenceUrl: string) {
+    this.http.get(evidenceUrl, { responseType: 'blob' }).subscribe((blob) => {
+      const urlParts = evidenceUrl.split('/');
+      const fileName = urlParts[urlParts.length - 1];
+      saveAs(blob, fileName);
+    });
   }
 }

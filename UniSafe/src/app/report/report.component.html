@@ -316,7 +316,17 @@
         <p>EVIDENCE:</p>
       </div>
       <div class="report-section">
-        <!-- Place your evidence-related content here -->
+        <table>
+          <tr *ngFor="let evidence of selectedReport.report_evidence">
+            <td class="label-cell"><strong>Evidence ID:</strong></td>
+            <td>{{ evidence.id }}</td>
+            <td>
+              <button (click)="downloadEvidence(evidence.evidence)">
+                Download Evidence
+              </button>
+            </td>
+          </tr>
+        </table>
       </div>
       <span class="sp2"></span>
     </div>
