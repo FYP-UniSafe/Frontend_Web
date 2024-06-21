@@ -279,6 +279,7 @@ body.modal-open {
 }
 .sp2 {
   margin-bottom: 5vh;
+  margin-top: 5vh;
 }
 
 .stage {
@@ -305,6 +306,7 @@ body.modal-open {
 .report-section table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: auto;
 }
 
 .report-section table td.descr,
@@ -326,12 +328,21 @@ body.modal-open {
   text-align: left;
 }
 
-.evidence-image {
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 10px;
+.evidence-item{
+  border: 0.5px solid #0f6cbf;
+  max-height: 80vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
+.evidence-image, .evidence-video, .evidence-audio {
+  height: auto;
+  width: auto;
+  object-fit: contain;
+}
 /* .handwritten-style {
   font-family: 'Indie Flower', cursive;
   font-family: 'Pacifico', cursive;
