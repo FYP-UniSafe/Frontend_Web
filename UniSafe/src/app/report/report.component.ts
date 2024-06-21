@@ -6,7 +6,7 @@ import { Router, NavigationEnd } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -150,11 +150,50 @@ export class ReportComponent implements OnInit, OnDestroy {
     }, 500); // Adjust timing as needed to ensure HTML is fully rendered
   }
 
-  downloadEvidence(evidenceUrl: string) {
-    this.http.get(evidenceUrl, { responseType: 'blob' }).subscribe((blob) => {
-      const urlParts = evidenceUrl.split('/');
-      const fileName = urlParts[urlParts.length - 1];
-      saveAs(blob, fileName);
-    });
+  isImage(url: string): boolean {
+    return /\.(jpg|jpeg|png|gif)$/i.test(url);
+  }
+
+  isVideo(url: string): boolean {
+    return /\.(mp4|mov)$/i.test(url);
+  }
+
+  isAudio(url: string): boolean {
+    return /\.(mp3|wav)$/i.test(url);
+  }
+
+  openFullScreenPreview(mediaUrl: string): void {
+    const isImageOrVideo = this.isImage(mediaUrl) || this.isVideo(mediaUrl);
+    if (!isImageOrVideo) return;
+
+    const previewElement = document.createElement(
+      isImageOrVideo ? 'img' : 'video'
+    );
+    previewElement.src = mediaUrl;
+    if (!this.isImage(mediaUrl)) {
+      previewElement.setAttribute('controls', 'true');
+      if (isImageOrVideo) {
+        (previewElement as HTMLVideoElement).play();
+      }
+    }
+    previewElement.style.width = '100%';
+    previewElement.style.height = '100%';
+    document.body.appendChild(previewElement);
+
+    previewElement.onclick = function () {
+      document.body.removeChild(previewElement);
+    };
+
+    // Optional: Add styles to make the previewElement full-screen or use a modal/dialog component for a better UX.
+  }
+
+  togglePlayAudio(event: MouseEvent): void {
+    const audioElement = event.target as HTMLAudioElement;
+    if (audioElement.paused) {
+      audioElement.play();
+    } else {
+      audioElement.pause();
+    }
+    event.stopPropagation(); // Prevent triggering any parent click events
   }
 }

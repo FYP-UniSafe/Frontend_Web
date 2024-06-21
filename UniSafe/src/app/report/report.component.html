@@ -316,17 +316,38 @@
         <p>EVIDENCE:</p>
       </div>
       <div class="report-section">
-        <table>
-          <tr *ngFor="let evidence of selectedReport.report_evidence">
-            <td class="label-cell"><strong>Evidence ID:</strong></td>
-            <td>{{ evidence.id }}</td>
-            <td>
-              <button (click)="downloadEvidence(evidence.evidence)">
-                Download Evidence
-              </button>
-            </td>
-          </tr>
-        </table>
+        <div
+          *ngFor="let evidence of selectedReport.report_evidence"
+          class="evidence-item"
+        >
+          <img
+            *ngIf="isImage(evidence.evidence)"
+            [src]="evidence.evidence"
+            alt="Evidence Image"
+            (click)="openFullScreenPreview(evidence.evidence)"
+            class="evidence-image"
+          />
+
+          <video
+            *ngIf="isVideo(evidence.evidence)"
+            controls
+            (click)="openFullScreenPreview(evidence.evidence)"
+            class="evidence-video"
+          >
+            <source [src]="evidence.evidence" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <audio
+            *ngIf="isAudio(evidence.evidence)"
+            controls
+            (click)="togglePlayAudio($event)"
+            class="evidence-audio"
+          >
+            <source [src]="evidence.evidence" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
       </div>
       <span class="sp2"></span>
     </div>
