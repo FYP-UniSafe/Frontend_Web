@@ -1,0 +1,125 @@
+<body>
+  <div class="heading">
+    <p>UniSafe GenderDesk Dashboard</p>
+  </div>
+  <div class="div1"></div>
+  <div class="div2">
+    <div class="head">
+      <h2>Reports</h2>
+      <span></span>
+    </div>
+    <div class="anoide">
+      <div class="butns upper">
+        <button
+          class="appe"
+          [class.active]="reportType === 'NORMAL'"
+          (click)="switchReportType('NORMAL')"
+        >
+          Normal Reports
+        </button>
+        <button
+          class="appe"
+          [class.active]="reportType === 'ANONYMOUS'"
+          (click)="switchReportType('ANONYMOUS')"
+        >
+          Anonymous Reports
+        </button>
+        <label class="custom-checkbox">
+            <input type="checkbox" [(ngModel)]="showAllReports" (change)="onReportsFilterChange()" />
+          <span>Show Yours (Assigned to you) / Show All Reports</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="reports">
+      <div class="selection">
+        <div class="butns">
+          <button class="special"
+            [class.active]="activeStatus === null"
+            (click)="filterReports()"
+          >
+            All Statuses
+          </button>
+          <button
+            [class.active]="activeStatus === 'PENDING'"
+            (click)="filterReports('PENDING')"
+          >
+            Pending
+          </button>
+          <button
+            [class.active]="activeStatus === 'IN PROGRESS'"
+            (click)="filterReports('IN PROGRESS')"
+          >
+            In Progress
+          </button>
+          <button
+            [class.active]="activeStatus === 'RESOLVED'"
+            (click)="filterReports('RESOLVED')"
+          >
+            Resolved
+          </button>
+          <button
+            [class.active]="activeStatus === 'FORWARDED TO POLICE'"
+            (click)="filterReports('FORWARDED TO POLICE')"
+          >
+            Forwarded
+          </button>
+          <button
+            [class.active]="activeStatus === 'REJECTED'"
+            (click)="filterReports('REJECTED')"
+          >
+            Rejected
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card" *ngIf="filteredReports.length > 0">
+          <table>
+            <thead>
+              <tr>
+                <th>Report ID</th>
+                <th>Abuse Type</th>
+                <th>Reported On</th>
+                <th>Status</th>
+                <th>Assigned Gender Desk</th>
+                <!-- <th>Action</th> -->
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let report of filteredReports">
+                <td>{{ report.report_id }}</td>
+                <td>{{ report.abuse_type }}</td>
+                <td>
+                  {{ report.created_on_date | date : "dd/MM/yyyy" }} |
+                  {{ report.created_on_date | date : "HH:mm" }}
+                </td>
+                <td>{{ report.status }}</td>
+                <td>{{ report.assigned_gd }}</td>
+                <!-- <td class="actions">
+                <button class="view" (click)="showReport(report)">
+                  <i class="far fa-eye eye-show"></i>
+                </button>
+                <button
+                  class="download"
+                  (click)="prepareAndDownloadReport(report)"
+                >
+                  <i class="fas fa-download"></i>
+                </button>
+                </button>
+                      <button class="download">
+                        <i class="fas fa-download"></i>
+                      </button>
+              </td> -->
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" *ngIf="filteredReports.length === 0">
+          <p>No report found!.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>

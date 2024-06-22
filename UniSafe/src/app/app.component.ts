@@ -31,7 +31,10 @@ export class AppComponent implements OnInit {
       this.router.url === '/report' ||
       this.router.url === '/report-form' ||
       this.router.url === '/counselling' ||
-      this.router.url === '/profile'
+      this.router.url === '/profile' ||
+      this.router.url === '/genderdesk' ||
+      this.router.url === '/police' ||
+      this.router.url === '/consultant'
     );
   }
 }
