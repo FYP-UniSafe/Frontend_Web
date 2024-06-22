@@ -12,6 +12,9 @@ import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { AgoraComponent } from './agora/agora.component';
+import { GenderdeskComponent } from './genderdesk/genderdesk.component';
+import { PoliceComponent } from './police/police.component';
+import { ConsultantComponent } from './consultant/consultant.component';
 
 
 const routes: Routes = [
@@ -27,6 +30,9 @@ const routes: Routes = [
   {path: 'report', component: ReportComponent},
   {path: 'counselling', component: CounsellingComponent},
   {path: 'agora', component: AgoraComponent},
+  {path: 'genderdesk', component: GenderdeskComponent},
+  {path: 'police', component: PoliceComponent},
+  {path: 'consultant', component: ConsultantComponent},
   {path: '**', redirectTo: 'home'}
 ];
 

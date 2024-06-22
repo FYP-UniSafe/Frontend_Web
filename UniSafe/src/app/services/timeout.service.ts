@@ -31,7 +31,7 @@ export class TimeoutService implements OnDestroy {
       clearTimeout(this.timer);
       this.timer = setTimeout(async () => {
         await this.logout();
-      }, 600000); // 10 minutes in milliseconds
+      }, 1200000); // 10 minutes in milliseconds 600000 (20 minutes now)
     }
   }
 

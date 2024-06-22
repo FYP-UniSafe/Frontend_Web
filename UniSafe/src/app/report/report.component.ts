@@ -2,12 +2,12 @@ import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
 import { TimeoutService } from '../services/timeout.service';
 import { ReportService } from '../services/report.service';
 import { Report } from '../models/report';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { saveAs } from 'file-saver';
+// import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-report',

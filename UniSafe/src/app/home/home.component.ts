@@ -115,61 +115,6 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  // createMap(): void {
-  //   let loader = new Loader({
-  //     apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8',
-  //   });
-
-  //   loader.load().then(() => {
-  //     const mapElement = document.getElementById('map1');
-  //     if (mapElement) {
-  //       this.map = new google.maps.Map(mapElement as HTMLElement, {
-  //         center: { lat: -6.7856611, lng: 39.2289924 },
-  //         zoom: 14,
-  //         mapTypeId: 'satellite',
-  //       });
-
-  //       for (let hostel in this.hostelsLocations) {
-  //         let hostelData = this.hostelsLocations[hostel];
-
-  //         // Only create markers for locations with cases > 0
-  //         if (hostelData.cases > 0) {
-  //           let marker = new google.maps.Marker({
-  //             position: hostelData.center,
-  //             map: this.map,
-  //             label: {
-  //               text: hostelData.cases.toString(),
-  //               color: 'white',
-  //               fontSize: '12px',
-  //               fontWeight: 'bold',
-  //             },
-  //             icon: {
-  //               path: google.maps.SymbolPath.CIRCLE,
-  //               fillColor: '#FF0000',
-  //               fillOpacity: 0.6,
-  //               strokeColor: '#FF0000',
-  //               strokeWeight: 1,
-  //               scale: Math.sqrt(hostelData.cases) * 25,
-  //             },
-  //           });
-
-  //           // Create InfoWindow to show the number of cases when marker is clicked
-  //           let infoWindow = new google.maps.InfoWindow({
-  //             content: `<div style="text-align: center;">${hostelData.cases}</div>`,
-  //           });
-
-  //           // Add a listener to the marker to open the InfoWindow on click
-  //           marker.addListener('click', () => {
-  //             infoWindow.open(this.map, marker);
-  //           });
-  //         }
-  //       }
-  //     } else {
-  //       console.error('Element with id "map1" not found');
-  //     }
-  //   });
-  // }
-
   initializeMaps(policeLocations: any): void {
     let loader = new Loader({
       apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8',
@@ -283,36 +228,6 @@ export class HomeComponent implements OnInit {
       });
     }
   }
-
-  // initializeMap2(locations: any): void {
-  //   const mapElement = document.getElementById('map2');
-  //   if (mapElement) {
-  //     const map2 = new google.maps.Map(mapElement, {
-  //       zoom: 13,
-  //       center: { lat: -6.780613140045591, lng: 39.20244879164626 },
-  //     });
-
-  //     Object.keys(locations).forEach((locationKey) => {
-  //       const location = locations[locationKey];
-  //       if (Array.isArray(location)) {
-  //         location.forEach((loc) => this.addMarkerToMap(map2, loc));
-  //       } else {
-  //         this.addMarkerToMap(map2, location);
-  //       }
-  //     });
-  //   } else {
-  //     console.error('Element with id "map2" not found');
-  //   }
-  // }
-  // addMarkerToMap(
-  //   map: google.maps.Map,
-  //   location: { lat: number; lng: number }
-  // ): void {
-  //   new google.maps.Marker({
-  //     position: location,
-  //     map: map,
-  //   });
-  // }
 
   renderYearlyReportsChart(): void {
     const labels = this.reportsYearData.map((item) => item.year);
@@ -433,8 +348,7 @@ export class HomeComponent implements OnInit {
     if (map === 'map1') {
       this.heading = 'Map showing cases in UDSM';
     } else if (map === 'map2') {
-      this.heading =
-        'Map showing location Auxiliary Police stations in UDSM';
+      this.heading = 'Map showing location Auxiliary Police stations in UDSM';
     }
   }
 }

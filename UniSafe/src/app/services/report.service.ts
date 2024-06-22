@@ -37,11 +37,18 @@ export class ReportService {
     );
   }
 
-  // getReportsPerLocation(): Observable<any> {
-  //   return this.http.get(`${environment.apiUrl}/reports/per/location`);
-  // }
+  getNormalReports(): Observable<Report[]> {
+    return this.http.get<Report[]>(`${environment.apiUrl}/reports/list`, {
+      withCredentials: true,
+    });
+  }
 
-  // getReportsPerCaseType(): Observable<any> {
-  //   return this.http.get(`${environment.apiUrl}/reports/per/casetype`);
-  // }
+  getAnonymousReports(): Observable<Report[]> {
+    return this.http.get<Report[]>(
+      `${environment.apiUrl}/reports/anonymous/list`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
 }

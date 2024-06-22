@@ -13,17 +13,21 @@ import { VerifyOtpComponent } from './verify-otp/verify-otp.component';
 import { ReportComponent } from './report/report.component';
 import { ReportFormComponent } from './report-form/report-form.component';
 import { CounsellingComponent } from './counselling/counselling.component';
+import { GenderdeskComponent } from './genderdesk/genderdesk.component';
+import { PoliceComponent } from './police/police.component';
+import { ConsultantComponent } from './consultant/consultant.component';
+import { ProfileComponent } from './profile/profile.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { AgoraComponent } from './agora/agora.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TimeoutService } from './services/timeout.service';
 import { ResendOtpComponent } from './resend-otp/resend-otp.component';
 import { OtpService } from './services/otp.service';
 import { ReportService } from './services/report.service';
-import { ProfileComponent } from './profile/profile.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { AgoraComponent } from './agora/agora.component';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
@@ -43,6 +47,9 @@ import { ChartModule } from '@syncfusion/ej2-angular-charts';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     AgoraComponent,
+    GenderdeskComponent
+    // PoliceComponent,
+    // ConsultantComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +58,8 @@ import { ChartModule } from '@syncfusion/ej2-angular-charts';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ChartModule
+    ChartModule,
+    CommonModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS,
