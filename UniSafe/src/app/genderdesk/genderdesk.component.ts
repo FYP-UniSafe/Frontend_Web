@@ -26,6 +26,8 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
   totalPages = 0;
   selectedReport: any;
   isReportVisible: boolean = false;
+  isRejectDialogOpen = false;
+  rejectionReason = '';
 
   constructor(
     private authService: AuthService,
@@ -269,6 +271,56 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
     }
     const reportId = this.selectedReport.report_id;
     this.reportService.acceptReport(reportId).subscribe({
+      next: (response) => {
+        window.alert(response.message);
+        this.router.navigate(['/genderdesk']);
+      },
+      error: (error) => {
+        const errorMessage = error.error
+          ? error.error.error
+          : 'An unknown error occurred';
+        window.alert(errorMessage);
+      },
+    });
+  }
+
+  openRejectDialog() {
+    this.isRejectDialogOpen = true;
+  }
+
+  rejectReport(report: Report, rejectionReason: string) {
+    this.reportService
+      .rejectReport(report.report_id, rejectionReason)
+      .subscribe({
+        next: (response) => {
+          window.alert(response.message);
+        },
+        error: (error) => {
+          const errorMessage = error.error
+            ? error.error.error
+            : 'An unknown error occurred';
+          window.alert(errorMessage);
+        },
+      });
+  }
+
+  forwardReport(report: Report) {
+    this.reportService.forwardReport(report.report_id).subscribe({
+      next: (response) => {
+        window.alert(response.message);
+        this.router.navigate(['/genderdesk']);
+      },
+      error: (error) => {
+        const errorMessage = error.error
+          ? error.error.error
+          : 'An unknown error occurred';
+        window.alert(errorMessage);
+      },
+    });
+  }
+
+  closeReport(report: Report) {
+    this.reportService.closeReport(report.report_id).subscribe({
       next: (response) => {
         window.alert(response.message);
         this.router.navigate(['/genderdesk']);

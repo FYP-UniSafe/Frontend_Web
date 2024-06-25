@@ -195,6 +195,12 @@
             <td class="label-cell"><strong>Assigned GD:</strong></td>
             <td class="handwritten-style">{{ selectedReport.assigned_gd }}</td>
           </tr>
+          <tr *ngIf="selectedReport.status === 'REJECTED'">
+            <td class="label-cell"><strong>Rejection Reason:</strong></td>
+            <td class="handwritten-style">
+              {{ selectedReport.rejection_reason }}
+            </td>
+          </tr>
         </table>
       </div>
 
@@ -282,7 +288,7 @@
             <td class="label-cell"><strong>Location:</strong></td>
             <td>{{ selectedReport.location }}</td>
           </tr>
-          <tr>
+          <tr *ngIf="selectedReport.location === 'Other'">
             <td class="label-cell"><strong>Other Location:</strong></td>
             <td>{{ selectedReport.other_location }}</td>
           </tr>
@@ -324,7 +330,7 @@
             <td class="label-cell"><strong>Status:</strong></td>
             <td>{{ selectedReport.police_status }}</td>
           </tr>
-          <tr>
+          <tr *ngIf="selectedReport.police_status === 'FORWARDED'">
             <td class="label-cell"><strong>Assigned Officer:</strong></td>
             <td>{{ selectedReport.assigned_officer }}</td>
           </tr>
@@ -373,10 +379,23 @@
     </div>
     <div class="report-actions">
       <button (click)="acceptReport()">Accept</button>
-      <button>Reject</button>
-      <button>Forward</button>
-      <button>Close Case</button>
+      <button (click)="openRejectDialog()">Reject</button>
+      <button (click)="forwardReport(selectedReport)">Forward</button>
+      <button (click)="closeReport(selectedReport)">Close Case</button>
     </div>
+
+    <div *ngIf="isRejectDialogOpen" class="reject-dialog-overlay">
+      <div class="reject-dialog">
+        <input
+          [(ngModel)]="rejectionReason"
+          placeholder="Enter rejection reason"
+        />
+        <button (click)="rejectReport(selectedReport, rejectionReason)">
+          Reject
+        </button>
+      </div>
+    </div>
+
     <button class="close" (click)="hideReport()">
       <i class="fas fa-times"></i>
     </button>
