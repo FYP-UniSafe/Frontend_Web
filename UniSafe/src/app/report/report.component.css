@@ -139,7 +139,8 @@ body {
   text-align: center;
   vertical-align: middle;
   border-bottom: 1px solid #ddd;
-  cursor: default;
+  /* cursor: default; */
+  cursor: pointer;
 }
 
 .card table th {
@@ -187,14 +188,56 @@ td.actions button.download i:hover {
   transition: transform 0.3s ease;
 }
 
-/* body.modal-open {
-  margin: 0;
-  height: 100%;
-  overflow: hidden;
-} */
 body.modal-open {
   overflow: hidden;
   /* display: none; */
+}
+
+.pagination-controls {
+  height: 6vh;
+  width: 80%;
+  margin-bottom: 5vh;
+  background-color: #f0f8ff;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination-controls .prev,
+.next {
+  height: 3.25vh;
+  width: 4vw;
+  margin: 0;
+  position: sticky;
+  background-color: transparent;
+  color: black;
+  text-decoration: none;
+  font-size: 0.6vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  border-radius: 50vw;
+  transition: transform 0.5s;
+}
+.pagination-controls .prev:hover,
+.next:hover,
+.num:hover {
+  font-weight: bold;
+  background-color: #0f6cbf;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+.num {
+  margin-left: 0.25vw;
+  margin-right: 0.25vw;
+  font-size: 0.6vw;
+  cursor: pointer;
+  position: sticky;
+  border: 0.5px solid black;
+  transition: transform 0.5s;
+}
+.pagination-controls button.active {
+  background-color: #0f6cbf;
+  color: #ffffff;
 }
 
 #divreport {
@@ -328,7 +371,7 @@ body.modal-open {
   text-align: left;
 }
 
-.evidence-item{
+.evidence-item {
   border: 0.5px solid #0f6cbf;
   max-height: 80vh;
   width: 100%;
@@ -338,7 +381,9 @@ body.modal-open {
   overflow: hidden;
 }
 
-.evidence-image, .evidence-video, .evidence-audio {
+.evidence-image,
+.evidence-video,
+.evidence-audio {
   height: auto;
   width: auto;
   object-fit: contain;

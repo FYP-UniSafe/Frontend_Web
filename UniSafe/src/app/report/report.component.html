@@ -100,11 +100,11 @@
               <th>Status</th>
               <th>Assigned Gender Desk</th>
               <!-- <th>Police Status</th> -->
-              <th>Action</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let report of filteredReports">
+            <tr (click)="showReport(report)" *ngFor="let report of getCurrentPageReports()">
               <td>{{ report.report_id }}</td>
               <td>{{ report.abuse_type }}</td>
               <td>
@@ -136,6 +136,33 @@
       <div class="card" *ngIf="filteredReports.length === 0">
         <p>No report found!.</p>
       </div>
+    </div>
+
+    <div class="pagination-controls">
+      <button
+        class="prev"
+        (click)="previousPage()"
+        [disabled]="currentPage === 1"
+      >
+        Previous
+      </button>
+
+      <button
+        class="num"
+        *ngFor="let page of [].constructor(totalPages); let i = index"
+        (click)="goToPage(i + 1)"
+        [class.active]="currentPage === i + 1"
+      >
+        {{ i + 1 }}
+      </button>
+
+      <button
+        class="next"
+        (click)="nextPage()"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
     </div>
   </div>
 

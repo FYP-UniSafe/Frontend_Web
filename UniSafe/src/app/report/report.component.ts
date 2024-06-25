@@ -7,7 +7,7 @@ import { AuthService } from '../services/auth.service';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-// import { saveAs } from 'file-saver';
+
 
 @Component({
   selector: 'app-report',
@@ -17,11 +17,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ReportComponent implements OnInit, OnDestroy {
   reports: Report[] = [];
   filteredReports: Report[] = [];
-  // activeStatus: string | undefined = '';
   selectedReport: any;
   activeStatus: string | null = null;
   authenticated: boolean = false;
   isReportVisible: boolean = false;
+  paginatedReports: Report[] = [];
+  currentPage = 1;
+  reportsPerPage = 10;
+  totalPages = 0;
 
   constructor(
     private timeoutService: TimeoutService,
@@ -41,7 +44,6 @@ export class ReportComponent implements OnInit, OnDestroy {
       this.authenticated = false;
     }
 
-    // this.activeStatus = '';
     this.fetchReports();
     this.filterReports('');
 
@@ -93,6 +95,32 @@ export class ReportComponent implements OnInit, OnDestroy {
     } else {
       this.filteredReports = this.reports;
     }
+    this.calculateTotalPages();
+  }
+
+  calculateTotalPages() {
+    this.totalPages = Math.ceil(this.filteredReports.length / this.reportsPerPage);
+  }
+
+  getCurrentPageReports() {
+    const startIndex = (this.currentPage - 1) * this.reportsPerPage;
+    return this.filteredReports.slice(startIndex, startIndex + this.reportsPerPage);
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+  
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+  
+  goToPage(pageNumber: number) {
+    this.currentPage = pageNumber;
   }
 
   showReport(report: any) {
@@ -196,4 +224,5 @@ export class ReportComponent implements OnInit, OnDestroy {
     }
     event.stopPropagation(); // Prevent triggering any parent click events
   }
+
 }

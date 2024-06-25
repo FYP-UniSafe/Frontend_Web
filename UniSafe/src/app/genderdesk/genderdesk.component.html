@@ -25,7 +25,11 @@
           Anonymous Reports
         </button>
         <label class="custom-checkbox">
-            <input type="checkbox" [(ngModel)]="showAllReports" (change)="onReportsFilterChange()" />
+          <input
+            type="checkbox"
+            [(ngModel)]="showAllReports"
+            (change)="onReportsFilterChange()"
+          />
           <span>Show Yours (Assigned to you) / Show All Reports</span>
         </label>
       </div>
@@ -34,7 +38,8 @@
     <div class="reports">
       <div class="selection">
         <div class="butns">
-          <button class="special"
+          <button
+            class="special"
             [class.active]="activeStatus === null"
             (click)="filterReports()"
           >
@@ -83,11 +88,15 @@
                 <th>Reported On</th>
                 <th>Status</th>
                 <th>Assigned Gender Desk</th>
-                <!-- <th>Action</th> -->
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let report of filteredReports">
+              <tr
+                (click)="showReport(report)"
+                tr
+                *ngFor="let report of getCurrentPageReports()"
+              >
                 <td>{{ report.report_id }}</td>
                 <td>{{ report.abuse_type }}</td>
                 <td>
@@ -96,21 +105,21 @@
                 </td>
                 <td>{{ report.status }}</td>
                 <td>{{ report.assigned_gd }}</td>
-                <!-- <td class="actions">
-                <button class="view" (click)="showReport(report)">
-                  <i class="far fa-eye eye-show"></i>
-                </button>
-                <button
-                  class="download"
-                  (click)="prepareAndDownloadReport(report)"
-                >
-                  <i class="fas fa-download"></i>
-                </button>
-                </button>
+                <td class="actions">
+                  <button class="view" (click)="showReport(report)">
+                    <i class="far fa-eye eye-show"></i>
+                  </button>
+                  <button
+                    class="download"
+                    (click)="prepareAndDownloadReport(report)"
+                  >
+                    <i class="fas fa-download"></i>
+                  </button>
+                  <!-- <button>
                       <button class="download">
                         <i class="fas fa-download"></i>
-                      </button>
-              </td> -->
+                      </button> -->
+                </td>
               </tr>
             </tbody>
           </table>
@@ -120,6 +129,256 @@
           <p>No report found!.</p>
         </div>
       </div>
+
+      <div class="pagination-controls">
+        <button
+          class="prev"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+        >
+          Previous
+        </button>
+
+        <button
+          class="num"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          (click)="goToPage(i + 1)"
+          [class.active]="currentPage === i + 1"
+        >
+          {{ i + 1 }}
+        </button>
+
+        <button
+          class="next"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          Next
+        </button>
+      </div>
     </div>
+  </div>
+
+  <div id="divreport" *ngIf="isReportVisible" tabindex="-1">
+    <div id="thereport">
+      <div class="intro">
+        <img src="../../assets/media/udsm logo.png" alt="udsm logo" />
+        <p>UNIVERSITY OF DAR ES SALAAM</p>
+      </div>
+      <h2>GBV REPORT</h2>
+      <span></span>
+      <!-- General Information -->
+      <div class="stage">
+        <p>GENERAL INFORMATION:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Report ID:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.report_id }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Report For:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.report_for }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Created On:</strong></td>
+            <td class="handwritten-style">
+              {{ selectedReport.created_on | date : "medium" }}
+            </td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Status:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.status }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Assigned GD:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.assigned_gd }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Reporter Contact Details -->
+      <div class="stage">
+        <p>REPORTER CONTACT DETAILS:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Full Name:</strong></td>
+            <td>{{ selectedReport.reporter_full_name }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Gender:</strong></td>
+            <td>{{ selectedReport.reporter_gender }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>College:</strong></td>
+            <td>{{ selectedReport.reporter_college }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Registration No:</strong></td>
+            <td>{{ selectedReport.reporter_reg_no }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Email:</strong></td>
+            <td>{{ selectedReport.reporter_email }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Phone:</strong></td>
+            <td>{{ selectedReport.reporter_phone }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Victim Details -->
+      <div class="stage">
+        <p>VICTIM'S DETAILS:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Full Name:</strong></td>
+            <td>{{ selectedReport.victim_full_name }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Gender:</strong></td>
+            <td>{{ selectedReport.victim_gender }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>College:</strong></td>
+            <td>{{ selectedReport.victim_college }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Registration No:</strong></td>
+            <td>{{ selectedReport.victim_reg_no }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Email:</strong></td>
+            <td>{{ selectedReport.victim_email }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Phone:</strong></td>
+            <td>{{ selectedReport.victim_phone }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Abuse Information -->
+      <div class="stage">
+        <p>ABUSE DETAILS:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Abuse Type:</strong></td>
+            <td>{{ selectedReport.abuse_type }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Date and Time:</strong></td>
+            <td>{{ selectedReport.date_and_time | date : "medium" }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Location:</strong></td>
+            <td>{{ selectedReport.location }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Other Location:</strong></td>
+            <td>{{ selectedReport.other_location }}</td>
+          </tr>
+          <tr>
+            <td class="descr"><strong>Description:</strong></td>
+            <td class="descr-l">{{ selectedReport.description }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Perpetrator Details -->
+      <div class="stage">
+        <p>PERPERTRATOR DETAILS:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Full Name:</strong></td>
+            <td>{{ selectedReport.perpetrator_fullname }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Gender:</strong></td>
+            <td>{{ selectedReport.perpetrator_gender }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Relationship:</strong></td>
+            <td>{{ selectedReport.relationship }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Police Status -->
+      <div class="stage">
+        <p>POLICE INFORMATION:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Status:</strong></td>
+            <td>{{ selectedReport.police_status }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Assigned Officer:</strong></td>
+            <td>{{ selectedReport.assigned_officer }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- EVIDENCE -->
+      <div class="stage">
+        <p>EVIDENCE:</p>
+      </div>
+      <div class="report-section">
+        <div
+          *ngFor="let evidence of selectedReport.report_evidence"
+          class="evidence-item"
+        >
+          <img
+            *ngIf="isImage(evidence.evidence)"
+            [src]="evidence.evidence"
+            alt="Evidence Image"
+            (click)="openFullScreenPreview(evidence.evidence)"
+            class="evidence-image"
+          />
+
+          <video
+            *ngIf="isVideo(evidence.evidence)"
+            controls
+            (click)="openFullScreenPreview(evidence.evidence)"
+            class="evidence-video"
+          >
+            <source [src]="evidence.evidence" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <audio
+            *ngIf="isAudio(evidence.evidence)"
+            controls
+            (click)="togglePlayAudio($event)"
+            class="evidence-audio"
+          >
+            <source [src]="evidence.evidence" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+      <span class="sp2"></span>
+    </div>
+    <div class="report-actions">
+      <button (click)="acceptReport()">Accept</button>
+      <button>Reject</button>
+      <button>Forward</button>
+      <button>Close Case</button>
+    </div>
+    <button class="close" (click)="hideReport()">
+      <i class="fas fa-times"></i>
+    </button>
   </div>
 </body>
