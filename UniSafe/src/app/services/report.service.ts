@@ -57,4 +57,22 @@ export class ReportService {
     const body = { report_id: reportId };
     return this.http.put(url, body, { withCredentials: true });
   }
+
+  rejectReport(reportId: string, rejectionReason: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/reject`;
+    const body = { report_id: reportId, rejection_reason: rejectionReason };
+    return this.http.put(url, body, { withCredentials: true });
+  }
+
+  forwardReport(reportId: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/forward`;
+    const body = { report_id: reportId };
+    return this.http.put(url, body, { withCredentials: true });
+  }
+
+  closeReport(reportId: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/close`;
+    const body = { report_id: reportId };
+    return this.http.put(url, body, { withCredentials: true });
+  }
 }

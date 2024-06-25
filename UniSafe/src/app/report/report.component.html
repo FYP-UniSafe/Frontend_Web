@@ -104,7 +104,10 @@
             </tr>
           </thead>
           <tbody>
-            <tr (click)="showReport(report)" *ngFor="let report of getCurrentPageReports()">
+            <tr
+              (click)="showReport(report)"
+              *ngFor="let report of getCurrentPageReports()"
+            >
               <td>{{ report.report_id }}</td>
               <td>{{ report.abuse_type }}</td>
               <td>
@@ -202,6 +205,12 @@
             <td class="label-cell"><strong>Assigned GD:</strong></td>
             <td class="handwritten-style">{{ selectedReport.assigned_gd }}</td>
           </tr>
+          <tr *ngIf="selectedReport.status === 'REJECTED'">
+            <td class="label-cell"><strong>Rejection Reason:</strong></td>
+            <td class="handwritten-style">
+              {{ selectedReport.rejection_reason }}
+            </td>
+          </tr>
         </table>
       </div>
 
@@ -289,7 +298,7 @@
             <td class="label-cell"><strong>Location:</strong></td>
             <td>{{ selectedReport.location }}</td>
           </tr>
-          <tr>
+          <tr *ngIf="selectedReport.location === 'Other'">
             <td class="label-cell"><strong>Other Location:</strong></td>
             <td>{{ selectedReport.other_location }}</td>
           </tr>
@@ -331,7 +340,7 @@
             <td class="label-cell"><strong>Status:</strong></td>
             <td>{{ selectedReport.police_status }}</td>
           </tr>
-          <tr>
+          <tr *ngIf="selectedReport.police_status === 'FORWARDED'">
             <td class="label-cell"><strong>Assigned Officer:</strong></td>
             <td>{{ selectedReport.assigned_officer }}</td>
           </tr>
