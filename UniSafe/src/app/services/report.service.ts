@@ -51,4 +51,10 @@ export class ReportService {
       }
     );
   }
+
+  acceptReport(reportId: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/accept`;
+    const body = { report_id: reportId };
+    return this.http.put(url, body, { withCredentials: true });
+  }
 }
