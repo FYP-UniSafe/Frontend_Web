@@ -99,4 +99,31 @@ export class ReportService {
     const body = { report_id: reportId };
     return this.http.put(url, body);
   }
+
+  receiveReport(reportId: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/receive`;
+    const body = { report_id: reportId };
+    return this.http.put(url, body, { withCredentials: true });
+  }
+
+  receiveAnonymous(reportId: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/anonymous/receive`;
+    const body = { report_id: reportId };
+    return this.http.put(url, body);
+  }
+
+  getForwardedReport(): Observable<Report[]> {
+    return this.http.get<Report[]>(
+      `${environment.apiUrl}/reports/list/forwarded`,
+      { withCredentials: true }
+    );
+  }
+
+  getForwardedAnonymous(): Observable<Report[]> {
+    return this.http.get<Report[]>(
+      `${environment.apiUrl}/reports/anonymous/list/forwarded`,
+      { withCredentials: true }
+    );
+  }
+
 }

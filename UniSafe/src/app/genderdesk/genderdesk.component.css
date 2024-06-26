@@ -24,7 +24,7 @@ body {
   justify-content: space-evenly;
   align-items: center;
 }
-.left{
+.left {
   background-color: white;
   width: 45%;
   height: 90%;
@@ -35,7 +35,7 @@ body {
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
 }
 
-.right{
+.right {
   background-color: white;
   width: 45%;
   height: 90%;
@@ -44,9 +44,8 @@ body {
   justify-content: flex-start;
   align-items: center;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
-  
 }
-.one{
+.one {
   height: 10%;
   width: 100%;
   background-color: #0f6cbf;
@@ -58,14 +57,14 @@ body {
   font-size: 1.5vw;
   font-weight: 500;
 }
-.two{
+.two {
   background-color: red;
   height: auto;
   width: 100%;
   /* margin: 20px; */
   padding: 10px;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #f9f9f9;
 }
 .two table {
@@ -93,7 +92,7 @@ body {
 .two tr:hover {
   background-color: #f1f1f1;
 }
-.three{
+.three {
   height: 60%;
   width: 100%;
 }
@@ -286,7 +285,6 @@ body.modal-open {
   /* display: none; */
 }
 
-
 .pagination-controls {
   height: 6vh;
   width: 100%;
@@ -369,7 +367,7 @@ body.modal-open {
   transition: transform 0.3s ease;
 }
 
-.report-actions{
+.report-actions {
   height: 6%;
   width: 50vw;
   /* background-color: red; */
@@ -378,7 +376,7 @@ body.modal-open {
   justify-content: space-evenly;
   align-items: center;
 }
-.report-actions button{
+.report-actions button {
   height: 3.25vh;
   width: 4vw;
   margin: 0;
@@ -421,7 +419,6 @@ body.modal-open {
   padding: 20px;
   border-radius: 5px;
 }
-
 
 #thereport {
   background-color: white;

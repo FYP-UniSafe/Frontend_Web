@@ -47,8 +47,8 @@ import { CommonModule } from '@angular/common';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     AgoraComponent,
-    GenderdeskComponent
-    // PoliceComponent,
+    GenderdeskComponent,
+    PoliceComponent,
     // ConsultantComponent
   ],
   imports: [

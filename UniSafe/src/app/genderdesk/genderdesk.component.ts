@@ -13,6 +13,7 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Router } from '@angular/router';
 import { Chart, ChartOptions } from 'chart.js';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-genderdesk',
@@ -20,9 +21,7 @@ import { Chart, ChartOptions } from 'chart.js';
   styleUrls: ['./genderdesk.component.css'],
 })
 export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
-  userFullName: string = '';
   userEmail: string = '';
-  genderDesk: string = 'GenderDesk';
   showAllReports: boolean = false;
   normalReports: Report[] = [];
   anonymousReports: Report[] = [];
@@ -65,15 +64,14 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     private timeoutService: TimeoutService,
     private reportService: ReportService,
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private location: Location
   ) {}
 
   ngOnInit() {
     this.timeoutService.resetTimer();
     const user = this.authService.getUser();
     if (user) {
-      this.userFullName = user.full_name;
-      this.genderDesk = user.profile.custom_id;
       this.userEmail = user.email;
     }
 
@@ -103,16 +101,14 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
           const lastCharB = b.report_id.split('-').pop();
           return Number(lastCharA) - Number(lastCharB);
         });
-
         // Convert the created_on string to a Date object for each report
         this.normalReports.forEach((report) => {
           report.created_on_date = new Date(report.created_on);
         });
-
         this.filterReports(this.activeStatus);
         this.countReportStatuses();
         this.countAbuseTypes();
-        this.renderRadarChart(); 
+        this.renderRadarChart();
       },
       (error) => {
         console.error('Error fetching reports:', error);
@@ -128,16 +124,14 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
           const lastCharB = b.report_id.split('-').pop();
           return Number(lastCharA) - Number(lastCharB);
         });
-
         // Convert the created_on string to a Date object for each report
         this.anonymousReports.forEach((report) => {
           report.created_on_date = new Date(report.created_on);
         });
-
         this.filterReports(this.activeStatus);
         this.countAnonymousReportStatuses();
         this.countAbuseTypes();
-        this.renderRadarChart(); 
+        this.renderRadarChart();
         this.renderAnonymousRadarChart();
       },
       (error) => {
@@ -152,22 +146,18 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       this.activeStatus = status;
     }
-
     let filteredReports =
       this.reportType === 'NORMAL' ? this.normalReports : this.anonymousReports;
-
     if (this.activeStatus) {
       filteredReports = filteredReports.filter(
         (report) => report.status === this.activeStatus
       );
     }
-
     if (!this.showAllReports) {
       filteredReports = filteredReports.filter(
         (report) => report.assigned_gd === this.userEmail
       );
     }
-
     this.filteredReports = filteredReports;
     this.calculateTotalPages();
   }
@@ -181,7 +171,6 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
   countReportStatuses() {
     this.normalPending = 0;
     this.normalAccepted = 0;
-
     this.normalReports.forEach((report) => {
       if (report.status === 'PENDING') {
         this.normalPending++;
@@ -189,17 +178,11 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
         this.normalAccepted++;
       }
     });
-
-    // Now you have the counts in normalPending and normalAccepted
-    console.log(
-      `Normal Reports - Pending: ${this.normalPending}, Accepted: ${this.normalAccepted}`
-    );
   }
 
   countAnonymousReportStatuses() {
-    this.anonymousPending = 0; // Reset counts before counting
+    this.anonymousPending = 0;
     this.anonymousAccepted = 0;
-
     this.anonymousReports.forEach((report) => {
       if (report.status === 'PENDING') {
         this.anonymousPending++;
@@ -207,11 +190,6 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
         this.anonymousAccepted++;
       }
     });
-
-    // Now you have the counts in anonymousPending and anonymousAccepted
-    console.log(
-      `Anonymous Reports - Pending: ${this.anonymousPending}, Accepted: ${this.anonymousAccepted}`
-    );
   }
 
   countAbuseTypes() {
@@ -222,15 +200,11 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       'Online Harassment': 0,
       'Societal Violence': 0,
     };
-
     this.normalReports.forEach((report) => {
       if (this.abuseTypeCounts.hasOwnProperty(report.abuse_type)) {
         this.abuseTypeCounts[report.abuse_type]++;
       }
     });
-
-    console.log('Abuse Type Counts for Normal Reports:', this.abuseTypeCounts);
-
     this.anonymousAbuseTypeCounts = {
       'Physical Violence': 0,
       'Sexual Violence': 0,
@@ -238,17 +212,11 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       'Online Harassment': 0,
       'Societal Violence': 0,
     };
-
     this.anonymousReports.forEach((report) => {
       if (this.anonymousAbuseTypeCounts.hasOwnProperty(report.abuse_type)) {
         this.anonymousAbuseTypeCounts[report.abuse_type]++;
       }
     });
-
-    console.log(
-      'Abuse Type Counts for Anonymous Reports:',
-      this.anonymousAbuseTypeCounts
-    );
   }
 
   renderRadarChart() {
@@ -292,9 +260,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   renderAnonymousRadarChart() {
-    const ctx = document.getElementById(
-      'radarChart2'
-    ) as HTMLCanvasElement;
+    const ctx = document.getElementById('radarChart2') as HTMLCanvasElement;
     if (ctx && this.anonymousAbuseTypeCounts) {
       if (this.radarChart2) {
         this.radarChart2.destroy();
@@ -325,7 +291,6 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
             r: {
               ticks: {
                 beginAtZero: true,
-                // display: false,
               },
             },
           },
@@ -333,7 +298,6 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       });
     }
   }
-
 
   getCurrentPageReports() {
     const startIndex = (this.currentPage - 1) * this.reportsPerPage;
@@ -382,7 +346,6 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
 
   downloadReport() {
     const thereport = document.getElementById('thereport');
-
     if (thereport) {
       html2canvas(thereport, {
         scale: 2,
@@ -391,14 +354,12 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       }).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
         const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
-
         const pdfWidth = pdf.internal.pageSize.getWidth();
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
         const imgProps = pdf.getImageProperties(imgData);
         const numPages = Math.ceil(
           pdfHeight / pdf.internal.pageSize.getHeight()
         );
-
         for (let i = 0; i < numPages; i++) {
           const heightLeft = i * pdf.internal.pageSize.getHeight();
           pdf.addImage(imgData, 'PNG', 0, -heightLeft, pdfWidth, pdfHeight);
@@ -406,7 +367,6 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
             pdf.addPage();
           }
         }
-
         pdf.save('report.pdf');
       });
     }
@@ -434,7 +394,6 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
   openFullScreenPreview(mediaUrl: string): void {
     const isImageOrVideo = this.isImage(mediaUrl) || this.isVideo(mediaUrl);
     if (!isImageOrVideo) return;
-
     const previewElement = document.createElement(
       isImageOrVideo ? 'img' : 'video'
     );
@@ -448,7 +407,6 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     previewElement.style.width = '100%';
     previewElement.style.height = '100%';
     document.body.appendChild(previewElement);
-
     previewElement.onclick = function () {
       document.body.removeChild(previewElement);
     };
@@ -463,25 +421,33 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     event.stopPropagation();
   }
-  
+
   openRejectDialog() {
     this.isRejectDialogOpen = true;
   }
 
-  
   isAnonymousReport(reportId: string): boolean {
     return reportId.startsWith('A-RE');
   }
-  
+
+  // navigateAndReload() {
+  //   this.router.navigateByUrl('/genderdesk').then(() => {
+  //     window.location.reload();
+  //   });
+  // }
+
   acceptReport(report: Report) {
     if (this.isAnonymousReport(report.report_id)) {
       this.reportService.acceptAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
           this.router.navigate(['/genderdesk']);
+          // this.navigateAndReload;
         },
         error: (error) => {
-          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          const errorMessage = error.error
+            ? error.error.error
+            : 'An unknown error occurred';
           window.alert(errorMessage);
         },
       });
@@ -490,50 +456,66 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (response) => {
           window.alert(response.message);
           this.router.navigate(['/genderdesk']);
+          // this.navigateAndReload;
         },
         error: (error) => {
-          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          const errorMessage = error.error
+            ? error.error.error
+            : 'An unknown error occurred';
           window.alert(errorMessage);
         },
       });
     }
   }
-  
+
   rejectReport(report: Report, rejectionReason: string) {
     if (this.isAnonymousReport(report.report_id)) {
-      this.reportService.rejectAnonymous(report.report_id, rejectionReason).subscribe({
-        next: (response) => {
-          window.alert(response.message);
-          this.router.navigate(['/genderdesk']);
-        },
-        error: (error) => {
-          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
-          window.alert(errorMessage);
-        },
-      });
+      this.reportService
+        .rejectAnonymous(report.report_id, rejectionReason)
+        .subscribe({
+          next: (response) => {
+            window.alert(response.message);
+            this.router.navigate(['/genderdesk']);
+            // this.navigateAndReload;
+          },
+          error: (error) => {
+            const errorMessage = error.error
+              ? error.error.error
+              : 'An unknown error occurred';
+            window.alert(errorMessage);
+          },
+        });
     } else {
-      this.reportService.rejectReport(report.report_id, rejectionReason).subscribe({
-        next: (response) => {
-          window.alert(response.message);
-          this.router.navigate(['/genderdesk']);
-        },
-        error: (error) => {
-          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
-          window.alert(errorMessage);
-        },
-      });
+      this.reportService
+        .rejectReport(report.report_id, rejectionReason)
+        .subscribe({
+          next: (response) => {
+            window.alert(response.message);
+            this.router.navigate(['/genderdesk']);
+            // this.navigateAndReload;
+          },
+          error: (error) => {
+            const errorMessage = error.error
+              ? error.error.error
+              : 'An unknown error occurred';
+            window.alert(errorMessage);
+          },
+        });
     }
   }
-  
+
   closeReport(report: Report) {
     if (this.isAnonymousReport(report.report_id)) {
       this.reportService.closeAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
           this.router.navigate(['/genderdesk']);
+          // this.navigateAndReload;
         },
         error: (error) => {
-          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          const errorMessage = error.error
+            ? error.error.error
+            : 'An unknown error occurred';
           window.alert(errorMessage);
         },
       });
@@ -542,24 +524,30 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (response) => {
           window.alert(response.message);
           this.router.navigate(['/genderdesk']);
+          // this.navigateAndReload;
         },
         error: (error) => {
-          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          const errorMessage = error.error
+            ? error.error.error
+            : 'An unknown error occurred';
           window.alert(errorMessage);
         },
       });
     }
   }
-  
+
   forwardReport(report: Report) {
     if (this.isAnonymousReport(report.report_id)) {
       this.reportService.forwardAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
           this.router.navigate(['/genderdesk']);
+          // this.navigateAndReload;
         },
         error: (error) => {
-          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          const errorMessage = error.error
+            ? error.error.error
+            : 'An unknown error occurred';
           window.alert(errorMessage);
         },
       });
@@ -568,9 +556,12 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
         next: (response) => {
           window.alert(response.message);
           this.router.navigate(['/genderdesk']);
+          // this.navigateAndReload;
         },
         error: (error) => {
-          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          const errorMessage = error.error
+            ? error.error.error
+            : 'An unknown error occurred';
           window.alert(errorMessage);
         },
       });
