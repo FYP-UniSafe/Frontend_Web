@@ -266,13 +266,13 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
               label: 'Reports per Abuse Types',
               data: Object.values(this.abuseTypeCounts),
               backgroundColor: 'rgba(255, 99, 132, 0.4)',
-              borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1,
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 2,
             },
           ],
         },
         options: {
-          maintainAspectRatio: false, // Disable aspect ratio to allow manual sizing
+          maintainAspectRatio: false,
           responsive: true,
           plugins: {
             legend: {
@@ -282,11 +282,11 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
           scales: {
             r: {
               ticks: {
-                beginAtZero: true, // Adjust this based on your chart's requirements
+                beginAtZero: true,
               },
             },
           },
-        } as ChartOptions<'radar'>, // Type assertion for ChartOptions<'radar'>
+        } as ChartOptions<'radar'>,
       });
     }
   }
@@ -308,8 +308,8 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
               label: 'Anonymous Reports per Abuse Types',
               data: Object.values(this.anonymousAbuseTypeCounts),
               backgroundColor: 'rgba(255, 99, 132, 0.4)',
-              borderColor: 'rgba(54, 162, 235, 1)',
-              borderWidth: 1,
+              borderColor: 'rgba(255, 99, 132, 1)',
+              borderWidth: 2,
             },
           ],
         },
@@ -325,6 +325,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
             r: {
               ticks: {
                 beginAtZero: true,
+                // display: false,
               },
             },
           },
@@ -462,73 +463,117 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     event.stopPropagation();
   }
-
-  acceptReport() {
-    if (!this.selectedReport || !this.selectedReport.report_id) {
-      return;
-    }
-    const reportId = this.selectedReport.report_id;
-    this.reportService.acceptReport(reportId).subscribe({
-      next: (response) => {
-        window.alert(response.message);
-        this.router.navigate(['/genderdesk']);
-      },
-      error: (error) => {
-        const errorMessage = error.error
-          ? error.error.error
-          : 'An unknown error occurred';
-        window.alert(errorMessage);
-      },
-    });
-  }
-
+  
   openRejectDialog() {
     this.isRejectDialogOpen = true;
   }
 
-  rejectReport(report: Report, rejectionReason: string) {
-    this.reportService
-      .rejectReport(report.report_id, rejectionReason)
-      .subscribe({
+  
+  isAnonymousReport(reportId: string): boolean {
+    return reportId.startsWith('A-RE');
+  }
+  
+  acceptReport(report: Report) {
+    if (this.isAnonymousReport(report.report_id)) {
+      this.reportService.acceptAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.router.navigate(['/genderdesk']);
         },
         error: (error) => {
-          const errorMessage = error.error
-            ? error.error.error
-            : 'An unknown error occurred';
+          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
           window.alert(errorMessage);
         },
       });
+    } else {
+      this.reportService.acceptReport(report.report_id).subscribe({
+        next: (response) => {
+          window.alert(response.message);
+          this.router.navigate(['/genderdesk']);
+        },
+        error: (error) => {
+          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          window.alert(errorMessage);
+        },
+      });
+    }
   }
-
-  forwardReport(report: Report) {
-    this.reportService.forwardReport(report.report_id).subscribe({
-      next: (response) => {
-        window.alert(response.message);
-        this.router.navigate(['/genderdesk']);
-      },
-      error: (error) => {
-        const errorMessage = error.error
-          ? error.error.error
-          : 'An unknown error occurred';
-        window.alert(errorMessage);
-      },
-    });
+  
+  rejectReport(report: Report, rejectionReason: string) {
+    if (this.isAnonymousReport(report.report_id)) {
+      this.reportService.rejectAnonymous(report.report_id, rejectionReason).subscribe({
+        next: (response) => {
+          window.alert(response.message);
+          this.router.navigate(['/genderdesk']);
+        },
+        error: (error) => {
+          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          window.alert(errorMessage);
+        },
+      });
+    } else {
+      this.reportService.rejectReport(report.report_id, rejectionReason).subscribe({
+        next: (response) => {
+          window.alert(response.message);
+          this.router.navigate(['/genderdesk']);
+        },
+        error: (error) => {
+          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          window.alert(errorMessage);
+        },
+      });
+    }
   }
-
+  
   closeReport(report: Report) {
-    this.reportService.closeReport(report.report_id).subscribe({
-      next: (response) => {
-        window.alert(response.message);
-        this.router.navigate(['/genderdesk']);
-      },
-      error: (error) => {
-        const errorMessage = error.error
-          ? error.error.error
-          : 'An unknown error occurred';
-        window.alert(errorMessage);
-      },
-    });
+    if (this.isAnonymousReport(report.report_id)) {
+      this.reportService.closeAnonymous(report.report_id).subscribe({
+        next: (response) => {
+          window.alert(response.message);
+          this.router.navigate(['/genderdesk']);
+        },
+        error: (error) => {
+          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          window.alert(errorMessage);
+        },
+      });
+    } else {
+      this.reportService.closeReport(report.report_id).subscribe({
+        next: (response) => {
+          window.alert(response.message);
+          this.router.navigate(['/genderdesk']);
+        },
+        error: (error) => {
+          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          window.alert(errorMessage);
+        },
+      });
+    }
+  }
+  
+  forwardReport(report: Report) {
+    if (this.isAnonymousReport(report.report_id)) {
+      this.reportService.forwardAnonymous(report.report_id).subscribe({
+        next: (response) => {
+          window.alert(response.message);
+          this.router.navigate(['/genderdesk']);
+        },
+        error: (error) => {
+          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          window.alert(errorMessage);
+        },
+      });
+    } else {
+      this.reportService.forwardReport(report.report_id).subscribe({
+        next: (response) => {
+          window.alert(response.message);
+          this.router.navigate(['/genderdesk']);
+        },
+        error: (error) => {
+          const errorMessage = error.error ? error.error.error : 'An unknown error occurred';
+          window.alert(errorMessage);
+        },
+      });
+    }
   }
 }
