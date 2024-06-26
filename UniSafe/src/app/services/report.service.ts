@@ -58,10 +58,22 @@ export class ReportService {
     return this.http.put(url, body, { withCredentials: true });
   }
 
+  acceptAnonymous(reportId: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/anonymous/accept`;
+    const body = { report_id: reportId };
+    return this.http.put(url, body);
+  }
+
   rejectReport(reportId: string, rejectionReason: string): Observable<any> {
     const url = `${environment.apiUrl}/reports/reject`;
     const body = { report_id: reportId, rejection_reason: rejectionReason };
     return this.http.put(url, body, { withCredentials: true });
+  }
+
+  rejectAnonymous(reportId: string, rejectionReason: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/anonymous/reject`;
+    const body = { report_id: reportId, rejection_reason: rejectionReason };
+    return this.http.put(url, body);
   }
 
   forwardReport(reportId: string): Observable<any> {
@@ -70,9 +82,21 @@ export class ReportService {
     return this.http.put(url, body, { withCredentials: true });
   }
 
+  forwardAnonymous(reportId: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/anonymous/forward`;
+    const body = { report_id: reportId };
+    return this.http.put(url, body);
+  }
+
   closeReport(reportId: string): Observable<any> {
     const url = `${environment.apiUrl}/reports/close`;
     const body = { report_id: reportId };
     return this.http.put(url, body, { withCredentials: true });
+  }
+
+  closeAnonymous(reportId: string): Observable<any> {
+    const url = `${environment.apiUrl}/reports/anonymous/close`;
+    const body = { report_id: reportId };
+    return this.http.put(url, body);
   }
 }

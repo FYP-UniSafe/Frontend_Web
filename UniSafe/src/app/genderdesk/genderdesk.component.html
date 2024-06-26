@@ -241,7 +241,7 @@
             <td class="label-cell"><strong>Report ID:</strong></td>
             <td class="handwritten-style">{{ selectedReport.report_id }}</td>
           </tr>
-          <tr>
+          <tr *ngIf="!isAnonymousReport(selectedReport.report_id)">
             <td class="label-cell"><strong>Report For:</strong></td>
             <td class="handwritten-style">{{ selectedReport.report_for }}</td>
           </tr>
@@ -269,10 +269,10 @@
       </div>
 
       <!-- Reporter Contact Details -->
-      <div class="stage">
+      <div class="stage" *ngIf="!isAnonymousReport(selectedReport.report_id)">
         <p>REPORTER CONTACT DETAILS:</p>
       </div>
-      <div class="report-section">
+      <div class="report-section" *ngIf="!isAnonymousReport(selectedReport.report_id)">
         <table>
           <tr>
             <td class="label-cell"><strong>Full Name:</strong></td>
@@ -302,10 +302,10 @@
       </div>
 
       <!-- Victim Details -->
-      <div class="stage">
+      <div class="stage" *ngIf="!isAnonymousReport(selectedReport.report_id)">
         <p>VICTIM'S DETAILS:</p>
       </div>
-      <div class="report-section">
+      <div class="report-section" *ngIf="!isAnonymousReport(selectedReport.report_id)">
         <table>
           <tr>
             <td class="label-cell"><strong>Full Name:</strong></td>
@@ -442,7 +442,7 @@
       <span class="sp2"></span>
     </div>
     <div class="report-actions">
-      <button (click)="acceptReport()">Accept</button>
+      <button (click)="acceptReport(selectedReport)">Accept</button>
       <button (click)="openRejectDialog()">Reject</button>
       <button (click)="forwardReport(selectedReport)">Forward</button>
       <button (click)="closeReport(selectedReport)">Close Case</button>

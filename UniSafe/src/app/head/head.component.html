@@ -9,12 +9,12 @@
         <div class="mobile-menu" [class.mobile-menu-active]="menuValue">
             <ul>
                 <li (click)="closeMenu()" routerLink="/home" [ngClass]="{ 'active': activeRoute === '/home' }">Home</li>
-                <li (click)="closeMenu()" *ngIf="authenticated" routerLink="/report" [ngClass]="{ 'active': activeRoute === '/report'|| activeRoute === '/report-form' }">Report a GBV</li>
+                <li (click)="closeMenu()" *ngIf="authenticated && isStudent" routerLink="/report" [ngClass]="{ 'active': activeRoute === '/report'|| activeRoute === '/report-form' }">Report a GBV</li>
                 <li (click)="closeMenu()" *ngIf="!authenticated" routerLink="/report" [ngClass]="{ 'active': activeRoute === '/report'|| activeRoute === '/report-form' }">Report Anonymously</li>
-                <li (click)="closeMenu()" routerLink="/genderdesk" [ngClass]="{ 'active': activeRoute === '/genderdesk' }">Dashboard</li>
-                <li (click)="closeMenu()" routerLink="/police" [ngClass]="{ 'active': activeRoute === '/police' }">Dashboard</li>
-                <li (click)="closeMenu()" routerLink="/consultant" [ngClass]="{ 'active': activeRoute === '/consultant' }">Dashboard</li>
-                <li (click)="closeMenu()" *ngIf="authenticated" routerLink="/counselling" [ngClass]="{ 'active': activeRoute === '/counselling' }">Seek Counsel</li>
+                <li (click)="closeMenu()" *ngIf="authenticated && isGenderDesk" routerLink="/genderdesk" [ngClass]="{ 'active': activeRoute === '/genderdesk' }">Dashboard</li>
+                <li (click)="closeMenu()" *ngIf="authenticated && isPolice" routerLink="/police" [ngClass]="{ 'active': activeRoute === '/police' }">Dashboard</li>
+                <li (click)="closeMenu()"  *ngIf="authenticated && isConsultant" routerLink="/consultant" [ngClass]="{ 'active': activeRoute === '/consultant' }">Dashboard</li>
+                <li (click)="closeMenu()" *ngIf="authenticated && isStudent" routerLink="/counselling" [ngClass]="{ 'active': activeRoute === '/counselling' }">Seek Counsel</li>
                 <li (click)="closeMenu(); scrollToFooter()">Contact us</li>
                 <li (click)="closeMenu()" routerLink="/profile" *ngIf="authenticated" [ngClass]="{ 'active': activeRoute === '/profile' }">Profile</li>
                 <li (click)="closeMenu()" routerLink="/login" *ngIf="authenticated" (click)="logout()">Logout</li>
@@ -31,7 +31,7 @@
         <button class="links" routerLink="/genderdesk" [ngClass]="{ 'active': activeRoute === '/genderdesk' }" *ngIf="authenticated && isGenderDesk">Dashboard</button>
         <button class="links" routerLink="/police" [ngClass]="{ 'active': activeRoute === '/police' }" *ngIf="authenticated && isPolice">Dashboard</button>
         <button class="links" routerLink="/consultant" [ngClass]="{ 'active': activeRoute === '/consultant' }" *ngIf="authenticated && isConsultant">Dashboard</button>
-        <button class="links" *ngIf="authenticated && (isStudent || isConsultant)" routerLink="/counselling" [ngClass]="{ 'active': activeRoute === '/counselling' }">Seek Counsel</button>
+        <button class="links" *ngIf="authenticated && (isStudent)" routerLink="/counselling" [ngClass]="{ 'active': activeRoute === '/counselling' }">Seek Counsel</button>
         <!-- <button class="links" *ngIf="authenticated && (isStudent)" routerLink="/counselling" [ngClass]="{ 'active': activeRoute === '/counselling' }">Seek Counsel</button> -->
         <button class="links" (click)="scrollToFooter()">Contact us</button>
     </div>
