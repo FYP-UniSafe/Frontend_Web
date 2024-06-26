@@ -2,7 +2,71 @@
   <div class="heading">
     <p>UniSafe GenderDesk Dashboard</p>
   </div>
-  <div class="div1"></div>
+  <div class="div1">
+    <div class="left">
+      <div class="one">
+        <p>Normal Reports</p>
+      </div>
+      <div class="two">
+        <table>
+          <tr>
+            <td>TOTAL:</td>
+            <td>
+              <b>{{ normalReports.length }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>PENDING:</td>
+            <td>
+              <b>{{ normalPending }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>IN PROGRESS:</td>
+            <td>
+              <b>{{ normalAccepted }}</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="three">
+        <canvas id="radarChart"></canvas>
+      </div>
+    </div>
+    <div class="right">
+      <div></div>
+      <div class="one">
+        <p>Anonymous eports</p>
+      </div>
+      <div class="two">
+        <table>
+          <tr>
+            <td>TOTAL:</td>
+            <td>
+              <b>{{ anonymousReports.length }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>PENDING:</td>
+            <td>
+              <b>{{ anonymousPending }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>IN PROGRESS:</td>
+            <td>
+              <b>{{ anonymousAccepted }}</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <div class="three">
+        <canvas id="radarChart2"></canvas>
+      </div>
+    </div>
+  </div>
   <div class="div2">
     <div class="head">
       <h2>Reports</h2>

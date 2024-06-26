@@ -17,9 +17,85 @@ body {
   color: #0f6cbf;
 }
 .div1 {
-  height: 40vh;
+  height: 75.5vh;
   width: 100%;
-  background-color: grey;
+  background-color: #e3f2ff;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.left{
+  background-color: white;
+  width: 45%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+}
+
+.right{
+  background-color: white;
+  width: 45%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+  
+}
+.one{
+  height: 10%;
+  width: 100%;
+  background-color: #0f6cbf;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.5vw;
+  font-weight: 500;
+}
+.two{
+  background-color: red;
+  height: auto;
+  width: 100%;
+  /* margin: 20px; */
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: #f9f9f9;
+}
+.two table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.two td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.two tr:last-child td {
+  border-bottom: none;
+}
+
+.two td:first-child {
+  color: #555;
+}
+
+.two b {
+  color: #333;
+  font-weight: bold;
+}
+.two tr:hover {
+  background-color: #f1f1f1;
+}
+.three{
+  height: 60%;
+  width: 100%;
 }
 .div2 {
   height: auto;
@@ -50,7 +126,7 @@ body {
 .anoide {
   height: 6vh;
   width: 80%;
-  background-color: brown;
+  /* background-color: brown; */
   background-color: white;
   display: flex;
   justify-content: flex-start;

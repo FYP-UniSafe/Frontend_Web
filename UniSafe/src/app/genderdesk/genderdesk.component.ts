@@ -1,4 +1,10 @@
-import { Component, OnInit, Renderer2, OnDestroy } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Renderer2,
+  OnDestroy,
+  AfterViewInit,
+} from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { TimeoutService } from '../services/timeout.service';
 import { ReportService } from '../services/report.service';
@@ -6,18 +12,20 @@ import { Report } from '../models/report';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Router } from '@angular/router';
+import { Chart, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-genderdesk',
   templateUrl: './genderdesk.component.html',
   styleUrls: ['./genderdesk.component.css'],
 })
-export class GenderdeskComponent implements OnInit, OnDestroy {
+export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
   userFullName: string = '';
   userEmail: string = '';
   genderDesk: string = 'GenderDesk';
   showAllReports: boolean = false;
-  reports: Report[] = [];
+  normalReports: Report[] = [];
+  anonymousReports: Report[] = [];
   filteredReports: Report[] = [];
   activeStatus: string | null = null;
   reportType: string = 'NORMAL';
@@ -28,6 +36,29 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
   isReportVisible: boolean = false;
   isRejectDialogOpen = false;
   rejectionReason = '';
+  normalPending = 0;
+  normalAccepted = 0;
+  anonymousPending = 0;
+  anonymousAccepted = 0;
+
+  abuseTypeCounts: { [key: string]: number } = {
+    'Physical Violence': 0,
+    'Sexual Violence': 0,
+    'Psychological Violence': 0,
+    'Online Harassment': 0,
+    'Societal Violence': 0,
+  };
+
+  anonymousAbuseTypeCounts: { [key: string]: number } = {
+    'Physical Violence': 0,
+    'Sexual Violence': 0,
+    'Psychological Violence': 0,
+    'Online Harassment': 0,
+    'Societal Violence': 0,
+  };
+
+  private radarChart: any;
+  private radarChart2: any;
 
   constructor(
     private authService: AuthService,
@@ -47,6 +78,12 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
     }
 
     this.fetchReports();
+    this.fetchAnonymousReports();
+  }
+
+  ngAfterViewInit() {
+    // Ensure the chart is rendered after the view has been initialized
+    this.renderRadarChart();
   }
 
   onReportsFilterChange() {
@@ -61,18 +98,21 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
   fetchReports() {
     this.reportService.getNormalReports().subscribe(
       (reports: Report[]) => {
-        this.reports = reports.sort((a, b) => {
+        this.normalReports = reports.sort((a, b) => {
           const lastCharA = a.report_id.split('-').pop();
           const lastCharB = b.report_id.split('-').pop();
           return Number(lastCharA) - Number(lastCharB);
         });
 
         // Convert the created_on string to a Date object for each report
-        this.reports.forEach((report) => {
+        this.normalReports.forEach((report) => {
           report.created_on_date = new Date(report.created_on);
         });
 
         this.filterReports(this.activeStatus);
+        this.countReportStatuses();
+        this.countAbuseTypes();
+        this.renderRadarChart(); 
       },
       (error) => {
         console.error('Error fetching reports:', error);
@@ -83,18 +123,22 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
   fetchAnonymousReports() {
     this.reportService.getAnonymousReports().subscribe(
       (reports: Report[]) => {
-        this.reports = reports.sort((a, b) => {
+        this.anonymousReports = reports.sort((a, b) => {
           const lastCharA = a.report_id.split('-').pop();
           const lastCharB = b.report_id.split('-').pop();
           return Number(lastCharA) - Number(lastCharB);
         });
 
         // Convert the created_on string to a Date object for each report
-        this.reports.forEach((report) => {
+        this.anonymousReports.forEach((report) => {
           report.created_on_date = new Date(report.created_on);
         });
 
         this.filterReports(this.activeStatus);
+        this.countAnonymousReportStatuses();
+        this.countAbuseTypes();
+        this.renderRadarChart(); 
+        this.renderAnonymousRadarChart();
       },
       (error) => {
         console.error('Error fetching anonymous reports:', error);
@@ -109,7 +153,8 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
       this.activeStatus = status;
     }
 
-    let filteredReports = this.reports;
+    let filteredReports =
+      this.reportType === 'NORMAL' ? this.normalReports : this.anonymousReports;
 
     if (this.activeStatus) {
       filteredReports = filteredReports.filter(
@@ -126,11 +171,168 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
     this.filteredReports = filteredReports;
     this.calculateTotalPages();
   }
+
   calculateTotalPages() {
     this.totalPages = Math.ceil(
       this.filteredReports.length / this.reportsPerPage
     );
   }
+
+  countReportStatuses() {
+    this.normalPending = 0;
+    this.normalAccepted = 0;
+
+    this.normalReports.forEach((report) => {
+      if (report.status === 'PENDING') {
+        this.normalPending++;
+      } else {
+        this.normalAccepted++;
+      }
+    });
+
+    // Now you have the counts in normalPending and normalAccepted
+    console.log(
+      `Normal Reports - Pending: ${this.normalPending}, Accepted: ${this.normalAccepted}`
+    );
+  }
+
+  countAnonymousReportStatuses() {
+    this.anonymousPending = 0; // Reset counts before counting
+    this.anonymousAccepted = 0;
+
+    this.anonymousReports.forEach((report) => {
+      if (report.status === 'PENDING') {
+        this.anonymousPending++;
+      } else {
+        this.anonymousAccepted++;
+      }
+    });
+
+    // Now you have the counts in anonymousPending and anonymousAccepted
+    console.log(
+      `Anonymous Reports - Pending: ${this.anonymousPending}, Accepted: ${this.anonymousAccepted}`
+    );
+  }
+
+  countAbuseTypes() {
+    this.abuseTypeCounts = {
+      'Physical Violence': 0,
+      'Sexual Violence': 0,
+      'Psychological Violence': 0,
+      'Online Harassment': 0,
+      'Societal Violence': 0,
+    };
+
+    this.normalReports.forEach((report) => {
+      if (this.abuseTypeCounts.hasOwnProperty(report.abuse_type)) {
+        this.abuseTypeCounts[report.abuse_type]++;
+      }
+    });
+
+    console.log('Abuse Type Counts for Normal Reports:', this.abuseTypeCounts);
+
+    this.anonymousAbuseTypeCounts = {
+      'Physical Violence': 0,
+      'Sexual Violence': 0,
+      'Psychological Violence': 0,
+      'Online Harassment': 0,
+      'Societal Violence': 0,
+    };
+
+    this.anonymousReports.forEach((report) => {
+      if (this.anonymousAbuseTypeCounts.hasOwnProperty(report.abuse_type)) {
+        this.anonymousAbuseTypeCounts[report.abuse_type]++;
+      }
+    });
+
+    console.log(
+      'Abuse Type Counts for Anonymous Reports:',
+      this.anonymousAbuseTypeCounts
+    );
+  }
+
+  renderRadarChart() {
+    const ctx = document.getElementById('radarChart') as HTMLCanvasElement;
+    if (ctx && this.abuseTypeCounts) {
+      if (this.radarChart) {
+        this.radarChart.destroy();
+      }
+      this.radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: Object.keys(this.abuseTypeCounts),
+          datasets: [
+            {
+              label: 'Reports per Abuse Types',
+              data: Object.values(this.abuseTypeCounts),
+              backgroundColor: 'rgba(255, 99, 132, 0.4)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false, // Disable aspect ratio to allow manual sizing
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+          scales: {
+            r: {
+              ticks: {
+                beginAtZero: true, // Adjust this based on your chart's requirements
+              },
+            },
+          },
+        } as ChartOptions<'radar'>, // Type assertion for ChartOptions<'radar'>
+      });
+    }
+  }
+
+  renderAnonymousRadarChart() {
+    const ctx = document.getElementById(
+      'radarChart2'
+    ) as HTMLCanvasElement;
+    if (ctx && this.anonymousAbuseTypeCounts) {
+      if (this.radarChart2) {
+        this.radarChart2.destroy();
+      }
+      this.radarChart2 = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: Object.keys(this.anonymousAbuseTypeCounts),
+          datasets: [
+            {
+              label: 'Anonymous Reports per Abuse Types',
+              data: Object.values(this.anonymousAbuseTypeCounts),
+              backgroundColor: 'rgba(255, 99, 132, 0.4)',
+              borderColor: 'rgba(54, 162, 235, 1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+          scales: {
+            r: {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          },
+        } as ChartOptions<'radar'>,
+      });
+    }
+  }
+
 
   getCurrentPageReports() {
     const startIndex = (this.currentPage - 1) * this.reportsPerPage;
@@ -158,11 +360,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy {
 
   switchReportType(type: string) {
     this.reportType = type;
-    if (type === 'NORMAL') {
-      this.fetchReports();
-    } else if (type === 'ANONYMOUS') {
-      this.fetchAnonymousReports();
-    }
+    this.filterReports(this.activeStatus);
   }
 
   showReport(report: any) {
