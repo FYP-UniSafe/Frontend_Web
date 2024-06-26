@@ -3,11 +3,434 @@
     <p>UniSafe Police Dashboard</p>
   </div>
 
-  <div class="div1"></div>
+  <div class="div1">
+    <div class="left">
+      <div class="one">
+        <p>Normal Reports</p>
+      </div>
+      <div class="two">
+        <table>
+          <tr>
+            <td>TOTAL:</td>
+            <td>
+              <b>{{ normalReports.length }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>RECEIVED:</td>
+            <td>
+              <b>{{ normalReceived }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>NOT RECEIVED:</td>
+            <td>
+              <b>{{ normalNotReceived }}</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="right">
+      <div></div>
+      <div class="one">
+        <p>Anonymous eports</p>
+      </div>
+      <div class="two">
+        <table>
+          <tr>
+            <td>TOTAL:</td>
+            <td>
+              <b>{{ anonymousReports.length }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>RECEIVED:</td>
+            <td>
+              <b>{{ anonymousReceived }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>NOT RECEIVED:</td>
+            <td>
+              <b>{{ anonymousNotReceived }}</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
   <div class="div2">
     <div class="head">
       <h2>Reports</h2>
       <span></span>
     </div>
+    <div class="anoide">
+      <div class="butns upper">
+        <button
+          class="appe"
+          [class.active]="reportType === 'NORMAL'"
+          (click)="switchReportType('NORMAL')"
+        >
+          Normal Reports
+        </button>
+        <button
+          class="appe"
+          [class.active]="reportType === 'ANONYMOUS'"
+          (click)="switchReportType('ANONYMOUS')"
+        >
+          Anonymous Reports
+        </button>
+        <label class="custom-checkbox">
+          <input
+            type="checkbox"
+            [(ngModel)]="showAllReports"
+            (change)="onReportsFilterChange()"
+          />
+          <span>Show Yours (Received by you) / Show All Reports</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="reports">
+      <div class="selection">
+        <div class="butns">
+          <button
+            class="special"
+            [class.active]="activeStatus === null"
+            (click)="filterReports()"
+          >
+            All Statuses
+          </button>
+          <button
+            style="width: 5vw"
+            [class.active]="activeStatus === 'FORWARDED TO POLICE'"
+            (click)="filterReports('FORWARDED TO POLICE')"
+          >
+            Not received
+          </button>
+          <button
+            [class.active]="activeStatus === 'RESOLVED'"
+            (click)="filterReports('RESOLVED')"
+          >
+            Resolved
+          </button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card" *ngIf="filteredReports.length > 0">
+          <table>
+            <thead>
+              <tr>
+                <th>Report ID</th>
+                <th>Abuse Type</th>
+                <th>Reported On</th>
+                <th>Status</th>
+                <!-- <th>Assigned Gender Desk</th> -->
+                <th>Police Status</th>
+                <th>Assigned Officer</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                (click)="showReport(report)"
+                tr
+                *ngFor="let report of getCurrentPageReports()"
+              >
+                <td>{{ report.report_id }}</td>
+                <td>{{ report.abuse_type }}</td>
+                <td>
+                  {{ report.created_on_date | date : "dd/MM/yyyy" }} |
+                  {{ report.created_on_date | date : "HH:mm" }}
+                </td>
+                <td>{{ report.status }}</td>
+                <!-- <td>{{ report.assigned_gd }}</td> -->
+                <td>{{ report.police_status }}</td>
+                <td>{{ report.assigned_officer }}</td>
+                <td class="actions">
+                  <button class="view" (click)="showReport(report)">
+                    <i class="far fa-eye eye-show"></i>
+                  </button>
+                  <button
+                    class="download"
+                    (click)="prepareAndDownloadReport(report)"
+                  >
+                    <i class="fas fa-download"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card" *ngIf="filteredReports.length === 0">
+          <p>No report found!.</p>
+        </div>
+      </div>
+
+      <div class="pagination-controls">
+        <button
+          class="prev"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+        >
+          Previous
+        </button>
+
+        <button
+          class="num"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          (click)="goToPage(i + 1)"
+          [class.active]="currentPage === i + 1"
+        >
+          {{ i + 1 }}
+        </button>
+
+        <button
+          class="next"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="divreport" *ngIf="isReportVisible" tabindex="-1">
+    <div id="thereport">
+      <div class="intro">
+        <img src="../../assets/media/udsm logo.png" alt="udsm logo" />
+        <p>UNIVERSITY OF DAR ES SALAAM</p>
+      </div>
+      <h2>GBV REPORT</h2>
+      <span></span>
+      <!-- General Information -->
+      <div class="stage">
+        <p>GENERAL INFORMATION:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Report ID:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.report_id }}</td>
+          </tr>
+          <tr *ngIf="!isAnonymousReport(selectedReport.report_id)">
+            <td class="label-cell"><strong>Report For:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.report_for }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Created On:</strong></td>
+            <td class="handwritten-style">
+              {{ selectedReport.created_on | date : "medium" }}
+            </td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Status:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.status }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Assigned GD:</strong></td>
+            <td class="handwritten-style">{{ selectedReport.assigned_gd }}</td>
+          </tr>
+          <tr *ngIf="selectedReport.status === 'REJECTED'">
+            <td class="label-cell"><strong>Rejection Reason:</strong></td>
+            <td class="handwritten-style">
+              {{ selectedReport.rejection_reason }}
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Reporter Contact Details -->
+      <div class="stage" *ngIf="!isAnonymousReport(selectedReport.report_id)">
+        <p>REPORTER CONTACT DETAILS:</p>
+      </div>
+      <div
+        class="report-section"
+        *ngIf="!isAnonymousReport(selectedReport.report_id)"
+      >
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Full Name:</strong></td>
+            <td>{{ selectedReport.reporter_full_name }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Gender:</strong></td>
+            <td>{{ selectedReport.reporter_gender }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>College:</strong></td>
+            <td>{{ selectedReport.reporter_college }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Registration No:</strong></td>
+            <td>{{ selectedReport.reporter_reg_no }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Email:</strong></td>
+            <td>{{ selectedReport.reporter_email }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Phone:</strong></td>
+            <td>{{ selectedReport.reporter_phone }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Victim Details -->
+      <div class="stage" *ngIf="!isAnonymousReport(selectedReport.report_id)">
+        <p>VICTIM'S DETAILS:</p>
+      </div>
+      <div
+        class="report-section"
+        *ngIf="!isAnonymousReport(selectedReport.report_id)"
+      >
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Full Name:</strong></td>
+            <td>{{ selectedReport.victim_full_name }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Gender:</strong></td>
+            <td>{{ selectedReport.victim_gender }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>College:</strong></td>
+            <td>{{ selectedReport.victim_college }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Registration No:</strong></td>
+            <td>{{ selectedReport.victim_reg_no }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Email:</strong></td>
+            <td>{{ selectedReport.victim_email }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Phone:</strong></td>
+            <td>{{ selectedReport.victim_phone }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Abuse Information -->
+      <div class="stage">
+        <p>ABUSE DETAILS:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Abuse Type:</strong></td>
+            <td>{{ selectedReport.abuse_type }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Date and Time:</strong></td>
+            <td>{{ selectedReport.date_and_time | date : "medium" }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Location:</strong></td>
+            <td>{{ selectedReport.location }}</td>
+          </tr>
+          <tr *ngIf="selectedReport.location === 'Other'">
+            <td class="label-cell"><strong>Other Location:</strong></td>
+            <td>{{ selectedReport.other_location }}</td>
+          </tr>
+          <tr>
+            <td class="descr"><strong>Description:</strong></td>
+            <td class="descr-l">{{ selectedReport.description }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Perpetrator Details -->
+      <div class="stage">
+        <p>PERPERTRATOR DETAILS:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Full Name:</strong></td>
+            <td>{{ selectedReport.perpetrator_fullname }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Gender:</strong></td>
+            <td>{{ selectedReport.perpetrator_gender }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Relationship:</strong></td>
+            <td>{{ selectedReport.relationship }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Police Status -->
+      <div class="stage">
+        <p>POLICE INFORMATION:</p>
+      </div>
+      <div class="report-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Status:</strong></td>
+            <td>{{ selectedReport.police_status }}</td>
+          </tr>
+          <tr *ngIf="selectedReport.police_status === 'FORWARDED'">
+            <td class="label-cell"><strong>Assigned Officer:</strong></td>
+            <td>{{ selectedReport.assigned_officer }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- EVIDENCE -->
+      <div class="stage">
+        <p>EVIDENCE:</p>
+      </div>
+      <div class="report-section">
+        <div
+          *ngFor="let evidence of selectedReport.report_evidence"
+          class="evidence-item"
+        >
+          <img
+            *ngIf="isImage(evidence.evidence)"
+            [src]="evidence.evidence"
+            alt="Evidence Image"
+            (click)="openFullScreenPreview(evidence.evidence)"
+            class="evidence-image"
+          />
+
+          <video
+            *ngIf="isVideo(evidence.evidence)"
+            controls
+            (click)="openFullScreenPreview(evidence.evidence)"
+            class="evidence-video"
+          >
+            <source [src]="evidence.evidence" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <audio
+            *ngIf="isAudio(evidence.evidence)"
+            controls
+            (click)="togglePlayAudio($event)"
+            class="evidence-audio"
+          >
+            <source [src]="evidence.evidence" type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+      </div>
+      <span class="sp2"></span>
+    </div>
+    <div class="report-actions">
+      <button (click)="receiveReport(selectedReport)">Receive</button>
+      <button (click)="closeReport(selectedReport)">Close Case</button>
+    </div>
+
+    <button class="close" (click)="hideReport()">
+      <i class="fas fa-times"></i>
+    </button>
   </div>
 </body>

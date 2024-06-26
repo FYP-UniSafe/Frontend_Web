@@ -94,7 +94,7 @@
             [(ngModel)]="showAllReports"
             (change)="onReportsFilterChange()"
           />
-          <span>Show Yours (Assigned to you) / Show All Reports</span>
+          <span>Show Yours (Accepted by you) / Show All Reports</span>
         </label>
       </div>
     </div>
@@ -179,10 +179,6 @@
                   >
                     <i class="fas fa-download"></i>
                   </button>
-                  <!-- <button>
-                      <button class="download">
-                        <i class="fas fa-download"></i>
-                      </button> -->
                 </td>
               </tr>
             </tbody>
@@ -255,7 +251,7 @@
             <td class="label-cell"><strong>Status:</strong></td>
             <td class="handwritten-style">{{ selectedReport.status }}</td>
           </tr>
-          <tr>
+          <tr *ngIf="!(selectedReport.status === 'PENDING')">
             <td class="label-cell"><strong>Assigned GD:</strong></td>
             <td class="handwritten-style">{{ selectedReport.assigned_gd }}</td>
           </tr>
@@ -272,7 +268,10 @@
       <div class="stage" *ngIf="!isAnonymousReport(selectedReport.report_id)">
         <p>REPORTER CONTACT DETAILS:</p>
       </div>
-      <div class="report-section" *ngIf="!isAnonymousReport(selectedReport.report_id)">
+      <div
+        class="report-section"
+        *ngIf="!isAnonymousReport(selectedReport.report_id)"
+      >
         <table>
           <tr>
             <td class="label-cell"><strong>Full Name:</strong></td>
@@ -305,7 +304,10 @@
       <div class="stage" *ngIf="!isAnonymousReport(selectedReport.report_id)">
         <p>VICTIM'S DETAILS:</p>
       </div>
-      <div class="report-section" *ngIf="!isAnonymousReport(selectedReport.report_id)">
+      <div
+        class="report-section"
+        *ngIf="!isAnonymousReport(selectedReport.report_id)"
+      >
         <table>
           <tr>
             <td class="label-cell"><strong>Full Name:</strong></td>
