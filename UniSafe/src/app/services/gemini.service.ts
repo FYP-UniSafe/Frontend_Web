@@ -22,6 +22,7 @@ export class GeminiService {
     const model = this.generativeAI.getGenerativeModel({
       model: 'gemini-1.5-pro',
       // model: 'gemini-1.5-flash',
+      //Change model as there a times GBV requests fail
     });
     const result = await model.generateContent(prompt);
     const response = await result.response;
