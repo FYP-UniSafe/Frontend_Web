@@ -85,6 +85,7 @@ export class CounsellingComponent implements OnInit {
       this.appointmentService.createAppointment(appointmentData).subscribe(
         (response) => {
           console.log('Appointment created successfully:', response);
+          window.alert('Appointment created successfully');
         },
         (error) => {
           console.error('Error creating appointment:', error);
