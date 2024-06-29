@@ -444,18 +444,18 @@
       <span class="sp2"></span>
     </div>
     <div class="report-actions">
-      <button (click)="acceptReport(selectedReport)">Accept</button>
-      <button (click)="openRejectDialog()">Reject</button>
-      <button (click)="forwardReport(selectedReport)">Forward</button>
-      <button (click)="closeReport(selectedReport)">Close Case</button>
+      <button *ngIf="selectedReport.status === 'PENDING'" (click)="acceptReport(selectedReport)">Accept</button>
+      <button *ngIf="selectedReport.status === 'IN PROGRESS' && selectedReport.assigned_gd === userEmail" (click)="openRejectDialog()">Reject</button>
+      <button *ngIf="selectedReport.status === 'IN PROGRESS' && selectedReport.assigned_gd === userEmail" (click)="forwardReport(selectedReport)">Forward</button>
+      <button *ngIf="selectedReport.status === 'IN PROGRESS' && selectedReport.assigned_gd === userEmail" (click)="closeReport(selectedReport)">Close Case</button>
     </div>
 
     <div *ngIf="isRejectDialogOpen" class="reject-dialog-overlay">
       <div class="reject-dialog">
-        <input
+        <textarea
           [(ngModel)]="rejectionReason"
           placeholder="Enter rejection reason"
-        />
+        ></textarea>
         <button (click)="rejectReport(selectedReport, rejectionReason)">
           Reject
         </button>
