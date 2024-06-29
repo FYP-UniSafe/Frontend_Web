@@ -29,7 +29,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
   activeStatus: string | null = null;
   reportType: string = 'NORMAL';
   currentPage = 1;
-  reportsPerPage = 10;
+  reportsPerPage = 5;
   totalPages = 0;
   selectedReport: any;
   isReportVisible: boolean = false;

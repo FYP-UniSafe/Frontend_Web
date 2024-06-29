@@ -108,10 +108,10 @@
             [class.active]="activeStatus === 'FORWARDED TO POLICE'"
             (click)="filterReports('FORWARDED TO POLICE')"
           >
-            Not received
+            Not Resolved
           </button>
           <button
-            [class.active]="activeStatus === 'RESOLVED'"
+            [class.active]= "activeStatus !== 'RESOLVED'"
             (click)="filterReports('RESOLVED')"
           >
             Resolved
@@ -425,8 +425,8 @@
       <span class="sp2"></span>
     </div>
     <div class="report-actions">
-      <button (click)="receiveReport(selectedReport)">Receive</button>
-      <button (click)="closeReport(selectedReport)">Close Case</button>
+      <button (click)="receiveReport(selectedReport)" *ngIf="selectedReport.status === 'FORWARDED TO POLICE' && selectedReport.police_status !== 'RECEIVED'">Receive</button>
+      <button (click)="closeReport(selectedReport)" *ngIf="selectedReport.police_status === 'RECEIVED' && selectedReport.assigned_officer === userEmail">Close Case</button>
     </div>
 
     <button class="close" (click)="hideReport()">

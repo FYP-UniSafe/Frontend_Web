@@ -416,8 +416,45 @@ body.modal-open {
 
 .reject-dialog {
   background-color: white;
-  padding: 20px;
   border-radius: 5px;
+  height: 30%;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.reject-dialog textarea{
+  height: 10vh;
+  width: 35vw;
+  padding: 15px;
+  border-radius: 5px;
+  resize: vertical;
+  border: 1.5px solid black;
+  font-family: "Montserrat", sans-serif;
+  font-weight: lighter;
+  font-size: 0.7vw;
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+.reject-dialog button{
+  height: 3.25vh;
+  width: 4vw;
+  margin-top: 10px;
+  background-color: white;
+  color: black;
+  text-decoration: none;
+  font-size: 0.8vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  border-radius: 50vw;
+  transition: transform 0.5s;
+}
+.reject-dialog button:hover {
+  font-weight: bold;
+  background-color: #0f6cbf;
+  color: #ffffff;
+  transform: scale(1.1);
 }
 
 #thereport {
