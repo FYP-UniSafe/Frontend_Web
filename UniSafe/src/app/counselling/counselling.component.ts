@@ -87,14 +87,15 @@ export class CounsellingComponent implements OnInit {
         student_reg_no: this.appointmentForm.value.regNo,
         student_gender: this.appointmentForm.value.gender,
       };
-
+  
       this.appointmentService.createAppointment(appointmentData).subscribe(
         (response) => {
-          console.log('Appointment created successfully:', response);
-          window.alert('Appointment created successfully');
+          window.alert(response.message);
+          this.fetchAppointments();
         },
         (error) => {
           console.error('Error creating appointment:', error);
+          window.alert(error.error.message);
         }
       );
     }
@@ -111,11 +112,14 @@ export class CounsellingComponent implements OnInit {
   fetchAppointments(): void {
     this.appointmentService.getAppointments().subscribe(
       (data: Appointment[]) => {
-        this.appointments = data;
+        this.appointments = data.map((appointment) => ({
+          ...appointment,
+          created_on_date: new Date(appointment.created_on),
+        }));
 
-        this.appointments.forEach((appointment) => {
-          appointment.created_on_date = new Date(appointment.created_on);
-        });
+        this.appointments.sort(
+          (a, b) => b.created_on_date.getTime() - a.created_on_date.getTime()
+        );
 
         this.filterAppointments(null);
       },
