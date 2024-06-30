@@ -291,7 +291,7 @@ body.modal-open {
 .pagination-controls {
   height: 6vh;
   width: 100%;
-  margin-bottom: 5vh;
+  margin-bottom: 2.5vh;
   margin-top: 5vh;
   background-color: #f0f8ff;
   box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);

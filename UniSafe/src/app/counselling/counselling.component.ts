@@ -24,6 +24,9 @@ export class CounsellingComponent implements OnInit {
   prompt: string = '';
   messageText: string = '';
   messages: { text: string; sender: 'user' | 'ai' }[] = [];
+  currentPage = 1;
+  appointmentsPerPage = 5;
+  totalPages = 0;
 
   constructor(
     private timeoutService: TimeoutService,
@@ -133,6 +136,39 @@ export class CounsellingComponent implements OnInit {
     } else {
       this.filteredAppointments = this.appointments;
     }
+
+    this.calculateTotalPages();
+    this.currentPage = 1;
+  }
+
+  calculateTotalPages() {
+    this.totalPages = Math.ceil(
+      this.filteredAppointments.length / this.appointmentsPerPage
+    );
+  }
+
+  getCurrentPageAppointments() {
+    const startIndex = (this.currentPage - 1) * this.appointmentsPerPage;
+    return this.filteredAppointments.slice(
+      startIndex,
+      startIndex + this.appointmentsPerPage
+    );
+  }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  goToPage(pageNumber: number) {
+    this.currentPage = pageNumber;
   }
 
   toggleChat(): void {
@@ -141,12 +177,10 @@ export class CounsellingComponent implements OnInit {
 
   sendData() {
     if (this.messageText.trim()) {
-      // Add user message to the messages array
       this.messages.push({ text: this.messageText, sender: 'user' });
 
       this.geminiService.generateText(this.messageText).subscribe(
         (response: string) => {
-          // Add AI response to the messages array
           this.messages.push({ text: response, sender: 'ai' });
         },
         (error: any) => {
