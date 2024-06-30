@@ -38,6 +38,15 @@ export class AppointmentsService {
       }
     );
   }
+
+  getAllAppointments(): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(
+      `${environment.apiUrl}/appointments/list/all`,
+      {
+        withCredentials: true,
+      }
+    );
+  }
   
   
 }

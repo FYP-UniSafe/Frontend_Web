@@ -109,6 +109,7 @@ export class PoliceComponent implements OnInit, OnDestroy {
     } else {
       this.activeStatus = status;
     }
+    
     let filteredReports =
       this.reportType === 'NORMAL' ? this.normalReports : this.anonymousReports;
     if (this.activeStatus) {

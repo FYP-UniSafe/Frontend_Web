@@ -1,1 +1,166 @@
-<p>consultant works!</p>
+<body>
+  <div class="heading">
+    <p>UniSafe Consultant Dashboard</p>
+  </div>
+
+  <div class="div1"></div>
+
+
+  <div class="appointments">
+    <div class="head">
+      <h2>Appointments</h2>
+      <span></span>
+    </div>
+
+    <div class="anoide">
+      <div class="butns upper">
+        <button
+          class="appe"
+          [class.active]="appointmentType === 'Physical'"
+          (click)="switchAppointmentType('Physical')"
+        >
+          Physical
+        </button>
+        <button
+          class="appe"
+          [class.active]="appointmentType === 'Online'"
+          (click)="switchAppointmentType('Online')"
+        >
+          Online
+        </button>
+        <label class="custom-checkbox">
+          <input
+            type="checkbox"
+            [(ngModel)]="showAllAppointments"
+            (change)="onAppointmentFilterChange()"
+          />
+          <span>Show Yours (Scheduled by you) / Show All Appointments</span>
+        </label>
+      </div>
+    </div>
+    
+  
+    <div class="reports">
+      <div class="selection">
+        <div class="butns">
+          <button
+            [class.active]="activeStatus === null"
+            (click)="filterAppointments()"
+            style="width: 7vw"
+          >
+            All Appointments
+          </button>
+          <button
+            [class.active]="activeStatus === 'REQUESTED'"
+            (click)="filterAppointments('REQUESTED')"
+          >
+            Requested
+          </button>
+          <button
+            [class.active]="activeStatus === 'SCHEDULED'"
+            (click)="filterAppointments('SCHEDULED')"
+          >
+            Scheduled
+          </button>
+          <button
+            [class.active]="activeStatus === 'CLOSED'"
+            (click)="filterAppointments('CLOSED')"
+          >
+            Closed
+          </button>
+          <button
+            [class.active]="activeStatus === 'CANCELLED'"
+            (click)="filterAppointments('CANCELLED')"
+          >
+            Cancelled
+          </button>
+          <button
+            [class.active]="activeStatus === 'MISSED'"
+            (click)="filterAppointments('MISSED')"
+          >
+            Missed
+          </button>
+        </div>
+      </div>
+
+      <div class="cardt" *ngIf="filteredAppointments.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Appointment ID</th>
+              <th>Session Type</th>
+              <th>Created On</th>
+              <th>Status</th>
+              <th>Assigned Consultant</th>
+              <th>Scheduled On</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              (click)="showAppointment(appointment)"
+              *ngFor="let appointment of getCurrentPageAppointments()"
+            >
+              <td>{{ appointment.appointment_id }}</td>
+              <td>{{ appointment.session_type }}</td>
+              <td>
+                {{ appointment.created_on_date | date : "dd/MM/yyyy" }} |
+                {{ appointment.created_on_date | date : "HH:mm" }}
+              </td>
+              <td>{{ appointment.status }}</td>
+              <td>{{ appointment.consultant }}</td>
+              <td>
+                {{ appointment.date | date : "dd/MM/yyyy" }} |
+                {{ appointment.start_time | date : "HH:mm" }}
+              </td>
+              <td class="actions">
+                <button class="view" (click)="showAppointment(appointment)">
+                  <i class="far fa-eye eye-show"></i>
+                </button>
+                <button
+                  class="attend-meeting"
+                  *ngIf="appointment.session_type === 'Online'"
+                  (click)="attendOnline()"
+                >
+                  <i class="fas fa-video"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="cardt" *ngIf="filteredAppointments.length === 0">
+        <p>No appointment found!.</p>
+      </div>
+
+      <div class="pagination-controls">
+        <button
+          class="prev"
+          (click)="previousPage()"
+          [disabled]="currentPage === 1"
+        >
+          Previous
+        </button>
+
+        <button
+          class="num"
+          *ngFor="let page of [].constructor(totalPages); let i = index"
+          (click)="goToPage(i + 1)"
+          [class.active]="currentPage === i + 1"
+        >
+          {{ i + 1 }}
+        </button>
+
+        <button
+          class="next"
+          (click)="nextPage()"
+          [disabled]="currentPage === totalPages"
+        >
+          Next
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
