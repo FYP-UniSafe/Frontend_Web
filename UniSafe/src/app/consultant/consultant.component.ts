@@ -53,6 +53,9 @@ export class ConsultantComponent implements OnInit {
         this.appointments = data.map((appointment) => ({
           ...appointment,
           created_on_date: new Date(appointment.created_on),
+          start_time_date: appointment.start_time
+            ? new Date(`1970-01-01T${appointment.start_time}`)
+            : null,
         }));
         this.applyFilters();
       },
@@ -149,11 +152,11 @@ export class ConsultantComponent implements OnInit {
       start_time: this.startTime,
       end_time: this.endTime,
     };
-  
+
     if (this.selectedAppointment.session_type === 'Physical') {
       acceptData.physical_location = this.physicalLocation;
     }
-  
+
     this.appointmentService
       .acceptAppointment(this.selectedAppointment.appointment_id, acceptData)
       .subscribe(
@@ -167,7 +170,6 @@ export class ConsultantComponent implements OnInit {
         }
       );
   }
-  
 
   openAcceptDialog() {
     this.startTime = '';
