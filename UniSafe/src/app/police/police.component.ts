@@ -65,11 +65,8 @@ export class PoliceComponent implements OnInit, OnDestroy {
     this.reportService.getForwardedReport().subscribe(
       (reports: Report[]) => {
         this.normalReports = reports.sort((a, b) => {
-          const lastCharA = a.report_id.split('-').pop();
-          const lastCharB = b.report_id.split('-').pop();
-          return Number(lastCharA) - Number(lastCharB);
+          return new Date(b.created_on).getTime() - new Date(a.created_on).getTime();
         });
-        // Convert the created_on string to a Date object for each report
         this.normalReports.forEach((report) => {
           report.created_on_date = new Date(report.created_on);
         });
@@ -86,11 +83,8 @@ export class PoliceComponent implements OnInit, OnDestroy {
     this.reportService.getForwardedAnonymous().subscribe(
       (reports: Report[]) => {
         this.anonymousReports = reports.sort((a, b) => {
-          const lastCharA = a.report_id.split('-').pop();
-          const lastCharB = b.report_id.split('-').pop();
-          return Number(lastCharA) - Number(lastCharB);
+          return new Date(b.created_on).getTime() - new Date(a.created_on).getTime();
         });
-        // Convert the created_on string to a Date object for each report
         this.anonymousReports.forEach((report) => {
           report.created_on_date = new Date(report.created_on);
         });

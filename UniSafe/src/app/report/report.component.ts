@@ -8,7 +8,6 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -62,12 +61,12 @@ export class ReportComponent implements OnInit, OnDestroy {
       this.reportService.getStudentReports().subscribe(
         (reports: Report[]) => {
           this.reports = reports.sort((a, b) => {
-            const lastCharA = a.report_id.split('-').pop();
-            const lastCharB = b.report_id.split('-').pop();
-            return Number(lastCharA) - Number(lastCharB);
+            return (
+              new Date(b.created_on).getTime() -
+              new Date(a.created_on).getTime()
+            );
           });
 
-          // Convert the created_on string to a Date object for each report
           this.reports.forEach((report) => {
             report.created_on_date = new Date(report.created_on);
           });
@@ -99,12 +98,17 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   calculateTotalPages() {
-    this.totalPages = Math.ceil(this.filteredReports.length / this.reportsPerPage);
+    this.totalPages = Math.ceil(
+      this.filteredReports.length / this.reportsPerPage
+    );
   }
 
   getCurrentPageReports() {
     const startIndex = (this.currentPage - 1) * this.reportsPerPage;
-    return this.filteredReports.slice(startIndex, startIndex + this.reportsPerPage);
+    return this.filteredReports.slice(
+      startIndex,
+      startIndex + this.reportsPerPage
+    );
   }
 
   previousPage() {
@@ -112,13 +116,13 @@ export class ReportComponent implements OnInit, OnDestroy {
       this.currentPage--;
     }
   }
-  
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
     }
   }
-  
+
   goToPage(pageNumber: number) {
     this.currentPage = pageNumber;
   }
@@ -224,5 +228,4 @@ export class ReportComponent implements OnInit, OnDestroy {
     }
     event.stopPropagation(); // Prevent triggering any parent click events
   }
-
 }

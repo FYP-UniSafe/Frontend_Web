@@ -59,13 +59,15 @@ export class ConsultantComponent implements OnInit {
   }
 
   applyFilters() {
-    this.filteredAppointments = this.appointments.filter(
-      (appointment) =>
-        (!this.activeStatus || appointment.status === this.activeStatus) &&
-        appointment.session_type.toLowerCase() ===
-          this.appointmentType.toLowerCase() &&
-        (this.showAllAppointments || appointment.consultant === this.userEmail)
-    );
+    this.filteredAppointments = this.appointments
+      .filter(
+        (appointment) =>
+          (!this.activeStatus || appointment.status === this.activeStatus) &&
+          appointment.session_type.toLowerCase() === this.appointmentType.toLowerCase() &&
+          (this.showAllAppointments || appointment.consultant === this.userEmail)
+      )
+      .sort((a, b) => b.created_on_date.getTime() - a.created_on_date.getTime());
+  
     this.calculateTotalPages();
     this.currentPage = 1;
   }
