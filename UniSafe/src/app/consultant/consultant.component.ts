@@ -144,8 +144,6 @@ export class ConsultantComponent implements OnInit {
     // this.router.navigate(['/online']);
   }
 
-
-  //Responses not handles well.
   acceptAppointment() {
     const acceptData: any = {
       start_time: this.startTime,
