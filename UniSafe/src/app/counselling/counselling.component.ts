@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Renderer2 } from '@angular/core';
 import { TimeoutService } from '../services/timeout.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
@@ -27,6 +27,8 @@ export class CounsellingComponent implements OnInit {
   currentPage = 1;
   appointmentsPerPage = 5;
   totalPages = 0;
+  isAppointmentVisible: boolean = false;
+  selectedAppointment: any;
 
   constructor(
     private timeoutService: TimeoutService,
@@ -35,7 +37,8 @@ export class CounsellingComponent implements OnInit {
     private reportService: ReportService,
     private formBuilder: FormBuilder,
     private appointmentService: AppointmentsService,
-    private geminiService: GeminiService
+    private geminiService: GeminiService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -189,5 +192,38 @@ export class CounsellingComponent implements OnInit {
       );
       this.messageText = '';
     }
+  }
+
+  showAppointment(appointment: Appointment): void {
+    this.selectedAppointment = appointment;
+    this.isAppointmentVisible = true;
+    this.renderer.setStyle(document.body, 'overflow', 'hidden');
+    setTimeout(() => {
+      const divreport = document.getElementById('divreport');
+      divreport?.focus();
+    }, 0);
+  }
+
+  hideAppointment() {
+    this.isAppointmentVisible = false;
+    this.selectedAppointment = null;
+    this.renderer.setStyle(document.body, 'overflow', 'auto');
+  }
+
+  cancelAppointment(appointment: Appointment): void {
+    this.appointmentService
+      .cancelAppointment(appointment.appointment_id)
+      .subscribe(
+        (response) => {
+          window.alert(response.message);
+        },
+        (error) => {
+          window.alert(error.error.error);
+        }
+      );
+  }
+
+  attendOnline() {
+    // this.router.navigate(['/online']);
   }
 }
