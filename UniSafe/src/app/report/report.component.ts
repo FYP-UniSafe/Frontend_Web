@@ -23,7 +23,7 @@ export class ReportComponent implements OnInit, OnDestroy {
   isReportVisible: boolean = false;
   paginatedReports: Report[] = [];
   currentPage = 1;
-  reportsPerPage = 10;
+  reportsPerPage = 5;
   totalPages = 0;
 
   constructor(

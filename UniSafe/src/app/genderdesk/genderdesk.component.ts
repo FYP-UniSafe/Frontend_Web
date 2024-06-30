@@ -65,7 +65,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     private reportService: ReportService,
     private renderer: Renderer2,
     private router: Router,
-    private location: Location
+    // private location: Location
   ) {}
 
   ngOnInit() {
