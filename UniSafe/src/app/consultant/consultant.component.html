@@ -5,7 +5,6 @@
 
   <div class="div1"></div>
 
-
   <div class="appointments">
     <div class="head">
       <h2>Appointments</h2>
@@ -38,8 +37,7 @@
         </label>
       </div>
     </div>
-    
-  
+
     <div class="reports">
       <div class="selection">
         <div class="butns">
@@ -163,4 +161,140 @@
     </div>
   </div>
 
+  <div id="divappointments" *ngIf="isAppointmentVisible" tabindex="-1">
+    <div id="theappointment">
+      <div class="intro">
+        <img src="../../assets/media/udsm logo.png" alt="udsm logo" />
+        <p>UNIVERSITY OF DAR ES SALAAM</p>
+      </div>
+      <h2>APPOINTMENT DETAILS</h2>
+      <span></span>
+      <!-- General Information -->
+      <div class="stage">
+        <p>GENERAL INFORMATION:</p>
+      </div>
+      <div class="appointment-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Appointment ID:</strong></td>
+            <td>{{ selectedAppointment.appointment_id }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Created On:</strong></td>
+            <td>{{ selectedAppointment.created_on | date : "medium" }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Status:</strong></td>
+            <td>{{ selectedAppointment.status }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Session Type:</strong></td>
+            <td>{{ selectedAppointment.session_type }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Requested Date:</strong></td>
+            <td>{{ selectedAppointment.date | date : "mediumDate" }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Student Information -->
+      <div class="stage">
+        <p>STUDENT INFORMATION:</p>
+      </div>
+      <div class="appointment-section">
+        <table>
+          <tr>
+            <td class="label-cell"><strong>Full Name:</strong></td>
+            <td>{{ selectedAppointment.student_full_name }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Email:</strong></td>
+            <td>{{ selectedAppointment.student_email }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Phone:</strong></td>
+            <td>{{ selectedAppointment.student_phone }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Registration No.:</strong></td>
+            <td>{{ selectedAppointment.student_reg_no }}</td>
+          </tr>
+          <tr>
+            <td class="label-cell"><strong>Gender:</strong></td>
+            <td>{{ selectedAppointment.student_gender }}</td>
+          </tr>
+        </table>
+      </div>
+
+      <!-- Consultant Information -->
+      <ng-container *ngIf="selectedAppointment.consultant">
+        <div class="stage">
+          <p>CONSULTANT INFORMATION:</p>
+        </div>
+        <div class="appointment-section">
+          <table>
+            <tr>
+              <td class="label-cell"><strong>Phone:</strong></td>
+              <td>{{ selectedAppointment.consultant_phone }}</td>
+            </tr>
+            <tr>
+              <td class="label-cell"><strong>Office:</strong></td>
+              <td>{{ selectedAppointment.consultant_office }}</td>
+            </tr>
+          </table>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Actions -->
+    <div class="appointment-actions">
+      <button
+        *ngIf="selectedAppointment.status === 'REQUESTED'"
+        (click)="openAcceptDialog()"
+      >
+        Accept
+      </button>
+      <!-- <button
+    *ngIf="selectedAppointment.status === 'REQUESTED'"
+  >
+    Accept
+  </button> -->
+      <button
+        *ngIf="
+          selectedAppointment.status === 'SCHEDULED' &&
+          selectedAppointment.meetingId
+        "
+        (click)="attendOnline()"
+      >
+        join Online
+      </button>
+    </div>
+
+    <div *ngIf="isAcceptDialogOpen" class="accept-dialog-overlay">
+      <div class="accept-dialog">
+        <label>Start Time</label>
+        <input class="starttime" type="time" [(ngModel)]="startTime" required />
+
+        <label>End Time</label>
+        <input class="endtime" type="time" [(ngModel)]="endTime" required />
+
+        <div *ngIf="selectedAppointment.session_type === 'Physical'">
+          <label>Physical Location</label>
+          <input
+            class="location"
+            type="text"
+            [(ngModel)]="physicalLocation"
+            required
+          />
+        </div>
+        <button (click)="acceptAppointment()">Schedule</button>
+        <button (click)="closeAcceptDialog()">Cancel</button>
+      </div>
+    </div>
+
+    <button class="close" (click)="hideAppointment()">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
 </body>
