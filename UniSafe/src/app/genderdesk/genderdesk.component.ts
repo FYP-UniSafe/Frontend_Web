@@ -13,7 +13,7 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { Router } from '@angular/router';
 import { Chart, ChartOptions } from 'chart.js';
-import { Location } from '@angular/common';
+// import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-genderdesk',

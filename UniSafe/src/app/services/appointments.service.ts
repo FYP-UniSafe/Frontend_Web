@@ -31,10 +31,13 @@ export class AppointmentsService {
 
   cancelAppointment(appointmentId: string): Observable<any> {
     return this.http.post<any>(
-      `${environment.apiUrl}/appointments/cancel/${appointmentId}`,
+      `${environment.apiUrl}/appointments/cancel/${appointmentId}/`,
+      {},
       {
         withCredentials: true,
       }
     );
   }
+  
+  
 }
