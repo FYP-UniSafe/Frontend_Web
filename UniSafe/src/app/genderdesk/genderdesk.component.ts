@@ -64,8 +64,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     private timeoutService: TimeoutService,
     private reportService: ReportService,
     private renderer: Renderer2,
-    private router: Router,
-    // private location: Location
+    private router: Router // private location: Location
   ) {}
 
   ngOnInit() {
@@ -96,10 +95,11 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
   fetchReports() {
     this.reportService.getNormalReports().subscribe(
       (reports: Report[]) => {
+        // Sort reports by created_on date in descending order
         this.normalReports = reports.sort((a, b) => {
-          const lastCharA = a.report_id.split('-').pop();
-          const lastCharB = b.report_id.split('-').pop();
-          return Number(lastCharA) - Number(lastCharB);
+          return (
+            new Date(b.created_on).getTime() - new Date(a.created_on).getTime()
+          );
         });
         // Convert the created_on string to a Date object for each report
         this.normalReports.forEach((report) => {
@@ -119,10 +119,11 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
   fetchAnonymousReports() {
     this.reportService.getAnonymousReports().subscribe(
       (reports: Report[]) => {
+        // Sort reports by created_on date in descending order
         this.anonymousReports = reports.sort((a, b) => {
-          const lastCharA = a.report_id.split('-').pop();
-          const lastCharB = b.report_id.split('-').pop();
-          return Number(lastCharA) - Number(lastCharB);
+          return (
+            new Date(b.created_on).getTime() - new Date(a.created_on).getTime()
+          );
         });
         // Convert the created_on string to a Date object for each report
         this.anonymousReports.forEach((report) => {

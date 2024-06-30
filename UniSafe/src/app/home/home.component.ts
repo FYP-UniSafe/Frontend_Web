@@ -289,9 +289,9 @@ export class HomeComponent implements OnInit {
             grid: {
               display: false,
             },
-            ticks: {
-              stepSize: 1,
-            },
+            // ticks: {
+            //   stepSize: 1,
+            // },
           },
         },
       },

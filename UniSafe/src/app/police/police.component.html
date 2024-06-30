@@ -113,11 +113,11 @@
             Not Resolved
           </button>
           <button
-            [class.active]= "activeStatus !== 'RESOLVED'"
-            (click)="filterReports('RESOLVED')"
-          >
-            Resolved
-          </button>
+          [class.active]="activeStatus === 'RESOLVED'"
+          (click)="filterReports('RESOLVED')"
+        >
+          Resolved
+        </button>
         </div>
       </div>
 
