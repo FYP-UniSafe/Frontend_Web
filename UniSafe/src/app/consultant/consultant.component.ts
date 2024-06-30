@@ -22,6 +22,10 @@ export class ConsultantComponent implements OnInit {
   selectedAppointment: any;
   appointmentType: string = 'Physical';
   showAllAppointments: boolean = false;
+  isAcceptDialogOpen = false;
+  startTime: string = '';
+  endTime: string = '';
+  physicalLocation: string = '';
 
   constructor(
     private timeoutService: TimeoutService,
@@ -63,11 +67,15 @@ export class ConsultantComponent implements OnInit {
       .filter(
         (appointment) =>
           (!this.activeStatus || appointment.status === this.activeStatus) &&
-          appointment.session_type.toLowerCase() === this.appointmentType.toLowerCase() &&
-          (this.showAllAppointments || appointment.consultant === this.userEmail)
+          appointment.session_type.toLowerCase() ===
+            this.appointmentType.toLowerCase() &&
+          (this.showAllAppointments ||
+            appointment.consultant === this.userEmail)
       )
-      .sort((a, b) => b.created_on_date.getTime() - a.created_on_date.getTime());
-  
+      .sort(
+        (a, b) => b.created_on_date.getTime() - a.created_on_date.getTime()
+      );
+
     this.calculateTotalPages();
     this.currentPage = 1;
   }
@@ -134,5 +142,43 @@ export class ConsultantComponent implements OnInit {
 
   attendOnline() {
     // this.router.navigate(['/online']);
+  }
+
+
+  //Responses not handles well.
+  acceptAppointment() {
+    const acceptData: any = {
+      start_time: this.startTime,
+      end_time: this.endTime,
+    };
+  
+    if (this.selectedAppointment.session_type === 'Physical') {
+      acceptData.physical_location = this.physicalLocation;
+    }
+  
+    this.appointmentService
+      .acceptAppointment(this.selectedAppointment.appointment_id, acceptData)
+      .subscribe(
+        (response) => {
+          window.alert(response.message);
+          this.isAcceptDialogOpen = false;
+          this.fetchAppointments();
+        },
+        (error) => {
+          window.alert(error.error.error);
+        }
+      );
+  }
+  
+
+  openAcceptDialog() {
+    this.startTime = '';
+    this.endTime = '';
+    this.physicalLocation = '';
+    this.isAcceptDialogOpen = true;
+  }
+
+  closeAcceptDialog() {
+    this.isAcceptDialogOpen = false;
   }
 }

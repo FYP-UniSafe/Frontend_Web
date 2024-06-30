@@ -427,6 +427,11 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isRejectDialogOpen = true;
   }
 
+  
+  closeRejectDialog() {
+    this.isRejectDialogOpen = false;
+  }
+
   isAnonymousReport(reportId: string): boolean {
     return reportId.startsWith('A-RE');
   }
@@ -442,6 +447,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.reportService.acceptAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchAnonymousReports();
           this.router.navigate(['/genderdesk']);
           // this.navigateAndReload;
         },
@@ -456,6 +462,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.reportService.acceptReport(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchReports();
           this.router.navigate(['/genderdesk']);
           // this.navigateAndReload;
         },
@@ -476,6 +483,8 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe({
           next: (response) => {
             window.alert(response.message);
+            this.closeRejectDialog();
+            this.fetchAnonymousReports();
             this.router.navigate(['/genderdesk']);
             // this.navigateAndReload;
           },
@@ -492,6 +501,8 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
         .subscribe({
           next: (response) => {
             window.alert(response.message);
+            this.closeRejectDialog();
+            this.fetchReports();
             this.router.navigate(['/genderdesk']);
             // this.navigateAndReload;
           },
@@ -505,11 +516,13 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+
   closeReport(report: Report) {
     if (this.isAnonymousReport(report.report_id)) {
       this.reportService.closeAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchAnonymousReports();
           this.router.navigate(['/genderdesk']);
           // this.navigateAndReload;
         },
@@ -524,6 +537,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.reportService.closeReport(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchReports();
           this.router.navigate(['/genderdesk']);
           // this.navigateAndReload;
         },
@@ -542,6 +556,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.reportService.forwardAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchAnonymousReports();
           this.router.navigate(['/genderdesk']);
           // this.navigateAndReload;
         },
@@ -556,6 +571,7 @@ export class GenderdeskComponent implements OnInit, OnDestroy, AfterViewInit {
       this.reportService.forwardReport(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchReports();
           this.router.navigate(['/genderdesk']);
           // this.navigateAndReload;
         },

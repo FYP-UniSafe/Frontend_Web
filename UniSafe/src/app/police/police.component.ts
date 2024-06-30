@@ -288,6 +288,7 @@ export class PoliceComponent implements OnInit, OnDestroy {
       this.reportService.receiveAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchAnonymousReports();
           this.router.navigate(['/police']);
           // this.navigateAndReload;
         },
@@ -302,6 +303,7 @@ export class PoliceComponent implements OnInit, OnDestroy {
       this.reportService.receiveReport(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchReports();
           this.router.navigate(['/police']);
           // this.navigateAndReload;
         },
@@ -320,6 +322,7 @@ export class PoliceComponent implements OnInit, OnDestroy {
       this.reportService.closeAnonymous(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchAnonymousReports();
           this.router.navigate(['/police']);
           // this.navigateAndReload;
         },
@@ -334,6 +337,7 @@ export class PoliceComponent implements OnInit, OnDestroy {
       this.reportService.closeReport(report.report_id).subscribe({
         next: (response) => {
           window.alert(response.message);
+          this.fetchReports();
           this.router.navigate(['/police']);
           // this.navigateAndReload;
         },
