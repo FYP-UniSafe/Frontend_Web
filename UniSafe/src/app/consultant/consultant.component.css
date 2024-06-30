@@ -1,0 +1,304 @@
+body {
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.heading {
+  width: 100%;
+  height: 7.5vh;
+  margin-top: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5vw;
+  font-weight: bold;
+  color: #0f6cbf;
+}
+.div1 {
+  height: 40vh;
+  width: 100%;
+  background-color: #e3f2ff;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.div2 {
+  height: auto;
+  width: 100%;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.head {
+  height: 7.5vh;
+  width: 100%;
+  background-color: #0f6cbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.head span {
+  border-top: 5px solid #ffffff;
+  width: 15vw;
+  margin-bottom: 1vh;
+  margin-left: 10vw;
+}
+.head h2 {
+  color: #ffffff;
+  margin-left: 10vw;
+  font-size: 1.2vw;
+}
+.appointments {
+  z-index: 4;
+  height: auto;
+  width: 100%;
+  position: sticky;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.appointments .head {
+  height: 7.5vh;
+  width: 100%;
+  background-color: #0f6cbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.head {
+  height: 7.5vh;
+  width: 100%;
+  background-color: #0f6cbf;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.head span {
+  border-top: 5px solid #ffffff;
+  width: 15vw;
+  margin-bottom: 1vh;
+  margin-left: 10vw;
+}
+.head h2 {
+  color: #ffffff;
+  margin-left: 10vw;
+  font-size: 1.2vw;
+}
+.anoide {
+  height: 6vh;
+  width: 80%;
+  /* background-color: brown; */
+  background-color: white;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  font-size: 0.7vw;
+}
+.custom-checkbox input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 25px;
+  width: 25px;
+  background-color: white;
+  border-radius: 50%;
+  border: 0.5px solid black;
+  cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"]:checked {
+  background-color: #0f6cbf;
+  border: 0.5px solid #ffffff;
+}
+
+.custom-checkbox span {
+  padding-left: 8px;
+}
+
+.reports {
+  flex-grow: 1;
+  width: 80%;
+  margin-bottom: 5vh;
+  display: flex;
+  flex-direction: column;
+}
+.selection {
+  height: 6vh;
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.butns {
+  height: 100%;
+  width: 60%;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.upper {
+  border-bottom: 0.5px solid #0f6cbf;
+}
+.butns button {
+  height: 3.25vh;
+  width: 4vw;
+  margin: 0;
+  position: sticky;
+  background-color: transparent;
+  color: black;
+  text-decoration: none;
+  font-size: 0.6vw;
+  cursor: pointer;
+  border: 0.5px solid black;
+  border-radius: 50vw;
+  transition: transform 0.5s;
+}
+.butns .appe {
+  width: 7vw;
+}
+.butns .special {
+  width: 5vw;
+}
+.butns button:hover {
+  font-weight: bold;
+  background-color: #0f6cbf;
+  color: #ffffff;
+  transform: scale(1.05);
+}
+.butns button.active {
+  background-color: #0f6cbf;
+  color: #ffffff;
+}
+.cardt {
+    height: auto;
+    width: 100%;
+    margin-right: 10%;
+    background-color: #f0f8ff;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .cardt table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+  .cardt table th,
+  .cardt table td,
+  .card table .actions{
+    padding: 12px 15px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .cardt table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+  }
+  
+  .cardt table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .cardt table tbody tr {
+    transition: transform 0.5s;
+  }
+  
+  .cardt table tbody tr:hover {
+    background-color: #0f6cbf;
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 5px 5px 0 rgba(0, 0, 0, 0.3);
+    transform: scale(1.02);
+  }
+  td.actions button.view,
+  td.actions button.attend-meeting {
+    height: 40px;
+    width: 50px;
+    color: black;
+    padding: 0;
+    margin: 0 5px;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+  td.actions button.view i:hover,
+  td.actions button.attend-meeting i:hover {
+    transform: scale(1.3);
+    transition: transform 0.3s ease;
+  }
+  
+  body.modal-open {
+    overflow: hidden;
+  }
+  
+  .pagination-controls {
+    height: 6vh;
+    width: 100%;
+    margin-bottom: 2.5vh;
+    margin-top: 5vh;
+    background-color: #f0f8ff;
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .pagination-controls .prev,
+  .next {
+    height: 3.25vh;
+    width: 4vw;
+    margin: 0;
+    position: sticky;
+    background-color: transparent;
+    color: black;
+    text-decoration: none;
+    font-size: 0.6vw;
+    cursor: pointer;
+    border: 0.5px solid black;
+    border-radius: 50vw;
+    transition: transform 0.5s;
+  }
+  .pagination-controls .prev:hover,
+  .next:hover,
+  .num:hover {
+    font-weight: bold;
+    background-color: #0f6cbf;
+    color: #ffffff;
+    transform: scale(1.05);
+  }
+  .num {
+    margin: 0;
+    height: auto;
+    width: auto;
+    background-color: #f0f8ff;
+    color: black;
+    margin-left: 0.25vw;
+    margin-right: 0.25vw;
+    font-size: 0.6vw;
+    cursor: pointer;
+    position: sticky;
+    border: 0.5px solid black;
+    border-radius: 0;
+    transition: transform 0.5s;
+  }
+  .pagination-controls .num.active {
+    background-color: #0f6cbf;
+    color: #ffffff;
+  }

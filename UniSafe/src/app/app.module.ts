@@ -49,7 +49,7 @@ import { CommonModule } from '@angular/common';
     AgoraComponent,
     GenderdeskComponent,
     PoliceComponent,
-    // ConsultantComponent
+    ConsultantComponent
   ],
   imports: [
     BrowserModule,
