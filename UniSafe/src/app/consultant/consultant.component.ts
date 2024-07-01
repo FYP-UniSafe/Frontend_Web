@@ -27,6 +27,14 @@ export class ConsultantComponent implements OnInit {
   endTime: string = '';
   physicalLocation: string = '';
 
+  // New properties for counting appointments
+  physicalAppointments: Appointment[] = [];
+  onlineAppointments: Appointment[] = [];
+  handledPhysical = 0;
+  notHandledPhysical = 0;
+  handledOnline = 0;
+  notHandledOnline = 0;
+
   constructor(
     private timeoutService: TimeoutService,
     private authService: AuthService,
@@ -57,12 +65,28 @@ export class ConsultantComponent implements OnInit {
             ? new Date(`1970-01-01T${appointment.start_time}`)
             : null,
         }));
+        this.calculateCounts();
         this.applyFilters();
       },
       (error) => {
         console.error('Error loading appointments:', error);
       }
     );
+  }
+
+  calculateCounts(): void {
+    this.physicalAppointments = this.appointments.filter(appointment => appointment.session_type === 'Physical');
+    this.onlineAppointments = this.appointments.filter(appointment => appointment.session_type === 'Online');
+
+    this.handledPhysical = this.physicalAppointments.filter(appointment =>
+      ['MISSED', 'SCHEDULED', 'CANCELLED', 'CLOSED'].includes(appointment.status)
+    ).length;
+    this.notHandledPhysical = this.physicalAppointments.filter(appointment => appointment.status === 'REQUESTED').length;
+
+    this.handledOnline = this.onlineAppointments.filter(appointment =>
+      ['MISSED', 'SCHEDULED', 'CANCELLED', 'CLOSED'].includes(appointment.status)
+    ).length;
+    this.notHandledOnline = this.onlineAppointments.filter(appointment => appointment.status === 'REQUESTED').length;
   }
 
   applyFilters() {
