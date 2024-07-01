@@ -2,8 +2,64 @@
   <div class="heading">
     <p>UniSafe Consultant Dashboard</p>
   </div>
-
-  <div class="div1"></div>
+  <div class="div1">
+    <div class="left">
+      <div class="one">
+        <p>Physical Appointments</p>
+      </div>
+      <div class="two">
+        <table>
+          <tr>
+            <td>TOTAL:</td>
+            <td>
+              <b>{{ physicalAppointments.length }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>HANDLED:</td>
+            <td>
+              <b>{{ handledPhysical }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>NOT HANDLED:</td>
+            <td>
+              <b>{{ notHandledPhysical }}</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  
+    <div class="right">
+      <div></div>
+      <div class="one">
+        <p>Online Reports</p>
+      </div>
+      <div class="two">
+        <table>
+          <tr>
+            <td>TOTAL:</td>
+            <td>
+              <b>{{ onlineAppointments.length }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>HANDLED:</td>
+            <td>
+              <b>{{ handledOnline }}</b>
+            </td>
+          </tr>
+          <tr>
+            <td>NOT HANDLED:</td>
+            <td>
+              <b>{{ notHandledOnline }}</b>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
 
   <div class="appointments">
     <div class="head">
