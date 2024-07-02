@@ -1,0 +1,22 @@
+<body>
+  <div style="height: 70px; background-color: lightgray">
+    <div class="top-bar-div">
+      <div>
+        <p style="margin-top: 0px; margin-bottom: 0px; font-weight: 700">
+          MeetingId: {{ meetingId }}
+        </p>
+      </div>
+      <div style="display: flex; align-items: center; margin-top: 8px">
+        <button style="cursor: pointer" (click)="toggleWebcam()">
+          Toggle Webcam
+        </button>
+        <button style="margin-left: 4px; cursor: pointer" (click)="toggleMic()">
+          Toggle Mic
+        </button>
+        <button class="leave-btn" (click)="leaveMeeting()">
+          Leave Meeting
+        </button>
+      </div>
+    </div>
+  </div>
+</body>

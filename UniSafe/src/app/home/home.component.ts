@@ -3,7 +3,7 @@ import { AuthService } from '../services/auth.service';
 import { TimeoutService } from '../services/timeout.service';
 import { Router } from '@angular/router';
 import { Chart, registerables } from 'node_modules/chart.js';
-import { ReportService } from '../services/report.service';
+// import { ReportService } from '../services/report.service';
 import { StatisticsService } from '../services/statistics.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Loader } from '@googlemaps/js-api-loader';
@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
     private authService: AuthService,
     private timeoutService: TimeoutService,
     private router: Router,
-    private reportService: ReportService,
+    // private reportService: ReportService,
     private statisticsService: StatisticsService
   ) {}
 

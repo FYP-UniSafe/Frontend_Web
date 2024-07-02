@@ -30,7 +30,7 @@
         </table>
       </div>
     </div>
-  
+
     <div class="right">
       <div></div>
       <div class="one">
@@ -147,6 +147,7 @@
               <th>Status</th>
               <th>Assigned Consultant</th>
               <th>Scheduled On</th>
+              <!-- <th>Meeting Id</th> -->
               <th>Actions</th>
             </tr>
           </thead>
@@ -165,16 +166,22 @@
               <td>{{ appointment.consultant }}</td>
               <td>
                 {{ appointment.date | date : "dd/MM/yyyy" }} |
-                {{ appointment.start_time_date | date: "HH:mm" }}
+                {{ appointment.start_time_date | date : "HH:mm" }}
               </td>
+              <!-- <td *ngIf="appointment.session_type === 'Online'">
+                {{ appointment.meeting_id }}
+              </td> -->
               <td class="actions">
                 <button class="view" (click)="showAppointment(appointment)">
                   <i class="far fa-eye eye-show"></i>
                 </button>
                 <button
                   class="attend-meeting"
-                  *ngIf="appointment.session_type === 'Online'"
-                  (click)="attendOnline()"
+                  *ngIf="
+                    appointment.session_type === 'Online' &&
+                    appointment.status === 'SCHEDULED'
+                  "
+                  (click)="attendOnline(appointment)"
                 >
                   <i class="fas fa-video"></i>
                 </button>
@@ -251,6 +258,14 @@
             <td class="label-cell"><strong>Requested Date:</strong></td>
             <td>{{ selectedAppointment.date | date : "mediumDate" }}</td>
           </tr>
+          <tr *ngIf="selectedAppointment.session_type === 'Physical'">
+            <td class="label-cell"><strong>Physical Location:</strong></td>
+            <td>{{ selectedAppointment.physical_location }}</td>
+          </tr>
+          <tr *ngIf="selectedAppointment.session_type === 'Online'">
+            <td class="label-cell"><strong>Meeting Id:</strong></td>
+            <td>{{ selectedAppointment.meeting_id }}</td>
+          </tr>
         </table>
       </div>
 
@@ -318,10 +333,10 @@
   </button> -->
       <button
         *ngIf="
-          selectedAppointment.status === 'SCHEDULED' &&
-          selectedAppointment.meetingId
+          selectedAppointment.session_type === 'Online' &&
+          selectedAppointment.status === 'SCHEDULED'
         "
-        (click)="attendOnline()"
+        (click)="attendOnline(selectedAppointment)"
       >
         join Online
       </button>
@@ -344,7 +359,7 @@
             required
           />
         </div>
-        <button (click)="acceptAppointment()">Schedule</button>
+        <button (click)=" acceptAppointment()">Schedule</button>
         <button (click)="closeAcceptDialog()">Cancel</button>
       </div>
     </div>

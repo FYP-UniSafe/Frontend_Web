@@ -34,7 +34,8 @@ export class AppComponent implements OnInit {
       this.router.url === '/profile' ||
       this.router.url === '/genderdesk' ||
       this.router.url === '/police' ||
-      this.router.url === '/consultant'
+      this.router.url === '/consultant' ||
+      this.router.url === '/joinscreen'
     );
   }
 }

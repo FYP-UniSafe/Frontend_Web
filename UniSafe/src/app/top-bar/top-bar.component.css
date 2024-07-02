@@ -1,0 +1,19 @@
+.top-bar-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+  .leave-btn {
+    margin-left: 4px;
+    cursor: pointer;
+    background-color: #ff5c5c;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+  }
+  .leave-btn:hover {
+    background-color: #ff3b3b;
+  }
+  
