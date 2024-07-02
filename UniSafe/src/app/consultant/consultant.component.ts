@@ -1,9 +1,10 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { TimeoutService } from '../services/timeout.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { AppointmentsService } from '../services/appointments.service';
 import { Appointment } from '../models/appointment';
+import { MeetingService } from '../services/meeting.service';
 
 @Component({
   selector: 'app-consultant',
@@ -26,8 +27,6 @@ export class ConsultantComponent implements OnInit {
   startTime: string = '';
   endTime: string = '';
   physicalLocation: string = '';
-
-  // New properties for counting appointments
   physicalAppointments: Appointment[] = [];
   onlineAppointments: Appointment[] = [];
   handledPhysical = 0;
@@ -40,7 +39,8 @@ export class ConsultantComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private appointmentService: AppointmentsService,
-    private renderer: Renderer2
+    private meetingService: MeetingService,
+    private renderer: Renderer2,
   ) {}
 
   ngOnInit(): void {
@@ -167,33 +167,54 @@ export class ConsultantComponent implements OnInit {
     this.renderer.setStyle(document.body, 'overflow', 'auto');
   }
 
-  attendOnline() {
-    // this.router.navigate(['/online']);
+  attendOnline(appointment: Appointment) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        appointmentId: appointment.appointment_id,
+      },
+    };
+    this.router.navigate(['/joinscreen'], navigationExtras);
   }
-
+  
   acceptAppointment() {
     const acceptData: any = {
       start_time: this.startTime,
       end_time: this.endTime,
     };
-
+  
     if (this.selectedAppointment.session_type === 'Physical') {
       acceptData.physical_location = this.physicalLocation;
     }
-
+  
     this.appointmentService
       .acceptAppointment(this.selectedAppointment.appointment_id, acceptData)
       .subscribe(
         (response) => {
-          window.alert(response.message);
-          this.isAcceptDialogOpen = false;
-          this.fetchAppointments();
+          if (this.selectedAppointment.session_type === 'Online') {
+            this.createMeeting(this.selectedAppointment.appointment_id);
+          }
         },
         (error) => {
           window.alert(error.error.error);
         }
       );
   }
+  
+  createMeeting(appointmentId: string) {
+    console.log(appointmentId)
+    this.meetingService.createMeeting(appointmentId).subscribe(
+      (response) => {
+        this.isAcceptDialogOpen = false;
+        this.fetchAppointments();
+
+        window.alert("Appointment and Online Meeting created successfully!");
+      },
+      (error) => {
+        console.error('Error creating meeting:', error);
+      }
+    );
+  }
+  
 
   openAcceptDialog() {
     this.startTime = '';

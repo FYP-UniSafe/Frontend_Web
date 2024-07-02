@@ -19,7 +19,6 @@ import { ConsultantComponent } from './consultant/consultant.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { AgoraComponent } from './agora/agora.component';
 import { SharedModule } from './shared/shared.module';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { TimeoutService } from './services/timeout.service';
@@ -28,7 +27,14 @@ import { OtpService } from './services/otp.service';
 import { ReportService } from './services/report.service';
 import { ChartModule } from '@syncfusion/ej2-angular-charts';
 import { CommonModule } from '@angular/common';
-
+import { MeetingService } from './services/meeting.service';
+import { JoinScreenComponent } from './join-screen/join-screen.component';
+import { TopBarComponent } from './top-bar/top-bar.component';
+import { StatisticsService } from './services/statistics.service';
+import { AppointmentsService } from './services/appointments.service';
+import { AuthService } from './services/auth.service';
+import { GeminiService } from './services/gemini.service';
+import { VideoCallComponent } from './video-call/video-call.component';
 
 @NgModule({
   declarations: [
@@ -46,10 +52,12 @@ import { CommonModule } from '@angular/common';
     ProfileComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
-    AgoraComponent,
     GenderdeskComponent,
     PoliceComponent,
-    ConsultantComponent
+    ConsultantComponent,
+    JoinScreenComponent,
+    TopBarComponent,
+    VideoCallComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,15 +67,19 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     HttpClientModule,
     ChartModule,
-    CommonModule
+    CommonModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     TimeoutService,
     OtpService,
-    ReportService
+    ReportService,
+    MeetingService,
+    StatisticsService,
+    AppointmentsService,
+    AuthService,
+    GeminiService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

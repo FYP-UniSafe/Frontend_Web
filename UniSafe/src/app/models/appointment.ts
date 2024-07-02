@@ -20,4 +20,5 @@ export interface Appointment {
   client: string;
   consultant: string | null;
   start_time_date?: Date | null;
+  meeting_id?: string;
 }

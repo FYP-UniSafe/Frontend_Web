@@ -1,0 +1,28 @@
+<body>
+  <div *ngIf="isStudent || isConsultant" id="joinPage" class="main-bg">
+    <div class="heading">
+      <p>Start a Conselling Session</p>
+    </div>
+    <form name="myForm">
+      <div class="one">
+        <button *ngIf="isConsultant" (click)="createMeeting()">
+          Create a meeting
+        </button>
+      </div>
+      <div class="two">
+        <input
+          name="meetingId"
+          type="text"
+          placeholder="Enter Meeting Id"
+          [(ngModel)]="meetingId"
+        />
+        <button
+          *ngIf="isStudent || isConsultant"
+         
+        >
+          Join a meeting
+        </button>
+      </div>
+    </form>
+  </div>
+</body>

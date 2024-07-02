@@ -1,6 +1,6 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { TimeoutService } from '../services/timeout.service';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ReportService } from '../services/report.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -29,6 +29,7 @@ export class CounsellingComponent implements OnInit {
   totalPages = 0;
   isAppointmentVisible: boolean = false;
   selectedAppointment: any;
+  hasOnlineAppointments: boolean = false;
 
   constructor(
     private timeoutService: TimeoutService,
@@ -230,7 +231,16 @@ export class CounsellingComponent implements OnInit {
       );
   }
 
-  attendOnline() {
-    // this.router.navigate(['/online']);
+  attendOnline(appointment: Appointment) {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        appointmentId: appointment.appointment_id,
+      },
+    };
+    this.router.navigate(['/joinscreen'], navigationExtras);
+  }
+  
+  checkOnlineAppointments() {
+    this.hasOnlineAppointments = this.appointments.some(appointment => appointment.session_type === 'Online');
   }
 }
