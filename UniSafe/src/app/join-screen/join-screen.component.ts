@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MeetingService } from '../services/meeting.service';
 import { AuthService } from '../services/auth.service';
 import { TimeoutService } from '../services/timeout.service';
@@ -10,66 +10,56 @@ import { TimeoutService } from '../services/timeout.service';
   styleUrls: ['./join-screen.component.css'],
 })
 export class JoinScreenComponent implements OnInit {
-  @Input() meetingId: string = '';
   userFullName: string = '';
-  userData: any = [];
+  userData: any = {};
   isConsultant: boolean = false;
   isStudent: boolean = false;
-  appointmentId: string | null = null;
+  meetingId: string | null = null;
+  token: string | null = null;
 
   constructor(
     private meetingService: MeetingService,
     private router: Router,
     private authService: AuthService,
-    private route: ActivatedRoute,
-    private timeoutService: TimeoutService,
+    private timeoutService: TimeoutService
   ) {}
 
   ngOnInit(): void {
-    const navigation = this.router.getCurrentNavigation();
-    const state = navigation?.extras.state as { appointmentId: string };
-    this.appointmentId = state ? state.appointmentId : null;
-
-    console.log('Appointment ID:', this.appointmentId);
-
+    this.timeoutService.resetTimer();
     const user = this.authService.getUser();
     if (user) {
-      this.timeoutService.resetTimer();
       this.userData = user;
       this.isConsultant = this.userData.is_consultant;
       this.isStudent = this.userData.is_student;
     }
-
+    this.retrieveMeetingId();
     this.authService.onLogout().subscribe(() => {
       this.router.navigate(['/login']);
     });
   }
 
-  createMeeting(): void {
-    if (this.appointmentId) {
-      this.meetingService.createMeeting(this.appointmentId).subscribe(
-        (response: any) => {
-          this.meetingId = response.roomId;
-          const token = response.token;
-          // this.redirectToVideoCall(this.meetingId, token);
-        },
-        (error: any) => {
-          console.error('Failed to create meeting:', error);
-        }
-      );
+
+  // DONT VALIDATE TRY GOING DIRECT INTO THE MEETING
+  retrieveMeetingId(): void {
+    this.meetingId = this.meetingService.getMeetingId();
+    this.token = this.meetingService.getTokenFromService();
+
+    if (this.meetingId && this.token) {
+      console.log('Meeting ID:', this.meetingId);
+      console.log('Token:', this.token);
     } else {
-      console.error('No appointment ID found.');
+      console.error('No meeting ID or token found.');
     }
   }
 
-  validateMeeting(meetingId: string): void {
-    this.meetingService.validateMeeting(meetingId).subscribe(
+
+  validateMeeting(meetingId: string, token: string): void {
+    this.meetingService.validateMeeting(meetingId, token).subscribe(
       (isValid: boolean) => {
         if (isValid) {
-          this.meetingId = meetingId;
           this.redirectToVideoCall(meetingId);
         } else {
-          alert('Invalid meeting id');
+          window.alert('Invalid meeting ID');
         }
       },
       (error: any) => {
@@ -78,7 +68,16 @@ export class JoinScreenComponent implements OnInit {
     );
   }
 
+  joinMeeting(): void {
+    if (this.meetingId && this.token) {
+      this.validateMeeting(this.meetingId, this.token);
+    } else {
+      window.alert('Please enter a meeting ID');
+    }
+  }
+
   redirectToVideoCall(meetingId: string): void {
-    // this.router.navigate(['/video-call', meetingId]);
+    this.router.navigate(['/video-call', meetingId]);
+    console.log('Redirecting to video call with meeting ID:', meetingId);
   }
 }

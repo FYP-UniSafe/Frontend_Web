@@ -4,6 +4,7 @@ body{
     background-color: white;
     margin: 0;
     padding: 0;
+    overflow: auto;
 }
 app-head{
     height: 7.5vh;

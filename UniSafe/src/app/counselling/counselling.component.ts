@@ -7,6 +7,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Appointment } from '../models/appointment';
 import { AppointmentsService } from '../services/appointments.service';
 import { GeminiService } from '../services/gemini.service';
+import { MeetingService } from '../services/meeting.service'; // Import MeetingService
 
 @Component({
   selector: 'app-counselling',
@@ -39,7 +40,8 @@ export class CounsellingComponent implements OnInit {
     private formBuilder: FormBuilder,
     private appointmentService: AppointmentsService,
     private geminiService: GeminiService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private meetingService: MeetingService // Inject MeetingService
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +93,7 @@ export class CounsellingComponent implements OnInit {
 
       this.appointmentService.createAppointment(appointmentData).subscribe(
         (response) => {
-          window.alert("Appointment Requested Successfully!");
+          window.alert('Appointment Requested Successfully!');
           this.fetchAppointments();
         },
         (error) => {
@@ -232,15 +234,26 @@ export class CounsellingComponent implements OnInit {
   }
 
   attendOnline(appointment: Appointment) {
-    const navigationExtras: NavigationExtras = {
-      state: {
-        appointmentId: appointment.appointment_id,
-      },
-    };
-    this.router.navigate(['/joinscreen'], navigationExtras);
+    if (
+      appointment.session_type === 'Online' &&
+      appointment.meeting_id &&
+      appointment.meeting_token
+    ) {
+      console.log('Attending Online Appointment:', appointment);
+      this.meetingService.setMeetingId(appointment.meeting_id);
+      this.meetingService.setToken(appointment.meeting_token); // Set the meeting token
+      this.router.navigate(['/joinscreen']);
+    } else {
+      console.error('Invalid Online Appointment:', appointment);
+      window.alert(
+        'This appointment does not have a valid meeting ID or token for online session.'
+      );
+    }
   }
-  
+
   checkOnlineAppointments() {
-    this.hasOnlineAppointments = this.appointments.some(appointment => appointment.session_type === 'Online');
+    this.hasOnlineAppointments = this.appointments.some(
+      (appointment) => appointment.session_type === 'Online'
+    );
   }
 }
