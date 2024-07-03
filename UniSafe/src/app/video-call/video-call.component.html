@@ -1,6 +1,25 @@
 <body>
-  <div>
-    <app-top-bar [meetingId]="meetingId"></app-top-bar>
-    <!-- Other video call content -->
+  <div *ngIf="showMeetingScreen">
+    <!-- topbar Start -->
+    <app-top-bar [meetingId]="meetingId!"></app-top-bar>
+    <!-- topbar End -->
+
+    <!-- Meeting Container -->
+    <div
+      style="
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        max-height: calc(100vh - 85px);
+      "
+    >
+      <div class="container">
+        <div
+          #participantGridContainer
+          id="participant-grid-container"
+          class="row"
+        ></div>
+      </div>
+    </div>
   </div>
 </body>
