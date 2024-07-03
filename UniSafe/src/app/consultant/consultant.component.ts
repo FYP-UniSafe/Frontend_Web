@@ -40,7 +40,7 @@ export class ConsultantComponent implements OnInit {
     private router: Router,
     private appointmentService: AppointmentsService,
     private meetingService: MeetingService,
-    private renderer: Renderer2,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -75,18 +75,30 @@ export class ConsultantComponent implements OnInit {
   }
 
   calculateCounts(): void {
-    this.physicalAppointments = this.appointments.filter(appointment => appointment.session_type === 'Physical');
-    this.onlineAppointments = this.appointments.filter(appointment => appointment.session_type === 'Online');
+    this.physicalAppointments = this.appointments.filter(
+      (appointment) => appointment.session_type === 'Physical'
+    );
+    this.onlineAppointments = this.appointments.filter(
+      (appointment) => appointment.session_type === 'Online'
+    );
 
-    this.handledPhysical = this.physicalAppointments.filter(appointment =>
-      ['MISSED', 'SCHEDULED', 'CANCELLED', 'CLOSED'].includes(appointment.status)
+    this.handledPhysical = this.physicalAppointments.filter((appointment) =>
+      ['MISSED', 'SCHEDULED', 'CANCELLED', 'CLOSED'].includes(
+        appointment.status
+      )
     ).length;
-    this.notHandledPhysical = this.physicalAppointments.filter(appointment => appointment.status === 'REQUESTED').length;
+    this.notHandledPhysical = this.physicalAppointments.filter(
+      (appointment) => appointment.status === 'REQUESTED'
+    ).length;
 
-    this.handledOnline = this.onlineAppointments.filter(appointment =>
-      ['MISSED', 'SCHEDULED', 'CANCELLED', 'CLOSED'].includes(appointment.status)
+    this.handledOnline = this.onlineAppointments.filter((appointment) =>
+      ['MISSED', 'SCHEDULED', 'CANCELLED', 'CLOSED'].includes(
+        appointment.status
+      )
     ).length;
-    this.notHandledOnline = this.onlineAppointments.filter(appointment => appointment.status === 'REQUESTED').length;
+    this.notHandledOnline = this.onlineAppointments.filter(
+      (appointment) => appointment.status === 'REQUESTED'
+    ).length;
   }
 
   applyFilters() {
@@ -168,24 +180,25 @@ export class ConsultantComponent implements OnInit {
   }
 
   attendOnline(appointment: Appointment) {
-    const navigationExtras: NavigationExtras = {
-      state: {
-        appointmentId: appointment.appointment_id,
-      },
-    };
-    this.router.navigate(['/joinscreen'], navigationExtras);
+    if (appointment.meeting_id && appointment.meeting_token) {
+      this.meetingService.setMeetingId(appointment.meeting_id);
+      this.meetingService.setToken(appointment.meeting_token);
+      this.router.navigate(['/joinscreen']);
+    } else {
+      window.alert('No meeting ID or token available for this appointment.');
+    }
   }
-  
+
   acceptAppointment() {
     const acceptData: any = {
       start_time: this.startTime,
       end_time: this.endTime,
     };
-  
+
     if (this.selectedAppointment.session_type === 'Physical') {
       acceptData.physical_location = this.physicalLocation;
     }
-  
+
     this.appointmentService
       .acceptAppointment(this.selectedAppointment.appointment_id, acceptData)
       .subscribe(
@@ -199,22 +212,21 @@ export class ConsultantComponent implements OnInit {
         }
       );
   }
-  
+
   createMeeting(appointmentId: string) {
-    console.log(appointmentId)
+    console.log(appointmentId);
     this.meetingService.createMeeting(appointmentId).subscribe(
       (response) => {
         this.isAcceptDialogOpen = false;
         this.fetchAppointments();
 
-        window.alert("Appointment and Online Meeting created successfully!");
+        window.alert('Appointment and Online Meeting created successfully!');
       },
       (error) => {
         console.error('Error creating meeting:', error);
       }
     );
   }
-  
 
   openAcceptDialog() {
     this.startTime = '';

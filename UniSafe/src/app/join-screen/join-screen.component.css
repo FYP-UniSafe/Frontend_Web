@@ -4,6 +4,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  overflow: auto;
 }
 .main-bg {
   height: 92.5vh;
@@ -41,7 +42,7 @@ form{
     margin-bottom: 2.5vh;
 }
 .two{
-    width: 70%;
+    width: 80%;
     height: 10%;
     display: flex;
     justify-content: space-evenly;

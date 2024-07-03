@@ -4,6 +4,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  overflow: auto;
 }
 .heading {
   width: 100%;
