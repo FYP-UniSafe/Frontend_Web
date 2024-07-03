@@ -6,9 +6,10 @@ import {
   ViewChild,
   ElementRef,
 } from '@angular/core';
-import { VideoSDK } from '@videosdk.live/js-sdk'; // Adjust path as per your setup
+import { VideoSDK } from '@videosdk.live/js-sdk';
 import { MeetingService } from '../services/meeting.service';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-video-call',
@@ -18,6 +19,8 @@ import { AuthService } from '../services/auth.service';
 export class VideoCallComponent implements OnInit, AfterViewInit {
   meeting: any;
   participantName: string = '';
+  isConsultant: boolean = false;
+  isStudent: boolean = false;
   meetingId: string | null = null;
   token: string | null = null;
   showMeetingScreen: boolean = false;
@@ -25,6 +28,8 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
   showTopBar: boolean = false;
   localParticipant: any;
   participants: any;
+  isWebcamOn: boolean = true;
+  isMicOn: boolean = true;
 
   @ViewChild('participantGridContainer', { static: false })
   participantGridContainer!: ElementRef;
@@ -32,20 +37,33 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
   constructor(
     private meetingService: MeetingService,
     private authService: AuthService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     const user = this.authService.getUser();
     if (user) {
       this.participantName = user.full_name;
+      this.isConsultant = user.is_consultant;
+      this.isStudent = user.is_student;
     }
 
-    this.retrieveMeetingDetails();
+    this.retrieveMeetingDetailsFromStorage();
+  }
+
+  retrieveMeetingDetailsFromStorage(): void {
+    this.meetingId = localStorage.getItem('meetingId');
+    this.token = localStorage.getItem('token');
+
+    if (this.meetingId && this.token) {
+      this.joinMeeting();
+    } else {
+      this.retrieveMeetingDetails();
+    }
   }
 
   ngAfterViewInit(): void {
-    console.log('ngAfterViewInit called'); // Debug log
     this.initMeeting();
   }
 
@@ -54,8 +72,8 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     this.token = this.meetingService.getTokenFromService();
 
     if (this.meetingId && this.token) {
-      console.log('Meeting ID:', this.meetingId);
-      console.log('Token:', this.token);
+      localStorage.setItem('meetingId', this.meetingId);
+      localStorage.setItem('token', this.token);
       this.joinMeeting();
     } else {
       console.error('No meeting ID or token found.');
@@ -71,10 +89,10 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     VideoSDK.config(this.token);
 
     this.meeting = VideoSDK.initMeeting({
-      meetingId: this.meetingId!, // required
-      name: this.participantName, // required
-      micEnabled: true, // optional, default: true
-      webcamEnabled: true, // optional, default: true
+      meetingId: this.meetingId!,
+      name: this.participantName,
+      micEnabled: true,
+      webcamEnabled: true,
     });
   }
 
@@ -84,26 +102,7 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
 
     this.handleMeetingEvents(this.meeting);
 
-    const showJoinScreenMessage = this.renderer.createElement('div');
-    this.renderer.setAttribute(
-      showJoinScreenMessage,
-      'id',
-      'show-join-screen-message'
-    );
-    this.renderer.setProperty(
-      showJoinScreenMessage,
-      'innerHTML',
-      'Please wait to join meeting...'
-    );
-    this.renderer.setStyle(showJoinScreenMessage, 'color', 'black');
-    this.renderer.setStyle(showJoinScreenMessage, 'fontSize', '20px');
-    this.renderer.setStyle(showJoinScreenMessage, 'fontWeight', 'bold');
-    this.renderer.setStyle(showJoinScreenMessage, 'marginTop', '20px');
-    this.renderer.setStyle(showJoinScreenMessage, 'marginLeft', '20px');
-    this.renderer.appendChild(document.body, showJoinScreenMessage);
-
     this.showMeetingScreen = true;
-    console.log('showMeetingScreen set to true'); // Debug log
   }
 
   handleMeetingEvents(meeting: any): void {
@@ -113,24 +112,16 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     if (meeting) {
       this.showJoinScreen = false;
       this.showMeetingScreen = true;
-      console.log('showMeetingScreen inside handleMeetingEvents set to true'); // Debug log
     }
 
-    // meeting joined event
     meeting.on('meeting-joined', () => {
-      const showJoinScreenMessage = document.getElementById(
-        'show-join-screen-message'
-      );
-      if (showJoinScreenMessage) {
-        this.renderer.removeChild(document.body, showJoinScreenMessage);
-      }
+      this.showTopBar = true;
+
       const { getParticipantMediaElement } = this.participantGridGenerator(
         this.meeting.localParticipant
       );
-      this.showTopBar = true;
 
       meeting.localParticipant.on('stream-enabled', (stream: any) => {
-        console.log('Stream Enabled: ', stream);
         this.handleStreamEnabled(
           stream,
           meeting.localParticipant,
@@ -139,7 +130,6 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         );
       });
       meeting.localParticipant.on('stream-disabled', (stream: any) => {
-        console.log('Stream Disabled: ', stream);
         this.handleStreamDisabled(
           stream,
           meeting.localParticipant,
@@ -149,7 +139,6 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
       });
     });
 
-    // meeting left event
     meeting.on('meeting-left', () => {
       while (this.participantGridContainer.nativeElement.firstChild) {
         this.participantGridContainer.nativeElement.removeChild(
@@ -160,15 +149,11 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
       this.showJoinScreen = true;
     });
 
-    // remote participant events
     meeting.on('participant-joined', (participant: any) => {
-      console.log('New Participant Joined: ', participant.id);
-
       const { getParticipantMediaElement } =
         this.participantGridGenerator(participant);
 
       participant.on('stream-enabled', (stream: any) => {
-        console.log('Participant Stream Enabled: ', stream);
         this.handleStreamEnabled(
           stream,
           participant,
@@ -177,7 +162,6 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
         );
       });
       participant.on('stream-disabled', (stream: any) => {
-        console.log('Participant Stream Disabled: ', stream);
         this.handleStreamDisabled(
           stream,
           participant,
@@ -188,7 +172,6 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     });
 
     meeting.on('participant-left', (participant: any) => {
-      console.log('Participant Left: ', participant.id);
       this.handleParticipantLeft(participant);
     });
   }
@@ -319,10 +302,9 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     const audio = this.renderer.createElement('audio');
     const mediaStream = new MediaStream();
     mediaStream.addTrack(stream.track);
-    this.renderer.setAttribute(audio, 'id', `audio-${participant.id}`);
+    this.renderer.setAttribute(audio, 'id', `a-${participant.id}`);
     this.renderer.setAttribute(audio, 'autoplay', 'true');
     this.renderer.setAttribute(audio, 'playsinline', 'true');
-    this.renderer.setAttribute(audio, 'muted', 'true');
     this.renderer.setProperty(audio, 'srcObject', mediaStream);
 
     const audioElement = this.renderer.createElement('div');
@@ -335,44 +317,39 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     this.renderer.appendChild(audioElement, audio);
   }
 
-  createNameElement(participant: any): HTMLElement {
-    var nameElement = this.renderer.createElement('div');
+  createNameElement(participant: any): any {
+    const nameElement = this.renderer.createElement('div');
     this.renderer.setAttribute(
       nameElement,
       'id',
       `name-container-${participant.id}`
     );
-    nameElement.innerHTML = participant.displayName.charAt(0).toUpperCase();
-    this.renderer.setStyle(nameElement, 'backgroundColor', 'black');
+    this.renderer.setStyle(nameElement, 'width', '100%');
+    this.renderer.setStyle(nameElement, 'height', '100%');
+    this.renderer.setStyle(nameElement, 'display', 'flex');
+    this.renderer.setStyle(nameElement, 'justifyContent', 'center');
+    this.renderer.setStyle(nameElement, 'alignItems', 'center');
     this.renderer.setStyle(nameElement, 'color', 'white');
-    this.renderer.setStyle(nameElement, 'textAlign', 'center');
-    this.renderer.setStyle(nameElement, 'padding', '32px');
-    this.renderer.setStyle(nameElement, 'borderRadius', '100%');
-    this.renderer.setStyle(nameElement, 'fontSize', '20px');
+    this.renderer.setStyle(nameElement, 'backgroundColor', 'black');
+    this.renderer.setStyle(nameElement, 'fontSize', '24px');
+    this.renderer.setStyle(nameElement, 'fontWeight', 'bold');
+    nameElement.innerHTML =
+      participant.displayName.length > 15
+        ? participant.displayName.substring(0, 15) + '...'
+        : participant.displayName;
     return nameElement;
   }
 
-  participantGridGenerator(participant: any): {
-    getParticipantMediaElement: HTMLElement;
-  } {
-    var participantGridItem = this.renderer.createElement('div');
-    this.renderer.setStyle(participantGridItem, 'backgroundColor', 'lightgrey');
-    this.renderer.setStyle(participantGridItem, 'borderRadius', '10px');
-    this.renderer.setStyle(participantGridItem, 'aspectRatio', '16 / 9');
-    this.renderer.setStyle(participantGridItem, 'width', '360px');
-    this.renderer.setStyle(participantGridItem, 'marginTop', '8px');
-    this.renderer.setStyle(participantGridItem, 'display', 'flex');
-    this.renderer.setStyle(participantGridItem, 'alignItems', 'center');
-    this.renderer.setStyle(participantGridItem, 'justifyContent', 'center');
-    this.renderer.setStyle(participantGridItem, 'overflow', 'hidden');
+  participantGridGenerator(participant: any): any {
+    const participantGridItem = this.renderer.createElement('div');
     this.renderer.setAttribute(
       participantGridItem,
       'id',
       `participant-grid-item-${participant.id}`
     );
-    this.renderer.setAttribute(participantGridItem, 'class', 'col-4');
+    this.renderer.addClass(participantGridItem, 'participant-grid-item');
 
-    var participantMediaElement = this.renderer.createElement('div');
+    const participantMediaElement = this.renderer.createElement('div');
     this.renderer.setAttribute(
       participantMediaElement,
       'id',
@@ -381,22 +358,57 @@ export class VideoCallComponent implements OnInit, AfterViewInit {
     this.renderer.setStyle(participantMediaElement, 'position', 'relative');
     this.renderer.setStyle(participantMediaElement, 'width', '100%');
     this.renderer.setStyle(participantMediaElement, 'height', '100%');
-    this.renderer.setStyle(participantMediaElement, 'display', 'flex');
-    this.renderer.setStyle(participantMediaElement, 'alignItems', 'center');
-    this.renderer.setStyle(participantMediaElement, 'justifyContent', 'center');
 
-    var nameElement = this.createNameElement(participant);
+    this.renderer.appendChild(participantGridItem, participantMediaElement);
     this.renderer.appendChild(
       this.participantGridContainer.nativeElement,
       participantGridItem
     );
-    this.renderer.appendChild(participantGridItem, participantMediaElement);
-    this.renderer.appendChild(participantMediaElement, nameElement);
 
-    var getParticipantMediaElement = document.getElementById(
-      `participant-media-container-${participant.id}`
-    ) as HTMLElement;
+    return {
+      getParticipantMediaElement: participantMediaElement,
+    };
+  }
 
-    return { getParticipantMediaElement };
+  toggleWebcam(): void {
+    if (this.localParticipant) {
+      if (this.isWebcamOn) {
+        console.log('Disabling webcam');
+        this.meeting.disableWebcam();
+      } else {
+        console.log('Enabling webcam');
+        this.meeting.enableWebcam();
+      }
+      this.isWebcamOn = !this.isWebcamOn;
+    }
+  }
+
+  toggleMic(): void {
+    if (this.localParticipant) {
+      if (this.isMicOn) {
+        console.log('Disabling mic');
+        this.meeting.muteMic();
+      } else {
+        console.log('Enabling mic');
+        this.meeting.unmuteMic();
+      }
+      this.isMicOn = !this.isMicOn;
+    }
+  }
+
+  leaveMeeting(): void {
+    if (this.meeting) {
+      this.meeting.leave();
+    }
+    this.showMeetingScreen = false;
+    this.showJoinScreen = true;
+    this.showTopBar = false;
+    localStorage.removeItem('meetingId');
+    localStorage.removeItem('token');
+    if (this.isConsultant) {
+      this.router.navigate(['/consultant']);
+    } else if (this.isStudent) {
+      this.router.navigate(['/counselling']);
+    }
   }
 }

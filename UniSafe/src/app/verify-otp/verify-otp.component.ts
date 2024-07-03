@@ -28,7 +28,7 @@ export class VerifyOtpComponent implements OnInit {
 
   submit(): void {
     if (this.verifyForm.valid) {
-      const { email, otp } = this.verifyForm.value; // Retrieve form values
+      const { email, otp } = this.verifyForm.value;
 
       this.otpService.verifyOtp(email, otp).subscribe(
         (response) => {
