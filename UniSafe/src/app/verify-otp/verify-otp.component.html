@@ -1,17 +1,29 @@
 <body>
-    <form [formGroup]="verifyForm" (submit)="submit()">
-        <div class="card">
-            <h2>Activate your account</h2>
-            
-            <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
-            
-            <p class="p1">Please enter the OTP that was sent to your email</p>
+  <form [formGroup]="verifyForm" (submit)="submit()">
+    <div class="card">
+      <h2>Activate your account</h2>
 
-            <input type="text" required id="Email" placeholder="Email" formControlName="email">
-            <input type="text" required id="OTP" placeholder="OTP _ _ _ _ _ _" formControlName="otp">
-            <p class="p2"><a routerLink="/resend-otp">Resend OTP code</a></p>
+      <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
 
-            <button type="submit">Submit</button>
-        </div>
-    </form>
+      <p class="p1">Please enter the OTP that was sent to your email</p>
+
+      <input
+        type="text"
+        required
+        id="Email"
+        placeholder="Email"
+        formControlName="email"
+      />
+      <input
+        type="text"
+        required
+        id="OTP"
+        placeholder="OTP _ _ _ _ _ _"
+        formControlName="otp"
+      />
+      <p class="p2"><a routerLink="/resend-otp">Resend OTP code</a></p>
+
+      <button type="submit">Submit</button>
+    </div>
+  </form>
 </body>

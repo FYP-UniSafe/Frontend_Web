@@ -1,19 +1,51 @@
-.top-bar-div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-  }
-  .leave-btn {
-    margin-left: 4px;
-    cursor: pointer;
-    background-color: #ff5c5c;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-  }
-  .leave-btn:hover {
-    background-color: #ff3b3b;
-  }
-  
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+}
+
+.top-bar {
+  display: flex;
+  width: 60%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon-container {
+  width: 20%;
+}
+
+.leave-container {
+  width: 20%;
+}
+
+.icon-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 4vw;
+  color: #0f6cbf;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.leavebtn {
+  background-color: red;
+  width: 100%;
+  border: 0.5px solid black;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.5s ease;
+}
+
+.leavebtn:hover {
+  font-weight: bold;
+  transform: scale(1.1);
+}

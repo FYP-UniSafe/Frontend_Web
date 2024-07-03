@@ -34,13 +34,13 @@ const routes: Routes = [
   {path: 'police', component: PoliceComponent},
   {path: 'consultant', component: ConsultantComponent},
   {path: 'joinscreen', component: JoinScreenComponent},
-  { path: 'videocall/:meetingId', component: VideoCallComponent },
+  { path: 'videocall', component: VideoCallComponent },
   {path: '**', redirectTo: 'home'}
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'top', // Scroll to top on route navigation
+    scrollPositionRestoration: 'top',
   })],
   exports: [RouterModule]
 })

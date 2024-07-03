@@ -38,8 +38,6 @@ export class JoinScreenComponent implements OnInit {
     });
   }
 
-
-  // DONT VALIDATE TRY GOING DIRECT INTO THE MEETING
   retrieveMeetingId(): void {
     this.meetingId = this.meetingService.getMeetingId();
     this.token = this.meetingService.getTokenFromService();
@@ -52,32 +50,11 @@ export class JoinScreenComponent implements OnInit {
     }
   }
 
-
-  validateMeeting(meetingId: string, token: string): void {
-    this.meetingService.validateMeeting(meetingId, token).subscribe(
-      (isValid: boolean) => {
-        if (isValid) {
-          this.redirectToVideoCall(meetingId);
-        } else {
-          window.alert('Invalid meeting ID');
-        }
-      },
-      (error: any) => {
-        console.error('Failed to validate meeting:', error);
-      }
-    );
-  }
-
   joinMeeting(): void {
     if (this.meetingId && this.token) {
-      this.validateMeeting(this.meetingId, this.token);
+      this.router.navigate(['/videocall']);
     } else {
       window.alert('Please enter a meeting ID');
     }
-  }
-
-  redirectToVideoCall(meetingId: string): void {
-    this.router.navigate(['/video-call', meetingId]);
-    console.log('Redirecting to video call with meeting ID:', meetingId);
   }
 }

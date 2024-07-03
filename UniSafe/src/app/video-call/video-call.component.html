@@ -1,6 +1,14 @@
 <body>
-  <div>
-    <app-top-bar [meetingId]="meetingId"></app-top-bar>
-    <!-- Other video call content -->
+  <div class="container">
+    <div
+      #participantGridContainer
+      id="participant-grid-container"
+      class="row"
+    ></div>
   </div>
+  <app-top-bar
+    (webcamToggle)="toggleWebcam()"
+    (micToggle)="toggleMic()"
+    (leaveMeeting)="leaveMeeting()"
+  ></app-top-bar>
 </body>
