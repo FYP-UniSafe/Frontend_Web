@@ -117,7 +117,7 @@ export class HomeComponent implements OnInit {
 
   initializeMaps(policeLocations: any): void {
     let loader = new Loader({
-      apiKey: 'AIzaSyBZ1WM4F7jNn0w8s3kaQr1_1yblH9thlT8',
+      apiKey: 'AIzaSyDGMl2dg2bTxMG4GF04xWIfsiklj9icyws',
     });
 
     loader.load().then(() => {
