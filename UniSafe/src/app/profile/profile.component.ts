@@ -71,10 +71,9 @@ export class ProfileComponent implements OnInit {
         this.message = `Closed ${this.userData.profile.report_count} Reports`;
       } else if (user.is_consultant) {
         this.message = `Handled ${this.userData.profile.session_count} Appointments`;
-      }  else if (user.is_police){
+      } else if (user.is_police) {
         this.message = `Closed ${this.userData.profile.report_count} Cases`;
-      }
-      else {
+      } else {
         this.message = '';
       }
 

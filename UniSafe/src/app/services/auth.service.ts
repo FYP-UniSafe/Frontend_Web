@@ -219,6 +219,9 @@ export class AuthService {
       new_password: newPassword,
     };
 
-    return this.http.post(`${environment.apiUrl}/users/password/change`, requestBody);
+    return this.http.post(
+      `${environment.apiUrl}/users/password/change`,
+      requestBody
+    );
   }
 }

@@ -81,7 +81,7 @@ body {
   width: 7.5vw;
   font-size: 1vw;
   color: white;
-  background-color: #0F6CBF;
+  background-color: #0f6cbf;
   font-weight: bold;
   border-radius: 5vw;
   cursor: pointer;
@@ -142,13 +142,12 @@ body {
   cursor: pointer;
   font-size: 0.8vw;
 }
-.conditions{
+.conditions {
   width: 17.5vw;
   display: flex;
   flex-direction: column;
   color: red;
   font-size: 12.5px;
-
 }
 
 @media (max-width: 819px) {

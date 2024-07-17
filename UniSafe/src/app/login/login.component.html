@@ -2,7 +2,8 @@
   <head>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
   </head>
   <form [formGroup]="loginForm" (submit)="submit()">
     <!-- <form> -->
@@ -11,7 +12,7 @@
 
       <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
 
-      <input type="text" placeholder="Email" formControlName="email"/>
+      <input type="text" placeholder="Email" formControlName="email" />
 
       <div class="password-container">
         <input
@@ -19,7 +20,7 @@
           [type]="showPassword ? 'text' : 'password'"
           class="form-control pwd-control"
           placeholder="Password"
-          formControlName = "password"
+          formControlName="password"
         />
 
         <i
@@ -39,7 +40,9 @@
 
       <button type="submit">Login</button>
 
-      <p class="p2">Don't have an account? <a routerLink="/signup">Signup</a></p>
+      <p class="p2">
+        Don't have an account? <a routerLink="/signup">Signup</a>
+      </p>
     </div>
   </form>
 </body>

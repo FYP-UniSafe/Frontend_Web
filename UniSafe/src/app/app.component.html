@@ -1,11 +1,9 @@
 <body>
-  
   <app-head *ngIf="isHomeRoute()"></app-head>
-  
+
   <div class="pages">
     <router-outlet></router-outlet>
   </div>
-      
-  <app-foot *ngIf="isHomeRoute()" id="app-foot"></app-foot>
 
+  <app-foot *ngIf="isHomeRoute()" id="app-foot"></app-foot>
 </body>

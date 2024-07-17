@@ -125,5 +125,4 @@ export class ReportService {
       { withCredentials: true }
     );
   }
-
 }

@@ -1,125 +1,281 @@
 <body>
-    <form [formGroup]="profileForm" (ngSubmit)="submit()">
+  <form [formGroup]="profileForm" (ngSubmit)="submit()">
     <div class="card">
-        <div class="menu">
-            <div class="auth">
-                <div class="profile">
-                    <i class="fas fa-user"></i>
-                </div>
-                <p><b>{{user_id}}</b></p>
-                <!-- <p>Reported {{userData.profile.report_count}} times</p> -->
-                <p>{{message}}</p>
-            </div>
-
-            <div class="menu-item" [class.selected]="selectedItem === 'Personal Details'" (click)="selectMenuItem('Personal Details')">Personal Details</div>
-            <div class="menu-item" [class.selected]="selectedItem === 'Profile Details'" (click)="selectMenuItem('Profile Details')">Profile Details</div>
-            <div class="menu-item" [class.selected]="selectedItem === 'Change Password'" (click)="selectMenuItem('Change Password')">Change Password</div>
-            <div class="menu-item" [class.selected]="selectedItem === 'Logout'" (click)="selectMenuItem('Logout'); logout()">Logout</div>
+      <div class="menu">
+        <div class="auth">
+          <div class="profile">
+            <i class="fas fa-user"></i>
+          </div>
+          <p>
+            <b>{{ user_id }}</b>
+          </p>
+          <!-- <p>Reported {{userData.profile.report_count}} times</p> -->
+          <p>{{ message }}</p>
         </div>
 
-        <div class="horizontal-line"></div>
-
-        <div class="content" *ngIf="selectedItem === 'Personal Details'">
-            <div class="head">
-                <h1>Personal Details</h1>
-            </div>
-            <div class="mid">
-                <div class="input">
-                    <h2>Full Name:</h2>
-                    <input class="nonupdate" type="text" id="" placeholder="{{userData.full_name}}"  readonly>
-                </div>
-                <div class="input">
-                    <h2>Email:</h2>
-                    <input type="email" id="" formControlName="email">
-                    <div class="conditions" *ngIf="emailField && emailField.dirty && emailField.invalid">
-                      <span class="block" *ngIf="emailField.errors?.['required']">• Email is required.</span>
-                      <span class="block" *ngIf="emailField.errors?.['email']">• Invalid email format.</span>
-                    </div>
-                </div>
-                <div class="input">
-                    <h2>Phone Number:</h2>
-                    <input type="text" id="" formControlName="phone_number">
-                    <div class="conditions" *ngIf="phoneField && phoneField.dirty && phoneField.invalid">
-                        <span class="block" *ngIf="phoneField.errors?.['required']">• Phone number is required.</span>
-                        <span class="block" *ngIf="phoneField.errors?.['pattern']">• Required format: +255(last 9 digits)</span>
-                    </div>
-                </div>
-                <div class="input">
-                    <h2>Gender:</h2>
-                    <input class="nonupdate" type="text" id="" formControlName="gender" readonly>
-                </div>
-            </div>
-            <div class="end">
-                <button type="submit" (click)="updateUser()">Update</button>
-            </div>
+        <div
+          class="menu-item"
+          [class.selected]="selectedItem === 'Personal Details'"
+          (click)="selectMenuItem('Personal Details')"
+        >
+          Personal Details
         </div>
-
-        <div class="content" *ngIf="selectedItem === 'Profile Details'">
-            <div class="head">
-                <h1>Profile Details</h1>
-            </div>
-            <div class="mid">
-                <div class="input">
-                    <h2>
-                        {{ isStudent ? 'Registration Number' : 
-                           (isGenderDesk || isConsultant ? 'Staff Number' : 
-                           (isPolice ? 'Police Number' : '')) }}:
-                    </h2>
-                    <input class="nonupdate" type="text" id="" formControlName="staff_no" *ngIf="isGenderDesk || isConsultant">
-                    <input class="nonupdate" type="text" id="" formControlName="police_no" *ngIf="isPolice"  readonly>
-                    <input class="nonupdate" type="text" id="" formControlName="reg_no" *ngIf="isStudent"  readonly>
-                </div>
-                <div class="input">
-                    <h2>
-                        {{ isStudent ? 'College' :
-                           (isGenderDesk || isConsultant ? 'Office' : 
-                           (isPolice ? 'Station' : '')) }}:
-                    </h2>
-                    <input type="text" id="" formControlName="office" *ngIf="isGenderDesk || isConsultant">
-                    <input type="text" id="" formControlName="station" *ngIf="isPolice">
-                    <div class="colleges" *ngIf="isStudent" >
-                        <select formControlName="college">
-                            <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
-                        </select>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="end">
-                <button type="submit" (click)="updateProfileDetails()">Update</button>
-            </div>
+        <div
+          class="menu-item"
+          [class.selected]="selectedItem === 'Profile Details'"
+          (click)="selectMenuItem('Profile Details')"
+        >
+          Profile Details
         </div>
-
-        <div class="content" *ngIf="selectedItem === 'Change Password'">
-            <div class="head">
-                <h1>Change Password</h1>
-            </div>
-            <div class="mid">
-                <div class="input pass">
-                    <h2>Current Password:</h2>
-                    <input [type]="showPassword ? 'text' : 'password'" name="password" id="" formControlName="current_password">
-                    <i class="far fa-eye eye-show" (click)="togglePasswordVisibility()" [class.hide]="!showPassword"></i>
-                    <i class="far fa-eye-slash eye-hide" (click)="togglePasswordVisibility()" [class.hide]="showPassword"></i>
-                </div>
-                <div class="input pass2">
-                    <h2>New Password:</h2>
-                    <input [type]="showPassword ? 'text' : 'password'" name="password" id="" formControlName="new_password">
-                    <i class="far fa-eye eye-show2" (click)="togglePasswordVisibility()" [class.hide]="!showPassword"></i>
-                    <i class="far fa-eye-slash eye-hide2" (click)="togglePasswordVisibility()" [class.hide]="showPassword"></i>
-                </div>
-                <div class="conditions" *ngIf="passwordFormField?.dirty">
-                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('^(?=.*[A-Z])')">• At least one uppercase letter.</span>
-                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(?=.*[a-z])')">• At least one lowercase letter.</span>
-                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(.*[0-9].*)')">• At least one digit.</span>
-                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(?=.*[!@#$%^&*])')">• At least one special character.</span>
-                    <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('.{8,}')">• At least 8 characters long.</span>
-                </div>
-            </div>
-            <div class="end">
-                <button type="submit" (click)="changePassword()">Update</button>
-            </div>
-        
+        <div
+          class="menu-item"
+          [class.selected]="selectedItem === 'Change Password'"
+          (click)="selectMenuItem('Change Password')"
+        >
+          Change Password
         </div>
+        <div
+          class="menu-item"
+          [class.selected]="selectedItem === 'Logout'"
+          (click)="selectMenuItem('Logout'); logout()"
+        >
+          Logout
+        </div>
+      </div>
+
+      <div class="horizontal-line"></div>
+
+      <div class="content" *ngIf="selectedItem === 'Personal Details'">
+        <div class="head">
+          <h1>Personal Details</h1>
+        </div>
+        <div class="mid">
+          <div class="input">
+            <h2>Full Name:</h2>
+            <input
+              class="nonupdate"
+              type="text"
+              id=""
+              placeholder="{{ userData.full_name }}"
+              readonly
+            />
+          </div>
+          <div class="input">
+            <h2>Email:</h2>
+            <input type="email" id="" formControlName="email" />
+            <div
+              class="conditions"
+              *ngIf="emailField && emailField.dirty && emailField.invalid"
+            >
+              <span class="block" *ngIf="emailField.errors?.['required']"
+                >• Email is required.</span
+              >
+              <span class="block" *ngIf="emailField.errors?.['email']"
+                >• Invalid email format.</span
+              >
+            </div>
+          </div>
+          <div class="input">
+            <h2>Phone Number:</h2>
+            <input type="text" id="" formControlName="phone_number" />
+            <div
+              class="conditions"
+              *ngIf="phoneField && phoneField.dirty && phoneField.invalid"
+            >
+              <span class="block" *ngIf="phoneField.errors?.['required']"
+                >• Phone number is required.</span
+              >
+              <span class="block" *ngIf="phoneField.errors?.['pattern']"
+                >• Required format: +255(last 9 digits)</span
+              >
+            </div>
+          </div>
+          <div class="input">
+            <h2>Gender:</h2>
+            <input
+              class="nonupdate"
+              type="text"
+              id=""
+              formControlName="gender"
+              readonly
+            />
+          </div>
+        </div>
+        <div class="end">
+          <button type="submit" (click)="updateUser()">Update</button>
+        </div>
+      </div>
+
+      <div class="content" *ngIf="selectedItem === 'Profile Details'">
+        <div class="head">
+          <h1>Profile Details</h1>
+        </div>
+        <div class="mid">
+          <div class="input">
+            <h2>
+              {{
+                isStudent
+                  ? "Registration Number"
+                  : isGenderDesk || isConsultant
+                  ? "Staff Number"
+                  : isPolice
+                  ? "Police Number"
+                  : ""
+              }}:
+            </h2>
+            <input
+              class="nonupdate"
+              type="text"
+              id=""
+              formControlName="staff_no"
+              *ngIf="isGenderDesk || isConsultant"
+            />
+            <input
+              class="nonupdate"
+              type="text"
+              id=""
+              formControlName="police_no"
+              *ngIf="isPolice"
+              readonly
+            />
+            <input
+              class="nonupdate"
+              type="text"
+              id=""
+              formControlName="reg_no"
+              *ngIf="isStudent"
+              readonly
+            />
+          </div>
+          <div class="input">
+            <h2>
+              {{
+                isStudent
+                  ? "College"
+                  : isGenderDesk || isConsultant
+                  ? "Office"
+                  : isPolice
+                  ? "Station"
+                  : ""
+              }}:
+            </h2>
+            <input
+              type="text"
+              id=""
+              formControlName="office"
+              *ngIf="isGenderDesk || isConsultant"
+            />
+            <input
+              type="text"
+              id=""
+              formControlName="station"
+              *ngIf="isPolice"
+            />
+            <div class="colleges" *ngIf="isStudent">
+              <select formControlName="college">
+                <option *ngFor="let college of colleges" [value]="college">
+                  {{ college }}
+                </option>
+              </select>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+          </div>
+        </div>
+        <div class="end">
+          <button type="submit" (click)="updateProfileDetails()">Update</button>
+        </div>
+      </div>
+
+      <div class="content" *ngIf="selectedItem === 'Change Password'">
+        <div class="head">
+          <h1>Change Password</h1>
+        </div>
+        <div class="mid">
+          <div class="input pass">
+            <h2>Current Password:</h2>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              id=""
+              formControlName="current_password"
+            />
+            <i
+              class="far fa-eye eye-show"
+              (click)="togglePasswordVisibility()"
+              [class.hide]="!showPassword"
+            ></i>
+            <i
+              class="far fa-eye-slash eye-hide"
+              (click)="togglePasswordVisibility()"
+              [class.hide]="showPassword"
+            ></i>
+          </div>
+          <div class="input pass2">
+            <h2>New Password:</h2>
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              id=""
+              formControlName="new_password"
+            />
+            <i
+              class="far fa-eye eye-show2"
+              (click)="togglePasswordVisibility()"
+              [class.hide]="!showPassword"
+            ></i>
+            <i
+              class="far fa-eye-slash eye-hide2"
+              (click)="togglePasswordVisibility()"
+              [class.hide]="showPassword"
+            ></i>
+          </div>
+          <div class="conditions" *ngIf="passwordFormField?.dirty">
+            <span
+              class="block"
+              *ngIf="
+                passwordFormField?.value &&
+                !passwordFormField?.value.match('^(?=.*[A-Z])')
+              "
+              >• At least one uppercase letter.</span
+            >
+            <span
+              class="block"
+              *ngIf="
+                passwordFormField?.value &&
+                !passwordFormField?.value.match('(?=.*[a-z])')
+              "
+              >• At least one lowercase letter.</span
+            >
+            <span
+              class="block"
+              *ngIf="
+                passwordFormField?.value &&
+                !passwordFormField?.value.match('(.*[0-9].*)')
+              "
+              >• At least one digit.</span
+            >
+            <span
+              class="block"
+              *ngIf="
+                passwordFormField?.value &&
+                !passwordFormField?.value.match('(?=.*[!@#$%^&*])')
+              "
+              >• At least one special character.</span
+            >
+            <span
+              class="block"
+              *ngIf="
+                passwordFormField?.value &&
+                !passwordFormField?.value.match('.{8,}')
+              "
+              >• At least 8 characters long.</span
+            >
+          </div>
+        </div>
+        <div class="end">
+          <button type="submit" (click)="changePassword()">Update</button>
+        </div>
+      </div>
     </div>
-</form>
+  </form>
 </body>

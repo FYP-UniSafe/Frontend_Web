@@ -132,7 +132,6 @@ body form {
   color: black;
   font-family: "Montserrat", sans-serif;
   font-weight: lighter;
-
 }
 .colleges select {
   appearance: none;
@@ -149,7 +148,7 @@ body form {
   border-radius: 0.7vw;
   text-indent: 0.75vw;
 }
-option{
+option {
   font-size: 1.2em;
 }
 .colleges i {
@@ -183,10 +182,10 @@ option{
 .card button:hover {
   transform: scale(1.05);
 }
-.pass{
+.pass {
   position: relative;
 }
-.pass2{
+.pass2 {
   position: relative;
 }
 .eye-show,
@@ -212,7 +211,7 @@ option{
 .hide {
   display: none;
 }
-.conditions{
+.conditions {
   justify-self: center;
   width: 100%;
   text-align: center;
@@ -221,7 +220,6 @@ option{
   flex-direction: column;
   color: red;
   font-size: 15px;
-
 }
 
 @media (max-width: 1023px) {

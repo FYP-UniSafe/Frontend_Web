@@ -28,11 +28,13 @@ export class LoginComponent implements OnInit {
   submit() {
     this.authService.login(this.loginForm.getRawValue()).subscribe(
       (res: any) => {
-        this.router.navigate(['/home'])
+        this.router.navigate(['/home']);
       },
       (error: any) => {
         console.log('Error logging in');
-        window.alert('Login failed. Please check your credentials and try again.');
+        window.alert(
+          'Login failed. Please check your credentials and try again.'
+        );
       }
     );
   }
@@ -41,4 +43,3 @@ export class LoginComponent implements OnInit {
     this.showPassword = !this.showPassword;
   }
 }
-

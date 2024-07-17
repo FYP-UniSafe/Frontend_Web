@@ -1,117 +1,194 @@
 <body>
   <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
   </head>
-    <form [formGroup]="signupForm" (submit)="submit()">
-        <div class="card">
-            <h2>Sign up</h2>
-            <p class="p1">Join a Supportive Community</p>
+  <form [formGroup]="signupForm" (submit)="submit()">
+    <div class="card">
+      <h2>Sign up</h2>
+      <p class="p1">Join a Supportive Community</p>
 
-            <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
+      <img src="../../assets/media/Unisafe-logo.png" alt="UniSafe logo" />
 
-            <input type="text" placeholder="Fullname" formControlName="fullname">
+      <input type="text" placeholder="Fullname" formControlName="fullname" />
 
-            <div class="Gender">
-              <select id="gender" formControlName="gender" >
-                <option value="">Gender</option>
-                <option value="Female">Female</option>
-                <option value="Male">Male</option>
-              </select>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            
-            <input type="text" placeholder="Email" formControlName="email">
-            <div class="conditions" *ngIf="emailField && emailField.dirty && emailField.invalid">
-              <span class="block" *ngIf="emailField.errors?.['required']">• Email is required.</span>
-              <span class="block" *ngIf="emailField.errors?.['email']">• Invalid email format.</span>
-            </div>
-            
+      <div class="Gender">
+        <select id="gender" formControlName="gender">
+          <option value="">Gender</option>
+          <option value="Female">Female</option>
+          <option value="Male">Male</option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
 
-            <input type="text" placeholder="Phone" formControlName="phone">
-            <div class="conditions" *ngIf="phoneField && phoneField.dirty && phoneField.invalid">
-              <span class="block" *ngIf="phoneField.errors?.['required']">• Phone number is required.</span>
-              <span class="block" *ngIf="phoneField.errors?.['pattern']">• Required format: +255(last 9 digits)</span>
-            </div>
+      <input type="text" placeholder="Email" formControlName="email" />
+      <div
+        class="conditions"
+        *ngIf="emailField && emailField.dirty && emailField.invalid"
+      >
+        <span class="block" *ngIf="emailField.errors?.['required']"
+          >• Email is required.</span
+        >
+        <span class="block" *ngIf="emailField.errors?.['email']"
+          >• Invalid email format.</span
+        >
+      </div>
 
-            <div class="Profile">
-              <select formControlName="userProfile" (change)="onProfileChange()">
-                <option value="0">Profile Type</option>
-                <option value="Student">Student</option>
-                <option value="GenderDesk">GenderDesk</option>
-                <option value="Consultant">Consultant</option>
-                <option value="Police">Police</option>
-              </select>
-              <i class="fas fa-chevron-down"></i>
-            </div>
-            
-            <div formGroupName="specificFields">
-              <!-- Student specific fields -->
-              <div *ngIf="signupForm.get('userProfile')?.value === 'Student'">
-                <div>
-                  <input type="text" placeholder="Reg-No" formControlName="registrationNumber" />
-                </div>
-                <div class="colleges">
-                  <select formControlName="college" [(ngModel)]="selectedCollege">
-                      <option *ngFor="let college of colleges" [value]="college">{{college}}</option>
-                  </select>
-                  <i class="fas fa-chevron-down"></i>
-              </div>
-              </div>
-              <!-- GenderDesk and Consultant specific fields -->
-              <div *ngIf="signupForm.get('userProfile')?.value === 'GenderDesk' || signupForm.get('userProfile')?.value === 'Consultant'">
-                <div>
-                  <input type="text" placeholder="Staff Number" formControlName="staffNumber" />
-                </div>
-                <div>
-                  <input type="text" placeholder="Office" formControlName="office" />
-                </div>
-              </div>
-              <!-- Police specific fields -->
-              <div *ngIf="signupForm.get('userProfile')?.value === 'Police'">
-                <div>
-                  <input type="text" placeholder="Police number" formControlName="policeNumber" />
-                </div>
-                <div>
-                  <input type="text" placeholder="Station" formControlName="station" />
-                </div>
-              </div>
-            </div>
+      <input type="text" placeholder="Phone" formControlName="phone" />
+      <div
+        class="conditions"
+        *ngIf="phoneField && phoneField.dirty && phoneField.invalid"
+      >
+        <span class="block" *ngIf="phoneField.errors?.['required']"
+          >• Phone number is required.</span
+        >
+        <span class="block" *ngIf="phoneField.errors?.['pattern']"
+          >• Required format: +255(last 9 digits)</span
+        >
+      </div>
 
-          <div class="password-container">
-            <input 
-              name="password"
-              [type]="showPassword ? 'text' : 'password'"
-              placeholder="Password"
-              formControlName="password"
-              required
+      <div class="Profile">
+        <select formControlName="userProfile" (change)="onProfileChange()">
+          <option value="0">Profile Type</option>
+          <option value="Student">Student</option>
+          <option value="GenderDesk">GenderDesk</option>
+          <option value="Consultant">Consultant</option>
+          <option value="Police">Police</option>
+        </select>
+        <i class="fas fa-chevron-down"></i>
+      </div>
+
+      <div formGroupName="specificFields">
+        <!-- Student specific fields -->
+        <div *ngIf="signupForm.get('userProfile')?.value === 'Student'">
+          <div>
+            <input
+              type="text"
+              placeholder="Reg-No"
+              formControlName="registrationNumber"
             />
-            
-            <i
-              class="far fa-eye eye-show"
-              (click)="togglePasswordVisibility()"
-              [class.hide]="!showPassword"
-            ></i>
-      
-            <i
-              class="far fa-eye-slash eye-hide"
-              (click)="togglePasswordVisibility()"
-              [class.hide]="showPassword"
-            ></i>
-          </div> 
-
-        <div class="conditions" *ngIf="passwordFormField?.dirty">
-          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('^(?=.*[A-Z])')">• At least one uppercase letter.</span>
-          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(?=.*[a-z])')">• At least one lowercase letter.</span>
-          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(.*[0-9].*)')">• At least one digit.</span>
-          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('(?=.*[!@#$%^&*])')">• At least one special character.</span>
-          <span class="block" *ngIf="passwordFormField?.value && !passwordFormField?.value.match('.{8,}')">• At least 8 characters long.</span>
+          </div>
+          <div class="colleges">
+            <select formControlName="college" [(ngModel)]="selectedCollege">
+              <option *ngFor="let college of colleges" [value]="college">
+                {{ college }}
+              </option>
+            </select>
+            <i class="fas fa-chevron-down"></i>
+          </div>
         </div>
-
-        <button type="submit">Sign up</button>
-
-        <p class="p2">Already have an account? <a routerLink="/login">Login</a></p>
-
+        <!-- GenderDesk and Consultant specific fields -->
+        <div
+          *ngIf="
+            signupForm.get('userProfile')?.value === 'GenderDesk' ||
+            signupForm.get('userProfile')?.value === 'Consultant'
+          "
+        >
+          <div>
+            <input
+              type="text"
+              placeholder="Staff Number"
+              formControlName="staffNumber"
+            />
+          </div>
+          <div>
+            <input type="text" placeholder="Office" formControlName="office" />
+          </div>
         </div>
-    </form>
+        <!-- Police specific fields -->
+        <div *ngIf="signupForm.get('userProfile')?.value === 'Police'">
+          <div>
+            <input
+              type="text"
+              placeholder="Police number"
+              formControlName="policeNumber"
+            />
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="Station"
+              formControlName="station"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="password-container">
+        <input
+          name="password"
+          [type]="showPassword ? 'text' : 'password'"
+          placeholder="Password"
+          formControlName="password"
+          required
+        />
+
+        <i
+          class="far fa-eye eye-show"
+          (click)="togglePasswordVisibility()"
+          [class.hide]="!showPassword"
+        ></i>
+
+        <i
+          class="far fa-eye-slash eye-hide"
+          (click)="togglePasswordVisibility()"
+          [class.hide]="showPassword"
+        ></i>
+      </div>
+
+      <div class="conditions" *ngIf="passwordFormField?.dirty">
+        <span
+          class="block"
+          *ngIf="
+            passwordFormField?.value &&
+            !passwordFormField?.value.match('^(?=.*[A-Z])')
+          "
+          >• At least one uppercase letter.</span
+        >
+        <span
+          class="block"
+          *ngIf="
+            passwordFormField?.value &&
+            !passwordFormField?.value.match('(?=.*[a-z])')
+          "
+          >• At least one lowercase letter.</span
+        >
+        <span
+          class="block"
+          *ngIf="
+            passwordFormField?.value &&
+            !passwordFormField?.value.match('(.*[0-9].*)')
+          "
+          >• At least one digit.</span
+        >
+        <span
+          class="block"
+          *ngIf="
+            passwordFormField?.value &&
+            !passwordFormField?.value.match('(?=.*[!@#$%^&*])')
+          "
+          >• At least one special character.</span
+        >
+        <span
+          class="block"
+          *ngIf="
+            passwordFormField?.value && !passwordFormField?.value.match('.{8,}')
+          "
+          >• At least 8 characters long.</span
+        >
+      </div>
+
+      <button type="submit">Sign up</button>
+
+      <p class="p2">
+        Already have an account? <a routerLink="/login">Login</a>
+      </p>
+    </div>
+  </form>
 </body>

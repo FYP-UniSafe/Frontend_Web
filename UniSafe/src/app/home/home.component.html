@@ -1,7 +1,7 @@
 <body>
   <div class="div1">
     <div class="words">
-      <h1>{{note}}<br>{{userFullName}}</h1>
+      <h1>{{ note }}<br />{{ userFullName }}</h1>
 
       <p>
         In a world that should be free from fear and<br />
@@ -28,17 +28,19 @@
 
   <div class="div2">
     <div class="head">
-      <h2 style="color: white;">What is UniSafe?</h2>
-      <span style="border-top: 5px solid white;"></span>
+      <h2 style="color: white">What is UniSafe?</h2>
+      <span style="border-top: 5px solid white"></span>
     </div>
     <div class="content">
       <h3>Empowering Voices, Fighting GBV. It's what we do.</h3>
 
       <p>
         UniSafe is a comprehensive platform designed to address gender-based
-        violence (GBV) and related issues within universities. Our mission<br class="b1" />
+        violence (GBV) and related issues within universities. Our mission<br
+          class="b1"
+        />
         is to empower students to speak out, report incidents, access resources,
-        and foster<br class="b1"/>
+        and foster<br class="b1" />
         a safer and more equitable campus environment.
       </p>
 
@@ -55,17 +57,15 @@
         <div class="card">
           <p><b>Get psychological help</b></p>
           <p class="temp">
-            Get counselling from our professional
-            counselors willing to provide you
-            with the best legal advice
+            Get counselling from our professional counselors willing to provide
+            you with the best legal advice
           </p>
         </div>
         <div class="card">
           <p><b>Join Gender community</b></p>
           <p class="temp">
-            Join a supportive community dedicated
-            to gender equality. Engage with fellow
-            advocates for gender justice.
+            Join a supportive community dedicated to gender equality. Engage
+            with fellow advocates for gender justice.
           </p>
         </div>
       </div>
@@ -74,18 +74,32 @@
 
   <div class="div3">
     <div class="head">
-      <h2>HeatMap</h2>
+      <h2>Maps</h2>
       <span></span>
     </div>
     <div class="divmap">
       <div class="heading">
-        <p>{{heading}}</p>
+        <p>{{ heading }}</p>
       </div>
-      <div class="map" id="map1" [style.display]="selectedMap === 'map1' ? 'block' : 'none'"></div>
-      <div class="map" id="map2" [style.display]="selectedMap === 'map2' ? 'block' : 'none'"></div>
+      <div
+        class="map"
+        id="map1"
+        [style.display]="selectedMap === 'map1' ? 'block' : 'none'"
+      ></div>
+      <div
+        class="map"
+        id="map2"
+        [style.display]="selectedMap === 'map2' ? 'block' : 'none'"
+      ></div>
       <div class="nav">
-        <span [class.active]="selectedMap === 'map1'" (click)="showMap('map1')"></span>
-        <span [class.active]="selectedMap === 'map2'" (click)="showMap('map2')"></span>
+        <span
+          [class.active]="selectedMap === 'map1'"
+          (click)="showMap('map1')"
+        ></span>
+        <span
+          [class.active]="selectedMap === 'map2'"
+          (click)="showMap('map2')"
+        ></span>
       </div>
     </div>
   </div>
@@ -96,22 +110,40 @@
       <span></span>
     </div>
     <div class="charts">
-      <div class="peryear" [style.display]="selectedChart === 'peryear' ? 'block' : 'none'">
+      <div
+        class="peryear"
+        [style.display]="selectedChart === 'peryear' ? 'block' : 'none'"
+      >
         <p class="charhead">Reports per Year of Study</p>
         <canvas id="yearlyReportsChart"></canvas>
-        <p>The Bar Chart showing the number of cases reported through UniSafe per Year of Study since August 1, 2023.</p>
+        <p>
+          The Bar Chart showing the number of cases reported through UniSafe per
+          Year of Study since August 1, 2023.
+        </p>
       </div>
-      <div class="pertype" [style.display]="selectedChart === 'pertype' ? 'block' : 'none'">
+      <div
+        class="pertype"
+        [style.display]="selectedChart === 'pertype' ? 'block' : 'none'"
+      >
         <p class="charhead">Reports per GBV Type</p>
         <div class="pie">
           <canvas id="caseTypeChart"></canvas>
         </div>
-        <p>The Pie Chart showing the number of cases reported since August 2024 through UniSafe, per GBV Type .</p>
+        <p>
+          The Pie Chart showing the number of cases reported since August 2024
+          through UniSafe, per GBV Type .
+        </p>
       </div>
     </div>
     <div class="nav">
-      <span [class.active]="selectedChart === 'pertype'" (click)="showChart('pertype')"></span>
-      <span [class.active]="selectedChart === 'peryear'" (click)="showChart('peryear')"></span>
+      <span
+        [class.active]="selectedChart === 'pertype'"
+        (click)="showChart('pertype')"
+      ></span>
+      <span
+        [class.active]="selectedChart === 'peryear'"
+        (click)="showChart('peryear')"
+      ></span>
     </div>
   </div>
 </body>
