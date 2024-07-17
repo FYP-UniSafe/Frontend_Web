@@ -21,7 +21,7 @@ export class TopBarComponent {
     this.webcamToggle.emit();
     this.camOn = !this.camOn;
   }
-   
+
   toggleMic(): void {
     this.micOn = !this.micOn;
     this.micToggle.emit();

@@ -111,7 +111,7 @@ export class ReportFormComponent implements OnInit {
       Perpetrator: [''],
       pgender: [this.selectedGender, Validators.required],
       relationship: ['', Validators.required],
-      counselling: ['', Validators.required]
+      counselling: ['', Validators.required],
     });
     if (!this.authenticated) {
       this.disableValidators();
@@ -144,10 +144,7 @@ export class ReportFormComponent implements OnInit {
       ?.setValidators(Validators.required);
     this.reportForm
       .get('email')
-      ?.setValidators([
-        Validators.required,
-        Validators.email,
-      ]);
+      ?.setValidators([Validators.required, Validators.email]);
     this.reportForm
       .get('phoneNumber')
       ?.setValidators([
@@ -250,8 +247,7 @@ export class ReportFormComponent implements OnInit {
           (response) => {
             window.alert('Your Anonymous Report was submitted successfully');
             console.log(response);
-            this.router.navigate(['/report'])
-            
+            this.router.navigate(['/report']);
           },
           (error) => {
             console.error('Error submitting anonymous report:', error);
@@ -265,8 +261,8 @@ export class ReportFormComponent implements OnInit {
             this.reportService.reportId = response.report.report_id;
             if (this.reportForm.value.counselling === 'yes') {
               this.router.navigate(['/counselling']);
-            }else{
-              this.router.navigate(['/report'])
+            } else {
+              this.router.navigate(['/report']);
             }
           },
           (error) => {
@@ -306,5 +302,4 @@ export class ReportFormComponent implements OnInit {
   get emailField() {
     return this.reportForm.get('email');
   }
-
 }

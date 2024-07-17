@@ -6,16 +6,18 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-resend-otp',
   templateUrl: './resend-otp.component.html',
-  styleUrls: ['./resend-otp.component.css']
+  styleUrls: ['./resend-otp.component.css'],
 })
 export class ResendOtpComponent {
   resendForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder,
-              private otpService: OtpService,
-              private router: Router) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private otpService: OtpService,
+    private router: Router
+  ) {
     this.resendForm = this.formBuilder.group({
-      email: ['', Validators.required]
+      email: ['', Validators.required],
     });
   }
 
@@ -27,7 +29,10 @@ export class ResendOtpComponent {
           this.router.navigate(['/verify-otp']);
         },
         (error) => {
-          window.alert(error.error.message || 'Email not found. Please register to UniSafe!');
+          window.alert(
+            error.error.message ||
+              'Email not found. Please register to UniSafe!'
+          );
           this.router.navigate(['/signup']);
         }
       );

@@ -157,11 +157,11 @@ body {
   flex-direction: column;
   justify-content: center;
 }
-.heading{
+.heading {
   font-weight: bold;
   font-size: 25px;
 }
-.divmap{
+.divmap {
   height: 85vh;
   width: 100%;
   /* background-color: red; */
@@ -170,7 +170,7 @@ body {
   justify-content: center;
   align-items: center;
 }
-.map{
+.map {
   height: 80%;
   width: 80%;
   /* background-color: green; */
@@ -193,7 +193,7 @@ body {
   flex-direction: column;
   justify-content: center;
 }
-.charts{
+.charts {
   height: 78vh;
   width: 100%;
   justify-self: flex-end;
@@ -203,7 +203,7 @@ body {
   align-items: center;
   /* background-color: red; */
 }
-.peryear{
+.peryear {
   height: 100%;
   width: 70%;
   /* background-color: green; */
@@ -213,7 +213,7 @@ body {
   align-items: center;
   text-align: center;
 }
-.pertype{
+.pertype {
   height: 100%;
   width: 70%;
   /* background-color: green; */
@@ -223,20 +223,20 @@ body {
   align-items: center;
   text-align: center;
 }
-.pertype div{
+.pertype div {
   height: 85%;
   width: 100%;
   /* background-color: red; */
 }
-.pertype p{
+.pertype p {
   margin-top: 2vh;
 }
-.charhead{
+.charhead {
   margin-top: 3vh;
   font-weight: bold;
   font-size: 25px;
 }
-.nav{
+.nav {
   height: 7;
   width: 100%;
   margin-top: 3vh;
@@ -260,12 +260,6 @@ body {
 .nav span.active {
   background-color: #0f6cbf;
 }
-
-
-
-
-
-
 
 /* @media (max-width: 1349px) { */
 @media (max-width: 1023px) {
@@ -375,7 +369,7 @@ body {
     width: 100vw;
     order: -1;
   }
-  .div2{
+  .div2 {
     height: auto;
   }
   .head h2 {
@@ -385,26 +379,26 @@ body {
     width: 50vw;
   }
 
-  .content{
+  .content {
     height: auto;
     /* background-color: bisque; */
     font-size: 4vw;
   }
-  .content div{
+  .content div {
     height: 60vh;
   }
   .content div .card {
     font-size: 4vw;
-    width: 90%;  
+    width: 90%;
   }
-  .content div .card br{
+  .content div .card br {
     display: none;
   }
   .content div .card:hover {
     height: 50%;
     box-shadow: 0 20px 16px 0 rgba(0, 0, 0, 0.5);
   }
-  .pmob{
+  .pmob {
     color: blue;
   }
   /* .pmob b{

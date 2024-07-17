@@ -17,31 +17,32 @@ import { ConsultantComponent } from './consultant/consultant.component';
 import { JoinScreenComponent } from './join-screen/join-screen.component';
 import { VideoCallComponent } from './video-call/video-call.component';
 
-
 const routes: Routes = [
-  {path: 'home', component: HomeComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'forgot-password', component: ForgotPasswordComponent},
-  {path: 'reset-password', component: ResetPasswordComponent},
-  {path: 'report-form', component: ReportFormComponent},
-  {path: 'signup', component: SignupComponent},
-  {path: 'profile', component: ProfileComponent},
-  {path: 'verify-otp', component: VerifyOtpComponent},
-  {path: 'resend-otp', component: ResendOtpComponent},
-  {path: 'report', component: ReportComponent},
-  {path: 'counselling', component: CounsellingComponent},
-  {path: 'genderdesk', component: GenderdeskComponent},
-  {path: 'police', component: PoliceComponent},
-  {path: 'consultant', component: ConsultantComponent},
-  {path: 'joinscreen', component: JoinScreenComponent},
+  { path: 'home', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'report-form', component: ReportFormComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'profile', component: ProfileComponent },
+  { path: 'verify-otp', component: VerifyOtpComponent },
+  { path: 'resend-otp', component: ResendOtpComponent },
+  { path: 'report', component: ReportComponent },
+  { path: 'counselling', component: CounsellingComponent },
+  { path: 'genderdesk', component: GenderdeskComponent },
+  { path: 'police', component: PoliceComponent },
+  { path: 'consultant', component: ConsultantComponent },
+  { path: 'joinscreen', component: JoinScreenComponent },
   { path: 'videocall', component: VideoCallComponent },
-  {path: '**', redirectTo: 'home'}
+  { path: '**', redirectTo: 'home' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    scrollPositionRestoration: 'top',
-  })],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'top',
+    }),
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

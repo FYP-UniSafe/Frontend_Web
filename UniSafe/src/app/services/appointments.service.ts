@@ -48,7 +48,10 @@ export class AppointmentsService {
     );
   }
 
-  acceptAppointment(appointmentId: string, appointmentData: any): Observable<any> {
+  acceptAppointment(
+    appointmentId: string,
+    appointmentData: any
+  ): Observable<any> {
     return this.http.post<any>(
       `${environment.apiUrl}/appointments/accept/${appointmentId}/`,
       appointmentData,
