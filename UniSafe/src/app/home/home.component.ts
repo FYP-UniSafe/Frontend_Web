@@ -7,6 +7,7 @@ import { Chart, registerables } from 'node_modules/chart.js';
 import { StatisticsService } from '../services/statistics.service';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Loader } from '@googlemaps/js-api-loader';
+import { environment } from '../../environments/environment';
 Chart.register(...registerables, ChartDataLabels);
 
 // declare function test(): void;
@@ -117,7 +118,7 @@ export class HomeComponent implements OnInit {
 
   initializeMaps(policeLocations: any): void {
     let loader = new Loader({
-      apiKey: 'AIzaSyCNaBuPe5kS939BoEnuHFVFpENB8V8IlYU',
+      apiKey:  environment.googleApiKey,
     });
 
     loader.load().then(() => {

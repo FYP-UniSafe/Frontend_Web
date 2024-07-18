@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Observable, from } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ export class GeminiService {
 
   constructor() {
     this.generativeAI = new GoogleGenerativeAI(
-      'AIzaSyD3sr9dj9MhXRI7QaklXF34PRam3g73oTA'
+      environment.geminiApiKey
     );
   }
 

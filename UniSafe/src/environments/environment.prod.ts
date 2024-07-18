@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
-  // apiUrl: 'https://example.com/api'
-  videoSDKApiKey: '65bdacaa-d670-4130-b5ed-0c72d73a69df',
-  videoSDKSecretKey:
-    '1c643bc31a5d4bc4c61195951cb5479a5a1f433611e858fdb0b0442c7644023e',
+  apiUrl: 'https://unisafe.nucci.live',
+  videoSDKApiKey: 'your-production-video-sdk-api-key',
+  videoSDKSecretKey: 'your-production-video-sdk-secret-key',
+  googleApiKey: 'your-production-google-api-key',
+  geminiApiKey: 'your-development-gemini-api-key',
 };
