@@ -1,5 +1,6 @@
-# UniSafe WEB FRONTEND
-## Prerequisites
+## UniSafe WEB FRONTEND
+
+### Prerequisites
 
 Before you begin, ensure you have met the following requirements:
 
@@ -15,7 +16,7 @@ Before you begin, ensure you have met the following requirements:
 
 - **Git**: Version control system for tracking changes in source code during software development. Download and install it from [Git's official website](https://git-scm.com/).
 
-## Installation
+### Setup
 
 To install and set up the project, follow these steps:
 
@@ -43,11 +44,11 @@ To install and set up the project, follow these steps:
    ng serve
 ```
 
-   This command will compile the application and start a web server. By default, the application will be available at `http://localhost:4200/`.
+This command will compile the application and start a web server. By default, the application will be available at `http://localhost:4200/`.
 
 5. **Open your browser and navigate to `http://localhost:4200/` to view the application.**
 
-## Development to Vercel (Shared Hosting was used)
+### Development to Vercel (Shared Hosting was used)
 
 To deploy the Angular project to Vercel, follow these steps:
 
@@ -64,10 +65,11 @@ To deploy the Angular project to Vercel, follow these steps:
    vercel deploy --prod
 ```
 
-   This command deploys your project and provides you with a production URL. Follow the prompts in your terminal to set up your project on Vercel the first time you run it.
+This command deploys your project and provides you with a production URL. Follow the prompts in your terminal to set up your project on Vercel the first time you run it.
 
 For more detailed instructions and configuration options, refer to the [Vercel documentation](https://vercel.com/docs).
 
-## Contributing
+### Contributing
+
 **Contact**
-For inquiries, contact [Mandy, Nuhu Paschal](mailto:caljr9301@gmail.com).
+For inquiries, contact [Mandy, Nuhu Paschal](mailto:caljr9301@gmail.com) or [Mariki, Whitney](mailto:marikiwhitney@gmail.com).
