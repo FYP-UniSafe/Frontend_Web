@@ -72,4 +72,4 @@ For more detailed instructions and configuration options, refer to the [Vercel d
 ### Contributing
 
 **Contact**
-For inquiries, contact [Mandy, Nuhu Paschal](mailto:caljr9301@gmail.com).
+For inquiries, contact [Mandy, Nuhu Paschal](mailto:caljr9301@gmail.com) or [Mariki, Whitney](mailto:marikiwhitney@gmail.com).
